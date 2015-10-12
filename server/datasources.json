@@ -1,0 +1,13 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "chatterOracle": {
+    "username": "bichatter",
+    "password": "Admin123",
+    "name": "chatterOracle",
+    "connector": "oracle",
+    "tns": "sampleapp"
+  }
+}

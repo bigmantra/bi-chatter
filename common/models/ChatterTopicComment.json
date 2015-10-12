@@ -1,0 +1,128 @@
+{
+  "name": "ChatterTopicComment",
+  "options": {
+    "idInjection": false,
+    "oracle": {
+      "schema": "BICHATTER",
+      "table": "CHATTER_TOPIC_COMMENT"
+    }
+  },
+  "properties": {
+    "commentId": {
+      "type": "String",
+      "id": 1,
+      "required": true,
+      "length": 50,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "COMMENT_ID",
+        "dataType": "VARCHAR2",
+        "dataLength": 50,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "N"
+      }
+    },
+    "topicId": {
+      "type": "String",
+      "required": true,
+      "length": 50,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "TOPIC_ID",
+        "dataType": "VARCHAR2",
+        "dataLength": 50,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "N"
+      }
+    },
+    "commentText": {
+      "type": "String",
+      "required": false,
+      "length": 4000,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "COMMENT_TEXT",
+        "dataType": "VARCHAR2",
+        "dataLength": 4000,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "commentHtml": {
+      "type": "String",
+      "required": false,
+      "length": 4000,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "COMMENT_HTML",
+        "dataType": "VARCHAR2",
+        "dataLength": 4000,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "commentCreatedByUser": {
+      "type": "String",
+      "required": false,
+      "length": 150,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "COMMENT_CREATED_BY_USER",
+        "dataType": "VARCHAR2",
+        "dataLength": 150,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "commentCreatedDate": {
+      "type": "Date",
+      "required": false,
+      "length": 7,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "COMMENT_CREATED_DATE",
+        "dataType": "DATE",
+        "dataLength": 7,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "commentUpdatedDate": {
+      "type": "Date",
+      "required": false,
+      "length": 7,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "COMMENT_UPDATED_DATE",
+        "dataType": "DATE",
+        "dataLength": 7,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "chatterTopicTags": {
+      "type": "hasMany",
+      "model": "ChatterTopicTag",
+      "foreignKey": "commentId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

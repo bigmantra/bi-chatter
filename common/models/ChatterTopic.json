@@ -1,0 +1,268 @@
+{
+  "name": "ChatterTopic",
+  "options": {
+    "idInjection": false,
+    "oracle": {
+      "schema": "BICHATTER",
+      "table": "CHATTER_TOPIC"
+    }
+  },
+  "properties": {
+    "topicId": {
+      "type": "String",
+      "id": 1,
+      "required": true,
+      "length": 50,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "TOPIC_ID",
+        "dataType": "VARCHAR2",
+        "dataLength": 50,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "N"
+      }
+    },
+    "contextGrainSha1": {
+      "type": "String",
+      "required": false,
+      "length": 40,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "CONTEXT_GRAIN_SHA1",
+        "dataType": "VARCHAR2",
+        "dataLength": 40,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "contextGrainText": {
+      "type": "String",
+      "required": false,
+      "length": 4000,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "CONTEXT_GRAIN_TEXT",
+        "dataType": "VARCHAR2",
+        "dataLength": 4000,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "contextFilterText": {
+      "type": "String",
+      "required": false,
+      "length": 4000,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "CONTEXT_FILTER_TEXT",
+        "dataType": "VARCHAR2",
+        "dataLength": 4000,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "contextFilterSha1": {
+      "type": "String",
+      "required": false,
+      "length": 40,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "CONTEXT_FILTER_SHA1",
+        "dataType": "VARCHAR2",
+        "dataLength": 40,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "contextType": {
+      "type": "String",
+      "required": false,
+      "length": 30,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "CONTEXT_TYPE",
+        "dataType": "VARCHAR2",
+        "dataLength": 30,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "contextDashboardPath": {
+      "type": "String",
+      "required": false,
+      "length": 800,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "CONTEXT_DASHBOARD_PATH",
+        "dataType": "VARCHAR2",
+        "dataLength": 800,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "contextDashboardName": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "CONTEXT_DASHBOARD_NAME",
+        "dataType": "VARCHAR2",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "contextAnalysisPath": {
+      "type": "String",
+      "required": false,
+      "length": 800,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "CONTEXT_ANALYSIS_PATH",
+        "dataType": "VARCHAR2",
+        "dataLength": 800,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "contextAnalysisName": {
+      "type": "String",
+      "required": false,
+      "length": 255,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "CONTEXT_ANALYSIS_NAME",
+        "dataType": "VARCHAR2",
+        "dataLength": 255,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "topicText": {
+      "type": "String",
+      "required": false,
+      "length": 4000,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "TOPIC_TEXT",
+        "dataType": "VARCHAR2",
+        "dataLength": 4000,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "topicHtml": {
+      "type": "String",
+      "required": false,
+      "length": 4000,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "TOPIC_HTML",
+        "dataType": "VARCHAR2",
+        "dataLength": 4000,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "topicCreatedByUser": {
+      "type": "String",
+      "required": false,
+      "length": 150,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "TOPIC_CREATED_BY_USER",
+        "dataType": "VARCHAR2",
+        "dataLength": 150,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "topicOwner": {
+      "type": "String",
+      "required": false,
+      "length": 150,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "TOPIC_OWNER",
+        "dataType": "VARCHAR2",
+        "dataLength": 150,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "topicCreatedDate": {
+      "type": "Date",
+      "required": false,
+      "length": 7,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "TOPIC_CREATED_DATE",
+        "dataType": "DATE",
+        "dataLength": 7,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "topicUpdatedDate": {
+      "type": "Date",
+      "required": false,
+      "length": 7,
+      "precision": null,
+      "scale": null,
+      "oracle": {
+        "columnName": "TOPIC_UPDATED_DATE",
+        "dataType": "DATE",
+        "dataLength": 7,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+    "chatterTopicComments": {
+      "type": "hasMany",
+      "model": "ChatterTopicComment",
+      "foreignKey": "topicId"
+    },
+    "chatterTopicTags": {
+      "type": "hasMany",
+      "model": "ChatterTopicTag",
+      "foreignKey": "topicId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

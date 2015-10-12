@@ -1,0 +1,178 @@
+<div>
+  <div class="modal-header">
+    <h3>Conversations</h3>
+    <p><h4>Context: {{chatterContainer.chatterContext}}</h4></p>
+  </div>
+  <div ng-controller="commentsCtrl" class="modal-body" style="border: none">
+
+    <div class="row-fluid">
+      <div class=span12" style="border: none">
+        <div ui-tree="options" data-drag-enabled="false">
+
+          <!--****************New Topic******************-->
+
+          <div class="media">
+            <a class="media-left media-top" href="#">
+              <img class="pull-left" height="32" width="32"
+                   src="//localhost:3000/src/assets/images/noavatar.png">
+            </a>
+
+            <div class="media-body">
+              <div class="well">
+                <div class="form-group">
+                  <label class="sr-only" for="topicName">Topic name</label>
+                    <textarea class="form-control" style="min-width: 100%;max-width: 100%" rows="3" id="topicName"
+                              placeholder="Start a new topic...."></textarea>
+                </div>
+
+
+                <div class="row">
+                  <div class="form-group col-xs-6">
+                    <!--<label for="tags" class="sr-only"></label>-->
+                    <input type="text" class="form-control" aria-label="...">
+                  </div>
+
+                  <div class="form-group col-xs-6">
+                    <button type="button" ng-click="addTopic()" class="btn btn-default pull-right"><span class="glyphicon glyphicon-plus"></span> Add
+                      Topic
+                    </button>
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+            <!--Media Body-->
+
+          </div>
+
+
+          <!--****************Existing Topics******************-->
+
+
+          <ol ui-tree-nodes ng-model="topics" data-type="topic">
+            <li ng-repeat="topic in topics | orderBy:'-sortOrder'" ui-tree-node>
+
+
+              <accordion close-others="true">
+                <accordion-group panel-class="panel-body topic" is-open="topic.accordionStatus">
+                  <accordion-heading>
+
+                    <!--*************************Topic in Readonly Mode***********************************-->
+
+                    <div ng-show="!topic.editing">
+
+                      <div class="media topic">
+                        <a class="media-left media-top" href="#">
+                          <img class="pull-left" height="32" width="32"
+                               src="//localhost:3000/src/assets/images/noavatar.png">
+                        </a>
+
+                        <div class="media-body">
+                          <a href="" class="btn btn-default btn-xs pull-right" ng-click="removeTopic(topic)"><i
+                            class="glyphicon glyphicon-remove"></i></a>
+                          <a href="" class="btn btn-default btn-xs pull-right"
+                             ng-click="toggleAccordionOpen(topic)"><i
+                            class="fa fa-plus-square-o"></i></a>
+
+                          <a href="" class="btn btn-default btn-xs pull-right"
+                             ng-click="editTopic(topic)"><i
+                            class="glyphicon glyphicon-pencil"></i></a>
+                          <p>&nbsp;{{topic.name}}</p>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <!--*************************Topic in Edit Mode***********************************-->
+
+                    <div ng-show="topic.editing">
+                      <form class="form-inline" role="form">
+                        <div class="form-topic">
+                          <label class="sr-only" for="topicName">Topic name</label>
+                          <input type="text" class="form-control" placeholder="Topic name" ng-model="topic.name">
+                        </div>
+                        <button type="submit" class="btn btn-default" ng-click="saveTopic(topic)">Save</button>
+                        <button type="submit" class="btn btn-default" ng-click="cancelEditingTopic(topic)">Cancel
+                        </button>
+                      </form>
+                    </div>
+
+
+                  </accordion-heading>
+
+                  <!--*************************Comments***********************************-->
+
+                  <ol ui-tree-nodes ng-model="topic.comments" data-type="comment">
+                    <li ng-repeat="comment in topic.comments" ui-tree-node>
+
+                      <!--Comment Controls-->
+                      <div class="comment">
+                        <div>
+                          <a href="" class="btn btn-default btn-xs pull-right" ng-click="removeComment(topic, comment)"><i
+                            class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+
+                        <!--Comment Content-->
+                        <a href="#"><span>Girish Lakshmanan</span></a>
+
+                        <p>{{comment.name}}</p>
+                      </div>
+
+                    </li>
+                  </ol>
+
+                  <!--************************************New Comment*******************************-->
+
+
+                  <ol class="angular-ui-tree-nodes">
+                    <li class="angular-ui-tree-node">
+                      <div class="comment-title angular-ui-tree-handle">
+                        <form class="form-inline" role="form">
+                          <div class="form-topic">
+                            <!--<label class="sr-only" for="commentName">Comment name</label>-->
+                            <input type="text" class="form-control" ng-model="topic.newCommentName"
+                                   placeholder="Continue the conversation....">
+                          </div>
+                          <button type="submit" class="btn btn-default" ng-click="addComment(topic)">Share</button>
+                        </form>
+                      </div>
+                    </li>
+                  </ol>
+
+
+                </accordion-group>
+              </accordion>
+
+
+            </li>
+          </ol>
+
+        </div>
+
+
+        <!--****************Dev Debugging Info******************-->
+
+
+        <div>
+          <!--<h3>Data binding</h3>-->
+
+          <!--<div class="info">-->
+          <!--{{ info }}-->
+          <!--</div>-->
+          <!--<pre class="code">{{ topics | json }}</pre>-->
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="chatterContainer.ok()">OK</button>
+    <!--<button class="btn btn-warning" type="button" ng-click="chatterContainer.cancel()">Cancel</button>-->
+  </div>
+</div>
+
+
+
