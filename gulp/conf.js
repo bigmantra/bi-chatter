@@ -7,6 +7,9 @@
  */
 
 var gutil = require('gulp-util');
+/*var jsonfile = require('jsonfile')
+var util = require('util')
+var path = require('path')*/
 
 /**
  *  The main paths of your project handle these with care
@@ -18,6 +21,7 @@ exports.paths = {
   e2e: 'e2e'
 };
 
+var wiredepInjects={"js":[],"css":[],"html":[]};
 /**
  *  Wiredep is the lib which inject bower dependencies in your project
  *  Mainly used to inject script tags in the index.html but also used
@@ -26,6 +30,8 @@ exports.paths = {
 exports.wiredep = {
   exclude: [/bootstrap.js$/, /bootstrap-sass-official\/.*\.js/, /bootstrap\.css/],
   directory: 'client/bower_components'
+
+
 };
 
 /**

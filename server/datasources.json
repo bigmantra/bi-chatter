@@ -8,6 +8,6 @@
     "password": "Admin123",
     "name": "chatterOracle",
     "connector": "oracle",
-    "tns": "sampleapp"
+    "tns": "sampleproj"
   }
 }

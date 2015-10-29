@@ -180,6 +180,7 @@
       $scope.topics.$save($scope.topics.$getRecord(topic.$id));
       topic.editing = false;
 
+
     };
 
 
@@ -375,7 +376,7 @@
 
       var modalInstance = $modal.open({
         animation: vm.animationsEnabled,
-        templateUrl: 'http://localhost:8000/src/app/chatter/commentEditorModal.html',
+        templateUrl: 'http://localhost:8000/app/chatter/commentEditorModal.html',
         controller: 'ModalInstanceCtrl as chatterContainer',
         size: 'lg',
         keyboard: true, // close with esc key
@@ -486,7 +487,7 @@
           topicsRef.once('value', function (snapshot) {
             if (snapshot.val() !== null) {
               scope.topicsExist == true
-              iElement.append('<i style="margin-left:8px;cursor: default;color: red;" class="fa fa-comments-o"></i>')
+              iElement.append('<i style="cursor: default;color: red;" class="fa fa-comments-o"></i>')
             }
           });
 
@@ -499,7 +500,7 @@
           if (scope.topicsExist == true) {
 
             if (iElement.find('.fa-comments-o').length < 1) {
-              iElement.append('<i style="margin-left:8px;cursor: default;color: red;" class="fa fa-comments-o"></i>')
+              iElement.append('<i style="cursor: default;color: red;" class="fa fa-comments-o"></i>')
             }
           }
           else {
@@ -513,7 +514,6 @@
 
 
     }
-
 
   }
 
@@ -532,16 +532,17 @@
         tElement.find('td[id^=e_saw]').attr('ng-dblclick', 'chatterCell.clickToOpen()');
         //tElement.find('td[id^=e_saw]').attr('ng-class',"{'bg-success': chatterCell.hover}");
         //tElement.find('td[id^=e_saw]').append('<i ng-click="chatterCell.clickToOpen()" ng-show="chatterCell.hover && !chatterCell.commentExists" style="margin-left:8px;cursor: pointer" class="fa fa-comment"></i>')
-        tElement.find('td[id^=e_saw]').append('<button type="button" class="btn btn-success btn-mini" ng-click="chatterCell.clickToOpen()" ng-show="chatterCell.hover && !chatterCell.commentExists" style="margin-left:8px;"><i class="fa fa-pencil-square-o"></i></button>');
 
-        tElement.find('td[id^=e_saw]').attr('ng-mouseenter', "chatterCell.hover = true");
-        tElement.find('td[id^=e_saw]').attr('ng-mouseleave', "chatterCell.hover = false");
+        //tElement.find('td[id^=e_saw]').append('<button type="button" class="btn btn-success btn-mini" ng-click="chatterCell.clickToOpen()" ng-show="chatterCell.hover && !chatterCell.commentExists" style="margin-left:8px;"><i class="fa fa-pencil-square-o"></i></button>');
+
+        //tElement.find('td[id^=e_saw]').attr('ng-mouseenter', "chatterCell.hover = true");
+        //tElement.find('td[id^=e_saw]').attr('ng-mouseleave', "chatterCell.hover = false");
 
         //tElement.find('td[id^=e_saw]').attr('popover-placement','right');
         //tElement.find('td[id^=e_saw]').attr('popover','On the top!');
         //tElement.find('td[id^=e_saw]').attr('popover-append-to-body','true');
 
-        tElement.find('td[id^=e_saw]').append('<a ng-show="!chatterCell.commentExists && !chatterCell.hover" style="margin-left:20px;"></a>')
+        tElement.find('td[id^=e_saw]').append('<a ng-show="!chatterCell.topicsExist" style="margin-left:1px;"></a>')
 
 
         //tElement.find('td[id^=e_saw]').append('<span>Name: {{chatterCell.name}}</span>')
@@ -639,6 +640,7 @@
 
           var contextHash = {};
           var edgeCoords = obips.EdgeCoords.findCoords($('#' + (elementID)).children()[0]);
+          console.log('getting Contexthash for element:' + elementID);
 
           var sawViewModelID = edgeCoords.getId();
           var sawColumn = obips.ViewModel.getCurrentColumn(edgeCoords);
@@ -707,8 +709,7 @@ var boostrapChatterApp = function () {
     tableParentElement.attr('ng-controller', 'MainController as chatter');
     //attach chatter directive - this will make angular loop through table child elements and attach further directives before compile
     tableParentElement.attr('bi-chatter-table', 'true');
-    //angular.bootstrap($('.PTChildPivotTable')[0], ['biChatter']);
-    angular.bootstrap($('.PortalBody')[0], ['biChatter']);
+    angular.bootstrap($('.PTChildPivotTable')[0], ['biChatter']);
 
     console.log('Angular Bootstraped!!!');
 
@@ -738,7 +739,7 @@ function observeChatterSensitiveDOMChanges(){
   }
 
   if (targetElementArray.length < 1) {
-    targetElementArray = $(document);
+    targetElementArray = $('.ViewContainer');
   }
 
 //TODO Fix this to handle all tables
@@ -747,15 +748,15 @@ function observeChatterSensitiveDOMChanges(){
   console.log(list);
 
   var observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function(mutation) {
-      console.log(mutation.type);
-    });
+    //mutations.forEach(function(mutation) {
+    //  console.log(mutation.type);
+    //});
 
     //TODO Finetune performance - to handle only specific DOM mutations
-    //if (!(angular.element($('.PTChildPivotTable')).scope())) {
-    //  boostrapChatterApp();
-    //
-    //}
+    if (!(angular.element($('.PTChildPivotTable')).scope())) {
+      boostrapChatterApp();
+
+    }
 
   });
 

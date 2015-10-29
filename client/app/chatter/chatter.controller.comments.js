@@ -34,6 +34,7 @@
         var currentTime = new Date();
         console.log(currentTime);
 
+
         $scope.topics.$add({
           name: topicName,
           type: "topic",
@@ -45,6 +46,9 @@
           context: ($scope.chatterContainer && $scope.chatterContainer.chatterContext) || 'defaultRowContext'
 
         });
+        console.log('In Add topic...');
+
+
         document.getElementById("topicNameTextArea").value = '';
       }
     };
@@ -55,6 +59,7 @@
       $scope.newTopicUsers.push(tag.text);
 
     };
+
 
 
     $scope.editTopic = function (topic) {
@@ -74,6 +79,8 @@
 
       topic.name = topic.newName;
       $scope.topics.$save($scope.topics.$getRecord(topic.$id));
+
+
       topic.editing = false;
 
     };

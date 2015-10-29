@@ -267,13 +267,13 @@
               </div>
 
               <div ng-show="editingNewTopic" class="row">
-                <div class="form-group col-xs-6">
+                <div class="form-group col-xs-8">
                   <!--<label for="tags" class="sr-only"></label>-->
                   <!--<input type="text" class="form-control" aria-label="...">-->
 
                   <tags-input class="bootstrap" on-tag-added="addedTag($tag)"
                               ng-model="newTopicUsers"
-                              placeholder="Invite more users to this conversation"
+                              placeholder="Tag users.."
                               replace-spaces-with-dashes="false">
                     <auto-complete source="loadUsers($query)"
                                    min-length="0"
@@ -283,7 +283,7 @@
 
                 </div>
 
-                <div class="form-group col-xs-6">
+                <div class="form-group col-xs-4">
                   <button type="button" ng-click="addTopic()" class="btn btn-default pull-right"><span
                     class="glyphicon glyphicon-plus"></span> Add
                     Topic
@@ -427,7 +427,7 @@
 
                       <tags-input class="bootstrap" on-tag-added="addedTag($tag)"
                                   ng-model="topic.newCommentUsers"
-                                  placeholder="Invite more users to this conversation"
+                                  placeholder="Tag more users.."
                                   replace-spaces-with-dashes="false">
                         <auto-complete source="loadUsers($query)"
                                        min-length="0"
