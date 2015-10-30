@@ -15,9 +15,9 @@ var path = require('path')*/
  *  The main paths of your project handle these with care
  */
 exports.paths = {
-  src: 'client',
+  src: './',
   dist: 'dist',
-  tmp: 'client/.tmp',
+  tmp: '.tmp',
   e2e: 'e2e'
 };
 
@@ -29,7 +29,7 @@ var wiredepInjects={"js":[],"css":[],"html":[]};
  */
 exports.wiredep = {
   exclude: [/bootstrap.js$/, /bootstrap-sass-official\/.*\.js/, /bootstrap\.css/],
-  directory: 'client/bower_components'
+  directory: 'bower_components'
 
 
 };

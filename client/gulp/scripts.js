@@ -17,15 +17,16 @@ gulp.task('includes', function () {
 
 
   var wireDepDataJS = require('wiredep')({
+
     src: ['*.js'],
     exclude: [/bootstrap.js$/, /bootstrap-sass-official\/.*\.js/, /bootstrap\.css/, /\/.*\.css/, /\/.*\.scss/],
-    directory: 'client/bower_components'
+    directory: 'bower_components'
   })
 
   var packageObjects = wireDepDataJS.packages;
 
   var requireConf = {
-    baseUrl: 'http://localhost:8000',
+    baseUrl: 'http://localhost:3000',
     paths: {},
     shim: {}
   }
@@ -39,7 +40,7 @@ gulp.task('includes', function () {
       packageObjects[packageItem].main.forEach(function (element, index, array) {
         if (wireDepDataJS.js.indexOf(packageObjects[packageItem].main[index]) > 0) {
           requireLoadArray.push(packageItem);
-          requireConf.paths[packageItem] = packageObjects[packageItem].main[index].replace('.js', '');
+          requireConf.paths[packageItem] = packageObjects[packageItem].main[index].replace('.js', '').replace(/\\/g, '/');
 
         }
       });
@@ -59,11 +60,13 @@ gulp.task('includes', function () {
   var fs = require('fs')
   var data = fs.readFileSync(path.join(conf.paths.src, '/biApp/includefile.js'), 'utf8');
 
+  //Add Placeholder strings into the JSON objects. These will later be replaced with start and end tags in the injection transform
   requireConf.paths['PLACEHOLDER_APP_DEPS'] = "AWAIT";
   requireConf.shim['PLACEHOLDER_APP_SHIM'] = "AWAIT";
 
-  var result1 = data.replace(/'PLACEHOLDER_CONF'/g, JSON.stringify(requireConf).replace('"PLACEHOLDER_APP_DEPS":"AWAIT"', '/*BEGIN_APPDEPS*/ /*END_APPDEPS*/').replace('"PLACEHOLDER_APP_SHIM":"AWAIT"', '/*BEGIN_APPSHIM*/ /*END_APPSHIM*/'));
 
+  //relace all Config Placeholder strings with Start and End tags as the inject plugin requires it
+  var result1 = data.replace(/'PLACEHOLDER_CONF'/g, JSON.stringify(requireConf).replace('"PLACEHOLDER_APP_DEPS":"AWAIT"', '/*BEGIN_APPDEPS*/ /*END_APPDEPS*/').replace('"PLACEHOLDER_APP_SHIM":"AWAIT"', '/*BEGIN_APPSHIM*/ /*END_APPSHIM*/'));
   var result2 = result1.replace(/'PLACEHOLDER_LOAD'/g, "'" + requireLoadArray.join("','") + "' " + ',/*BEGIN_APPARRDEPS*/ /*END_APPARRDEPS*/');
 
   fs.writeFileSync(path.join(conf.paths.src, '/biApp/includefileReplaced.js'), result2, 'utf8');
@@ -74,7 +77,7 @@ gulp.task('includes', function () {
       starttag: '/*BEGIN_APPDEPS*/',
       endtag: '/*END_APPDEPS*/',
       transform: function (filepath, file, i, length) {
-        return '"appDep' + i + '":  "' + filepath + '"' + (i + 1 < length ? ',' : '');
+        return '"appDep' + i + '":  "' + filepath.replace('.js','').replace('/app/','app/') + '"' + (i + 1 < length ? ',' : '');
       }
     }))
     .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'), path.join(conf.paths.src, '/app/**/*.css'), path.join(conf.paths.src, '/app/**/*.html')], {read: false}), {
