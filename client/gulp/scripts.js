@@ -5,6 +5,7 @@ var gulp = require('gulp');
 var conf = require('./conf');
 var jsonfile = require('jsonfile')
 var util = require('util')
+var fs = require('fs')
 
 var browserSync = require('browser-sync');
 
@@ -17,11 +18,13 @@ gulp.task('includes', function () {
 
 
   var wireDepDataJS = require('wiredep')({
-
-    src: ['*.js'],
-    exclude: [/bootstrap.js$/, /bootstrap-sass-official\/.*\.js/, /bootstrap\.css/, /\/.*\.css/, /\/.*\.scss/],
+    //exclude: [/bootstrap.js$/, /bootstrap-sass-official\/.*\.js/, /bootstrap\.css/, /\/.*\.css/, /\/.*\.scss/],
+    exclude: [/bootstrap.js$/, /bootstrap-sass-official\/.*\.js/, /\/.*\.scss/,/\/.*\.less/],
     directory: 'bower_components'
   })
+
+  //Log wiredep data
+  fs.writeFileSync(path.join(conf.paths.src, '/biApp/wiredep.json'), JSON.stringify(wireDepDataJS), 'utf8');
 
   var packageObjects = wireDepDataJS.packages;
 
@@ -43,6 +46,14 @@ gulp.task('includes', function () {
           requireConf.paths[packageItem] = packageObjects[packageItem].main[index].replace('.js', '').replace(/\\/g, '/');
 
         }
+
+        //Only CSS will be needed in the LoadArray. To be used by the CSSLoaded RQjs plugin
+        if (wireDepDataJS.css.indexOf(packageObjects[packageItem].main[index]) > 0) {
+
+          console.log('pushing css item: ' + packageObjects[packageItem].main[index]);
+          requireLoadArray.push('css!'+(packageObjects[packageItem].main[index]).replace(/\\/g, '/'));
+        }
+
       });
       //Insert RequireJS Shims
       var depObjects = packageObjects[packageItem].dependencies;
@@ -52,13 +63,19 @@ gulp.task('includes', function () {
           depArray.push(depItem);
         }
       }
+
+      //Force a jquery dependency on Angular so that it uses full-jquery instead of jqlite
+      if(packageItem=="angular"){
+        depArray.push("jquery");
+      }
+
       requireConf.shim[packageItem] = {deps: depArray}
 
     }
   }
 
-  var fs = require('fs')
-  var data = fs.readFileSync(path.join(conf.paths.src, '/biApp/includefile.js'), 'utf8');
+
+  var data = fs.readFileSync(path.join(conf.paths.src, '/biApp/include.FileInjector.js'), 'utf8');
 
   //Add Placeholder strings into the JSON objects. These will later be replaced with start and end tags in the injection transform
   requireConf.paths['PLACEHOLDER_APP_DEPS'] = "AWAIT";
@@ -69,32 +86,39 @@ gulp.task('includes', function () {
   var result1 = data.replace(/'PLACEHOLDER_CONF'/g, JSON.stringify(requireConf).replace('"PLACEHOLDER_APP_DEPS":"AWAIT"', '/*BEGIN_APPDEPS*/ /*END_APPDEPS*/').replace('"PLACEHOLDER_APP_SHIM":"AWAIT"', '/*BEGIN_APPSHIM*/ /*END_APPSHIM*/'));
   var result2 = result1.replace(/'PLACEHOLDER_LOAD'/g, "'" + requireLoadArray.join("','") + "' " + ',/*BEGIN_APPARRDEPS*/ /*END_APPARRDEPS*/');
 
-  fs.writeFileSync(path.join(conf.paths.src, '/biApp/includefileReplaced.js'), result2, 'utf8');
+  //TODO change to PIPE for efficiency
+  fs.writeFileSync(path.join(conf.paths.src, '/biApp/chatter.Bootstrap.js'), result2, 'utf8');
 
-
-  return gulp.src(path.join(conf.paths.src, '/biApp/includefileReplaced.js'))
-    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'), path.join(conf.paths.src, '/app/**/*.css'), path.join(conf.paths.src, '/app/**/*.html')], {read: false}), {
+  return gulp.src(path.join(conf.paths.src, '/biApp/chatter.Bootstrap.js'))
+    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js')], {read: false}), {
       starttag: '/*BEGIN_APPDEPS*/',
       endtag: '/*END_APPDEPS*/',
       transform: function (filepath, file, i, length) {
         return '"appDep' + i + '":  "' + filepath.replace('.js','').replace('/app/','app/') + '"' + (i + 1 < length ? ',' : '');
       }
     }))
-    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'), path.join(conf.paths.src, '/app/**/*.css'), path.join(conf.paths.src, '/app/**/*.html')], {read: false}), {
+    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js')], {read: false}), {
       starttag: '/*BEGIN_APPSHIM*/',
       endtag: '/*END_APPSHIM*/',
       transform: function (filepath, file, i, length) {
         return '"appDep' + i + '": {"deps": ["angular"]}' + (i + 1 < length ? ',' : '');
       }
     }))
-    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'), path.join(conf.paths.src, '/app/**/*.css'), path.join(conf.paths.src, '/app/**/*.html')], {read: false}), {
+    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'), path.join(conf.paths.src, '/app/**/*.css')], {read: false}), {
       starttag: '/*BEGIN_APPARRDEPS*/',
       endtag: '/*END_APPARRDEPS*/',
       transform: function (filepath, file, i, length) {
-        return '"appDep' + i + '"' + (i + 1 < length ? ',' : '');
+
+       //use the css loader requirejs plugin syntax for all non-js files
+       if((/(?:\.([^.]+))?$/).exec(filepath)[1]=='js'){
+         return '"appDep' + i + '"' + (i + 1 < length ? ',' : '');
+       }else{
+         return '"css!' + filepath.replace('/app/','app/') + '"' + (i + 1 < length ? ',' : '');
+       }
+
       }
     }))
-    .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve')));
+    .pipe(gulp.dest(path.join(conf.paths.src, '/biApp')));
 
 });
 
