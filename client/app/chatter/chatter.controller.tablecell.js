@@ -79,10 +79,7 @@
       vm.animationsEnabled = !vm.animationsEnabled;
     };
 
-
   }
-
-
 
 
 })();

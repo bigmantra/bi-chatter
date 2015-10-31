@@ -6,6 +6,7 @@
     .module('biChatter')
     .controller('commentsCtrl', CommentsController);
 
+
   function CommentsController($scope, $log, Topics, fbURL, Users) {
 
     $scope.info = "";

@@ -1,4 +1,4 @@
-(function() {
+define(["index.module"],function() {
   'use strict';
 
   angular
@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, toastr,$sceDelegateProvider) {
+  function config($logProvider, $sceDelegateProvider) {
 
     $sceDelegateProvider.resourceUrlWhitelist([
       // Allow same origin resource loads.
@@ -18,10 +18,10 @@
     $logProvider.debugEnabled(true);
 
     // Set options third-party lib
-    toastr.options.timeOut = 3000;
+/*    toastr.options.timeOut = 3000;
     toastr.options.positionClass = 'toast-top-right';
     toastr.options.preventDuplicates = true;
-    toastr.options.progressBar = true;
+    toastr.options.progressBar = true;*/
   }
 
-})();
+});

@@ -23,7 +23,11 @@ function browserSyncInit(baseDir, browser) {
 
   var server = {
     baseDir: baseDir,
-    routes: routes
+    routes: routes,
+    middleware: function (req, res, next) {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      next();
+    }
   };
 
   /*

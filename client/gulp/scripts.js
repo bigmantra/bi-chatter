@@ -41,7 +41,8 @@ gulp.task('includes', function () {
       //Insert RequireJS Paths
 
       packageObjects[packageItem].main.forEach(function (element, index, array) {
-        if (wireDepDataJS.js.indexOf(packageObjects[packageItem].main[index]) > 0) {
+
+        if (wireDepDataJS.js.indexOf(packageObjects[packageItem].main[index]) > -1) {
           requireLoadArray.push(packageItem);
           requireConf.paths[packageItem] = packageObjects[packageItem].main[index].replace('.js', '').replace(/\\/g, '/');
 
@@ -67,9 +68,11 @@ gulp.task('includes', function () {
       //Force a jquery dependency on Angular so that it uses full-jquery instead of jqlite
       if(packageItem=="angular"){
         depArray.push("jquery");
-      }
+        requireConf.shim[packageItem] = {deps: depArray}
+      }else{
 
-      requireConf.shim[packageItem] = {deps: depArray}
+        requireConf.shim[packageItem] = {deps: depArray}
+      }
 
     }
   }
@@ -94,24 +97,36 @@ gulp.task('includes', function () {
       starttag: '/*BEGIN_APPDEPS*/',
       endtag: '/*END_APPDEPS*/',
       transform: function (filepath, file, i, length) {
-        return '"appDep' + i + '":  "' + filepath.replace('.js','').replace('/app/','app/') + '"' + (i + 1 < length ? ',' : '');
+        //Extract filename and use it as the itemname for app dependencies
+        var filename = filepath.replace(/^.*[\\\/]/, '')
+        filename = filename.replace(filename.substr(filename.lastIndexOf('.')),'')
+        return '"' + filename + '":  "' + filepath.replace('.js','').replace('/app/','app/') + '"' + (i + 1 < length ? ',' : '');
       }
     }))
     .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js')], {read: false}), {
       starttag: '/*BEGIN_APPSHIM*/',
       endtag: '/*END_APPSHIM*/',
       transform: function (filepath, file, i, length) {
-        return '"appDep' + i + '": {"deps": ["angular"]}' + (i + 1 < length ? ',' : '');
+        //Extract filename and use it as the itemname for app dependencies
+        var filename = filepath.replace(/^.*[\\\/]/, '')
+        filename = filename.replace(filename.substr(filename.lastIndexOf('.')),'')
+
+        return '"' + filename + '": {"deps": ["angular"]}' + (i + 1 < length ? ',' : '');
       }
     }))
-    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'), path.join(conf.paths.src, '/app/**/*.css')], {read: false}), {
+    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'),path.join(conf.paths.src, '/app/**/*.css')])/*.pipe($.angularFilesort())*/, {
       starttag: '/*BEGIN_APPARRDEPS*/',
       endtag: '/*END_APPARRDEPS*/',
       transform: function (filepath, file, i, length) {
 
        //use the css loader requirejs plugin syntax for all non-js files
        if((/(?:\.([^.]+))?$/).exec(filepath)[1]=='js'){
-         return '"appDep' + i + '"' + (i + 1 < length ? ',' : '');
+
+         //Extract filename and use it as the itemname for app dependencies
+         var filename = filepath.replace(/^.*[\\\/]/, '')
+         filename = filename.replace(filename.substr(filename.lastIndexOf('.')),'')
+
+         return '"' + filename + '"' + (i + 1 < length ? ',' : '');
        }else{
          return '"css!' + filepath.replace('/app/','app/') + '"' + (i + 1 < length ? ',' : '');
        }
