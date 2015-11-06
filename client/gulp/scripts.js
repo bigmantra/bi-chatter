@@ -24,7 +24,8 @@ gulp.task('includes', function () {
   })
 
   //Log wiredep data
-  fs.writeFileSync(path.join(conf.paths.src, '/biApp/wiredep.json'), JSON.stringify(wireDepDataJS), 'utf8');
+  fs.writeFileSync(path.join(conf.paths.src, '/bootstrap/wiredep.json'), JSON.stringify(wireDepDataJS), 'utf8');
+
 
   var packageObjects = wireDepDataJS.packages;
 
@@ -68,7 +69,7 @@ gulp.task('includes', function () {
       //Force a jquery dependency on Angular so that it uses full-jquery instead of jqlite
       if(packageItem=="angular"){
         depArray.push("jquery");
-        requireConf.shim[packageItem] = {deps: depArray}
+        requireConf.shim[packageItem] = {deps: depArray,exports: 'angular'}
       }else{
 
         requireConf.shim[packageItem] = {deps: depArray}
@@ -78,7 +79,7 @@ gulp.task('includes', function () {
   }
 
 
-  var data = fs.readFileSync(path.join(conf.paths.src, '/biApp/include.FileInjector.js'), 'utf8');
+  var data = fs.readFileSync(path.join(conf.paths.src, '/bootstrap/bootstrap.FileInjector.js'), 'utf8');
 
   //Add Placeholder strings into the JSON objects. These will later be replaced with start and end tags in the injection transform
   requireConf.paths['PLACEHOLDER_APP_DEPS'] = "AWAIT";
@@ -90,9 +91,10 @@ gulp.task('includes', function () {
   var result2 = result1.replace(/'PLACEHOLDER_LOAD'/g, "'" + requireLoadArray.join("','") + "' " + ',/*BEGIN_APPARRDEPS*/ /*END_APPARRDEPS*/');
 
   //TODO change to PIPE for efficiency
-  fs.writeFileSync(path.join(conf.paths.src, '/biApp/chatter.Bootstrap.js'), result2, 'utf8');
+  fs.writeFileSync(path.join(conf.paths.tmp, '/tmp.chatter.Bootstrap.js'), result2, 'utf8');
 
-  return gulp.src(path.join(conf.paths.src, '/biApp/chatter.Bootstrap.js'))
+  return gulp.src(path.join(conf.paths.tmp, '/tmp.chatter.Bootstrap.js'))
+    .pipe($.rename(path.join(conf.paths.src, '/chatter.Bootstrap.js')))
     .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js')], {read: false}), {
       starttag: '/*BEGIN_APPDEPS*/',
       endtag: '/*END_APPDEPS*/',
@@ -114,11 +116,13 @@ gulp.task('includes', function () {
         return '"' + filename + '": {"deps": ["angular"]}' + (i + 1 < length ? ',' : '');
       }
     }))
-    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'),path.join(conf.paths.src, '/app/**/*.css')])/*.pipe($.angularFilesort())*/, {
+    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'),path.join(conf.paths.src, '/app/**/*.css'),'!'+ path.join(conf.paths.src, '/app/chatter/chatter.Bootstrap.js')])/*.pipe($.angularFilesort())*/, {
       starttag: '/*BEGIN_APPARRDEPS*/',
       endtag: '/*END_APPARRDEPS*/',
       transform: function (filepath, file, i, length) {
 
+
+        console.log('file:'+ filepath)
        //use the css loader requirejs plugin syntax for all non-js files
        if((/(?:\.([^.]+))?$/).exec(filepath)[1]=='js'){
 
@@ -133,7 +137,7 @@ gulp.task('includes', function () {
 
       }
     }))
-    .pipe(gulp.dest(path.join(conf.paths.src, '/biApp')));
+    .pipe(gulp.dest(path.join(conf.paths.src, '/app/chatter')));
 
 });
 

@@ -1,6 +1,7 @@
-(function() {
+define(["index.module"],function() {
   'use strict';
 
+  console.log('defining index.run..');
   angular
     .module('biChatter')
     .run(runBlock);
@@ -28,4 +29,4 @@
 
   }
 
-})();
+});

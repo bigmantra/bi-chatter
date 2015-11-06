@@ -1,4 +1,4 @@
-(function () {
+define(["index.module"],function() {
   'use strict';
 
 
@@ -49,7 +49,6 @@
       }
     };
   };
-
 
   function ChatterTableCellDirective(BIGate, Topics) {
 
@@ -150,4 +149,4 @@
   }
 
 
-})();
+});

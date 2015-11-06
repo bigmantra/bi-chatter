@@ -1,3 +1,46 @@
+var requirejs = 'PLACEHOLDER_CONF'
+
+if ((typeof angular == 'undefined')) { //biChatter Loaded for the first time - Load JS and CSS files
+
+
+
+  var requireJSScriptElement = document.createElement("script");
+
+  requireJSScriptElement["src"] = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js";
+  document.getElementsByTagName("head")[0].appendChild(requireJSScriptElement);
+  console.log('added Requirejs to head');
+
+
+  requireJSScriptElement.onload = function () {
+
+    console.log('calling requireJS Load...');
+    require(['PLACEHOLDER_LOAD'], function (ang) {
+        if ((typeof obips != 'undefined')) {
+          console.log('Context inside OBI - Manually bootstrapping angular')
+          boostrapChatterApp();
+          observeChatterSensitiveDOMChanges();
+        } else {
+
+          console.log('Context outside OBI - Manually bootstrapping angular')
+          angular.bootstrap(document, ['biChatter']);
+        }
+
+      }
+    );
+  }
+}
+else {
+  console.log('Everything already loaded...just Rebootstrapping');
+  if ((typeof obips != 'undefined')) {
+    boostrapChatterApp();
+    observeChatterSensitiveDOMChanges();
+  } else {
+    angular.bootstrap(document, ['biChatter']);
+  }
+
+}
+
+
 function boostrapChatterApp() {
 
   var tableParentElement = $('.PTChildPivotTable');
@@ -65,7 +108,6 @@ function observeChatterSensitiveDOMChanges() {
     characterData: true,
     subtree: true
   });
-
 
 }
 

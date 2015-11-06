@@ -1,6 +1,7 @@
-(function() {
+define(["index.module"],function() {
   'use strict';
 
+  console.log('defining index.route..');
   angular
     .module('biChatter')
     .config(routeConfig);
@@ -22,4 +23,4 @@
     $urlRouterProvider.otherwise('/');
   }
 
-})();
+});

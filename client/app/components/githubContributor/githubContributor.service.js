@@ -1,4 +1,4 @@
-(function() {
+define(["index.module"],function() {
   'use strict';
 
   angular
@@ -34,4 +34,4 @@
       }
     }
   }
-})();
+});

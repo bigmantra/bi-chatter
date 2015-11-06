@@ -1,3 +1,4 @@
+define(["index.module"],function() {
   'use strict';
 
 
@@ -12,3 +13,4 @@
 
   }
 
+});

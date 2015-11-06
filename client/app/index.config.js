@@ -1,6 +1,8 @@
 define(["index.module"],function() {
   'use strict';
 
+
+  console.log('defining index.config..');
   angular
     .module('biChatter')
     .config(config);

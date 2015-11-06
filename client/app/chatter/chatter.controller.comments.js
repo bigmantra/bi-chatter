@@ -1,4 +1,4 @@
-(function () {
+define(["index.module"],function() {
   'use strict';
 
 
@@ -60,7 +60,6 @@
       $scope.newTopicUsers.push(tag.text);
 
     };
-
 
 
     $scope.editTopic = function (topic) {
@@ -175,4 +174,4 @@
 
   }
 
-})();
+});
