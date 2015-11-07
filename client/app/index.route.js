@@ -3,7 +3,7 @@ define(["index.module"],function() {
 
   console.log('defining index.route..');
   angular
-    .module('biChatter')
+    .module('bm.platform')
     .config(routeConfig);
 
   /** @ngInject */

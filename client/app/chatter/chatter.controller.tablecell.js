@@ -3,7 +3,7 @@ define(["index.module"],function() {
 
 
   angular
-    .module('biChatter')
+    .module('bm.platform')
     .controller('ChatterTableCellController', ChatterTableCellController);
 
   function ChatterTableCellController($scope, $modal, $log, BIGate, Topics) {

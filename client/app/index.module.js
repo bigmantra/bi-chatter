@@ -1,15 +1,23 @@
 
-define([], (function () {
+define(['dynamic.modules'], (function (modules) {
   'use strict';
 
   console.log('defining index.module..');
   angular
-    .module('biChatter', ['ui.bootstrap.tpls', 'ui.bootstrap', 'ngCookies', 'ui.router', 'ngSanitize', 'monospaced.elastic', 'ngTagsInput', 'ui.tree', 'firebase','angularMoment'])
+    .module('bm.platform', ['ngAnimate','ngCookies', 'ui.router', 'ngSanitize', 'bm.platform.chatter'])
+
+
+  //Load all modules
+  angular.forEach(modules, function (value, key) {
+    angular
+      .module(value, ['ngAnimate','ngCookies', 'ui.router', 'ngSanitize', 'bm.platform.chatter'])
+
+
+  });
 
 
 
-
-})());
+}));
 
 
 

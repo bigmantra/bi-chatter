@@ -1,6 +1,6 @@
 var requirejs = 'PLACEHOLDER_CONF'
 
-if ((typeof angular == 'undefined')) { //biChatter Loaded for the first time - Load JS and CSS files
+if ((typeof angular == 'undefined')) { //bm.platform Loaded for the first time - Load JS and CSS files
 
 
 
@@ -22,7 +22,7 @@ if ((typeof angular == 'undefined')) { //biChatter Loaded for the first time - L
         } else {
 
           console.log('Context outside OBI - Manually bootstrapping angular')
-          angular.bootstrap(document, ['biChatter']);
+          angular.bootstrap(document, ['bm.platform']);
         }
 
       }
@@ -35,7 +35,7 @@ else {
     boostrapChatterApp();
     observeChatterSensitiveDOMChanges();
   } else {
-    angular.bootstrap(document, ['biChatter']);
+    angular.bootstrap(document, ['bm.platform']);
   }
 
 }
@@ -43,26 +43,34 @@ else {
 
 function boostrapChatterApp() {
 
-  var tableParentElement = $('.PTChildPivotTable');
+
+$.each($("[vid*='tableView']"),function(index,tableParentElement){
+
+
+  //var tableParentElement = $('.PTChildPivotTable');
+
+  console.log(tableParentElement)
 
   //Bootstrap if not already
-  if (!(tableParentElement.attr('bi-chatter-table'))) {
+  if (!(tableParentElement.getAttribute('obi-table'))) {
 
     console.log('New - Attempt to attach angular to View');
-    var tableParentElement = $('.PTChildPivotTable');
-    tableParentElement.attr('ng-controller', 'MainController as chatter');
+    //var tableParentElement = $('.PTChildPivotTable');
+    //tableParentElement.setAttribute('ng-controller', 'MainController as chatter');
     //attach chatter directive - this will make angular loop through table child elements and attach further directives before compile
-    tableParentElement.attr('bi-chatter-table', 'true');
-    angular.bootstrap($('.PTChildPivotTable')[0], ['biChatter']);
-    console.log('Angular Bootstraped!!!');
-
+    tableParentElement.setAttribute('obi-table', 'true');
+    angular.bootstrap(tableParentElement, [tableParentElement.getAttribute('vid')]);
+    console.log('Angular Bootstraped for View ' + tableParentElement.getAttribute('vid'));
 
   }
 
 
-  document.onload = function () {
-    console.log("Document Loaded!!!");
-  };
+})
+
+
+
+
+
 
 }
 

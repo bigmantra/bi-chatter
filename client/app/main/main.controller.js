@@ -2,7 +2,7 @@ define(["index.module"],function() {
   'use strict';
 
   angular
-    .module('biChatter')
+    .module('bm.platform')
     .controller('MainController', MainController);
 
   /** @ngInject */

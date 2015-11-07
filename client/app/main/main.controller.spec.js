@@ -4,7 +4,7 @@
 
   describe('controllers', function(){
 
-    beforeEach(module('biChatter'));
+    beforeEach(module('bm.platform'));
 
     it('should define more than 5 awesome things', inject(function($controller) {
       var vm = $controller('MainController');

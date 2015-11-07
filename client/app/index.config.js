@@ -4,7 +4,7 @@ define(["index.module"],function() {
 
   console.log('defining index.config..');
   angular
-    .module('biChatter')
+    .module('bm.platform')
     .config(config);
 
   /** @ngInject */

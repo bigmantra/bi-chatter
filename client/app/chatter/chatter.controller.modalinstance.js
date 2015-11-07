@@ -3,7 +3,7 @@ define(["index.module"],function() {
 
 
     angular
-      .module('biChatter')
+      .module('bm.platform')
       .controller('ModalInstanceCtrl', DialogInstanceController);
 
     function DialogInstanceController($scope, $modalInstance, items, chatterContext) {

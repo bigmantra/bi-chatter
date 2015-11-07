@@ -3,7 +3,7 @@ define(["index.module"],function() {
 
   console.log('defining index.run..');
   angular
-    .module('biChatter')
+    .module('bm.platform')
     .run(runBlock);
 
   /** @ngInject */

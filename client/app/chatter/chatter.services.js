@@ -3,7 +3,7 @@ define(["index.module"],function() {
 
 
   angular
-  .module('biChatter')
+  .module('bm.platform')
   .factory('Users', function () {
 
     var userServiceInstance =
@@ -36,6 +36,7 @@ define(["index.module"],function() {
 
   .factory('BIGate', function () {
     var gateInstance = {
+
 
       sawSessionId: obips_scid,
       currentDashPath: saw.session.SessionInfos().portalPath,
