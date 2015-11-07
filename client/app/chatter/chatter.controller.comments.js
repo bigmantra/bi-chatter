@@ -13,13 +13,17 @@ define(["index.module"],function() {
     $scope.uistatus = {"open": true};
     $scope.editingNewTopic = false;
 
-    var dashboardPath = ($scope.chatterContainer && $scope.chatterContainer.chatterContext.dashboard) || ('/dummyDashboardSHA1');
+    $scope.chatterContainer.chatterContext.dashboard=$scope.chatterContainer.chatterContext.dashboard || ('/dummyDashboardSHA1');
+
+
+    var dashboardPath = ($scope.chatterContainer && $scope.chatterContainer.chatterContext.dashboard);
 
     $scope.contextId = CryptoJS.SHA1(dashboardPath).toString();
     $scope.rowContext = ($scope.chatterContainer && $scope.chatterContainer.chatterContext.rowContext.SHA1) || 'defaultRowContext';
     $scope.topics = Topics.getTopics($scope.contextId + '/' + $scope.rowContext);
 
     $scope.newTopicUsers = ['Girish Lakshmanan'];
+
 
 
     $scope.loadUsers = function (query) {

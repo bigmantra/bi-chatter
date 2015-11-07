@@ -23,6 +23,13 @@ define(["index.module"],function() {
       contextId: CryptoJS.SHA1(BIGate.currentDashPath).toString()
     };
 
+
+    $.each($(BIGate.currentDashXML).find('[folder]'),function(reportIndex,reportItem){
+
+      console.log($(this).attr('itemName'));
+
+    })
+
     //This is to allow access to Context on the Cell's postlink function
     $scope.chatterContext = vm.chatterContext;
 

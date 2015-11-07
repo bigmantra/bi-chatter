@@ -41,6 +41,7 @@ define(["index.module"],function() {
       sawSessionId: obips_scid,
       currentDashPath: saw.session.SessionInfos().portalPath,
       currentUser: saw.session.SessionInfos().user,
+      currentDashXML:saw.getXmlIsland("idClientStateXml", null , null , true),
       baseURL: saw.getBaseURL(),
 
       getContextHash: function (elementID) {
@@ -54,6 +55,8 @@ define(["index.module"],function() {
         var sawViewModel = obips.ViewModel.getViewModelById(sawViewModelID);
         var columnID = sawColumn.getAttribute('columnID');
         var stateInstance = obips.ReportMetadata.GetInstanceByStatePath(sawViewModel.reportStatePath);
+
+
         var numLayers = sawViewModel.getEdgeDefinition(sawViewModelID).getLayerCount(obips.JSDataLayout.ROW_EDGE);
 
         var currentRowColumns = [];

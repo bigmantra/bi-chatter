@@ -5,9 +5,15 @@ define([], (function () {
 
   var bicModules = [];
 
+
+
+
   angular.forEach($("[vid*='tableView']"), function (value, key) {
     bicModules.push(value.getAttribute('vid'))
   });
+
+  bicModules.push('bm.platform');
+
 
   return bicModules;
 }));

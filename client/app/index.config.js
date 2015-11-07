@@ -3,9 +3,12 @@ define(["index.module"],function() {
 
 
   console.log('defining index.config..');
+
+
   angular
     .module('bm.platform')
     .config(config);
+
 
   /** @ngInject */
   function config($logProvider, $sceDelegateProvider) {

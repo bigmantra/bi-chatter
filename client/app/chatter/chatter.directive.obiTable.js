@@ -13,7 +13,7 @@ define(["index.module"],function() {
       replace: true,
       transclude: false,
       compile: function (tElement, attrs) {
-        console.log('Compiling BI Chatter directive!')
+        console.log('Compiling BI Chatter Table directive!')
         tElement.find('td[id^=e_saw]').attr('ng-controller', 'ChatterTableCellController as chatterCell');
         tElement.find('td[id^=e_saw]').attr('bi-chatter-table-cell', 'true');
         tElement.find('td[id^=e_saw]').attr('style', 'cursor: default');
