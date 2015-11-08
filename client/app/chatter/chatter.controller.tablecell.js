@@ -25,13 +25,14 @@ define(["index.module"],function() {
 
 
 
+    //TODO
+
+    /*$.each($(BIGate.currentStateXML).find('[folder]'),function(reportIndex,reportItem){
 
 
-    $.each($(BIGate.currentStateXML).find('[folder]'),function(reportIndex,reportItem){
+     console.log($(this).attr('folder') + $(this).attr('itemName'));
 
-      console.log($(this).attr('folder') + $(this).attr('itemName'));
-
-    })
+    })*/
 
 
     //This is to allow access to Context on the Cell's postlink function

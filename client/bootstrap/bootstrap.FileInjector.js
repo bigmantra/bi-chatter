@@ -1,11 +1,11 @@
 var requirejs = 'PLACEHOLDER_CONF'
 var bmPlatformLoaded;
-
+var bmPlatformLoading;
 
 if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loaded for the first time - Load JS and CSS files
 
 
-  var bmPlatformLoading=true;
+  bmPlatformLoading=true;
 
   var requireJSScriptElement = document.createElement("script");
 
@@ -21,8 +21,10 @@ if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loa
         if ((typeof obips != 'undefined')) {
           console.log('Context inside OBI - Manually bootstrapping angular')
           bmPlatformLoaded=true;
+          bmPlatformLoading=false;
           bootstrapChatterApp();
           observeChatterSensitiveDOMChanges();
+
         } else {
 
           console.log('Context outside OBI - Manually bootstrapping angular')
@@ -45,10 +47,17 @@ else {
 }
 
 
+
+
+
 function bootstrapChatterApp() {
 
-  if((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded)) return;
 
+
+  if((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded) || bmPlatformLoading) return;
+
+
+  bmPlatformLoading=true;
   console.log('In Bootstrap!');
 
 
@@ -73,6 +82,10 @@ function bootstrapChatterApp() {
     var injector=angular.element($('#PageContentOuterDiv')[0]).injector()
     var compileService=injector.get('$compile');
     angular.forEach($('.PTChildPivotTable'), function (value, key) {
+
+      //Return if the directive is already attached to the view
+      if(value.getAttribute('obi-table')=='true') return;
+
       value.setAttribute('obi-table', 'true')
       var scope=((angular.element(value).scope()));
       var linkFn=compileService(value,scope);
@@ -86,37 +99,16 @@ function bootstrapChatterApp() {
   }
 
 
-  /*
-
-  $.each($("[vid*='tableView']"),function(index,tableParentElement){
-    //var tableParentElement = $('.PTChildPivotTable');
-
-    console.log(tableParentElement)
-
-    //Bootstrap if not already
-    if (!(tableParentElement.getAttribute('obi-table'))) {
-
-      console.log('New - Attempt to attach angular to View');
-      //var tableParentElement = $('.PTChildPivotTable');
-      //tableParentElement.setAttribute('ng-controller', 'MainController as chatter');
-      //attach chatter directive - this will make angular loop through table child elements and attach further directives before compile
-      tableParentElement.setAttribute('obi-table', 'true');
-      angular.bootstrap(tableParentElement, [tableParentElement.getAttribute('vid')]);
-      console.log('Angular Bootstraped for View ' + tableParentElement.getAttribute('vid'));
-
-    }
-
-  })
-  */
-
-
+  bmPlatformLoading=false;
 
 }
 
 
 function observeChatterSensitiveDOMChanges() {
 
-  if((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded)) return;
+  if((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded) || bmPlatformLoading) return;
+
+  bmPlatformLoading=true;
 
   var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
@@ -141,28 +133,43 @@ function observeChatterSensitiveDOMChanges() {
        });*/
 
 
+      console.log('mutated ' + viewElement.getAttribute('id'));
+
+
+      var pivotTables=$(viewElement).find('.PTChildPivotTable');
 
       //TODO Finetune performance - to handle only specific DOM mutations
-      if (($(viewElement).find('.PTChildPivotTable').length>0)  && ((typeof angular == 'undefined') || !(($(viewElement).find('.PTChildPivotTable').attr('obi-table'))=='true')) ) {
+      if (!pivotTables.attr('obi-table'))  {
 
-        console.log('Re-bootstrapping from mutation observer')
+        console.log('Re-linking from mutation observer')
 
-        bootstrapChatterApp();
+       // bootstrapChatterApp();
+
+        var injector = angular.element($('#PageContentOuterDiv')[0]).injector()
+        var compileService = injector.get('$compile');
+
+        pivotTables.attr('obi-table', 'true')
+        var scope = ((angular.element(pivotTables).scope()));
+        var linkFn = compileService(pivotTables, scope);
+        console.log('linking mutated DOM with scope...');
+        var content = linkFn(scope);
+
+
       }
 
     });
 
     observer.observe(viewElement, {
-      attributes: true,
-      childList: true,
-      characterData: true,
-      subtree: true
+      //attributes: true,
+      childList: true
+      //characterData: true,
+      //subtree: true
     });
 
 
   })
 
-
+  bmPlatformLoading=false;
 
 }
 
