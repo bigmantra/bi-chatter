@@ -21,8 +21,8 @@ define(["index.module"],function() {
 
         //Check for comments only for the first time. - then the watch kicks in
         // Ugly hack to workaround delay caused by presentation services XHR
+        scope.elemId = iElement.attr('id');
         setTimeout(function () {
-          scope.elemId = iElement.attr('id');
           var rowContextSHA1 = BIGate.getContextHash(scope.elemId).SHA1;
           var topicsRef = Topics.getTopicsRef((CryptoJS.SHA1(BIGate.currentDashPath).toString()) + '/' + rowContextSHA1);
           topicsRef.once('value', function (snapshot) {

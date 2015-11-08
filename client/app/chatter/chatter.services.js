@@ -41,8 +41,14 @@ define(["index.module"],function() {
       sawSessionId: obips_scid,
       currentDashPath: saw.session.SessionInfos().portalPath,
       currentUser: saw.session.SessionInfos().user,
-      currentDashXML:saw.getXmlIsland("idClientStateXml", null , null , true),
+      currentStateXML:saw.getXmlIsland("idClientStateXml", null , null , true),
       baseURL: saw.getBaseURL(),
+
+      getReportIdFromCell:function(elementId){
+
+        return $('#' + elementId).closest("[vid*='tableView']").attr('vid');
+
+      },
 
       getContextHash: function (elementID) {
 
@@ -60,8 +66,33 @@ define(["index.module"],function() {
         var numLayers = sawViewModel.getEdgeDefinition(sawViewModelID).getLayerCount(obips.JSDataLayout.ROW_EDGE);
 
         var currentRowColumns = [];
+        var currentColumnElementId;
 
-        //Loop through all columns in the same row as the current Element
+
+      //Loop through all columns in the same row as the current Element
+        $.each($('#' + (elementID)).closest('td').siblings(),function(siblingIndex,sibling){
+
+
+          currentColumnElementId=sibling.getAttribute('id');
+
+          var currentColEdgeCoords = obips.EdgeCoords.findCoords($('#' + currentColumnElementId).children()[0]);
+
+          var currentCol = obips.ViewModel.getCurrentColumn(currentColEdgeCoords);
+
+          currentRowColumns.push({
+            //Get the Column Formula for the element
+            formula: currentCol.querySelector('columnFormula expr').innerHTML,
+            //Get the Heading of current element
+            heading: ((currentCol.querySelector('columnHeading caption text') && currentCol.querySelector('columnHeading caption text').innerHTML) || (currentCol.querySelector('columnFormula expr').innerHTML)),
+            //Get the Column Value of the Current element
+            value: currentColEdgeCoords.element.textContent
+
+          })
+
+
+        })
+
+/*        //Loop through all columns in the same row as the current Element
         for (var i = 0; i < numLayers; i++) {
 
           var currentColumnElementId = 'e_' + sawViewModelID + '_1_' + i + '_' + edgeCoords.getSlice();
@@ -79,7 +110,7 @@ define(["index.module"],function() {
             value: currentColEdgeCoords.element.textContent
 
           })
-        }
+        }*/
 
         contextHash = {
 

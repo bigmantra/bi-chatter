@@ -24,11 +24,15 @@ define(["index.module"],function() {
     };
 
 
-    $.each($(BIGate.currentDashXML).find('[folder]'),function(reportIndex,reportItem){
 
-      console.log($(this).attr('itemName'));
+
+
+    $.each($(BIGate.currentStateXML).find('[folder]'),function(reportIndex,reportItem){
+
+      console.log($(this).attr('folder') + $(this).attr('itemName'));
 
     })
+
 
     //This is to allow access to Context on the Cell's postlink function
     $scope.chatterContext = vm.chatterContext;
@@ -36,6 +40,7 @@ define(["index.module"],function() {
     vm.animationsEnabled = true;
 
     vm.checkTopics = function () {
+
       var topicsRef = Topics.getTopicsRef((CryptoJS.SHA1(BIGate.currentDashPath).toString()) + '/' + BIGate.getContextHash($scope.elemId).SHA1);
       topicsRef.once('value', function (snapshot) {
         if (snapshot.val() !== null) {
@@ -48,12 +53,17 @@ define(["index.module"],function() {
 
         }
       });
+
     }
 
 
     this.clickToOpen = function (size) {
 
       console.log('Opening Modal for elem ' + $scope.elemId)
+
+      vm.reportId=BIGate.getReportIdFromCell($scope.elemId)
+
+      console.log('ReportId:' + vm.reportId);
 
       vm.chatterContext.rowContext = BIGate.getContextHash($scope.elemId);
 

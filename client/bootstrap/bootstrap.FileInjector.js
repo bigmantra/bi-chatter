@@ -1,8 +1,11 @@
 var requirejs = 'PLACEHOLDER_CONF'
+var bmPlatformLoaded;
 
-if ((typeof angular == 'undefined')) { //bm.platform Loaded for the first time - Load JS and CSS files
+
+if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loaded for the first time - Load JS and CSS files
 
 
+  var bmPlatformLoading=true;
 
   var requireJSScriptElement = document.createElement("script");
 
@@ -17,6 +20,7 @@ if ((typeof angular == 'undefined')) { //bm.platform Loaded for the first time -
     require(['PLACEHOLDER_LOAD'], function (ang) {
         if ((typeof obips != 'undefined')) {
           console.log('Context inside OBI - Manually bootstrapping angular')
+          bmPlatformLoaded=true;
           bootstrapChatterApp();
           observeChatterSensitiveDOMChanges();
         } else {
@@ -42,6 +46,10 @@ else {
 
 
 function bootstrapChatterApp() {
+
+  if((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded)) return;
+
+  console.log('In Bootstrap!');
 
 
   var pageContentDiv=$('#PageContentOuterDiv')[0];
@@ -108,6 +116,7 @@ function bootstrapChatterApp() {
 
 function observeChatterSensitiveDOMChanges() {
 
+  if((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded)) return;
 
   var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
