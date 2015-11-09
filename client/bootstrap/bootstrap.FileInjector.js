@@ -1,4 +1,7 @@
 var requirejs = 'PLACEHOLDER_CONF'
+
+
+//These variables are used as semaphores to ensure that only one view can load and bootstrap the app
 var bmPlatformLoaded;
 var bmPlatformLoading;
 
@@ -13,6 +16,19 @@ if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loa
   document.getElementsByTagName("head")[0].appendChild(requireJSScriptElement);
   console.log('added Requirejs to head');
 
+  var materialIconsElement = document.createElement("link");
+
+  materialIconsElement["href"] = "https://fonts.googleapis.com/icon?family=Material+Icons";
+  materialIconsElement["rel"] = "stylesheet";
+
+  document.getElementsByTagName("head")[0].appendChild(materialIconsElement);
+  console.log('added material icons to head');
+
+
+  //
+  //
+  //<script async src="//d1ks1friyst4m3.cloudfront.net/toolbar/prod/td.js" data-trackduck-id="563f8dfb3af4b747301d2f16"></script>
+  //
 
   requireJSScriptElement.onload = function () {
 
@@ -70,10 +86,15 @@ function bootstrapChatterApp() {
     //attach chatter directive - this will make angular loop through table elements and attach further directives
     pageContentDiv.setAttribute('obi-chatter-enable', 'true');
 
+
+    $('.DashboardPageContentDiv').append( "<div obi-fab-menu='true'>Test</div>" );
+
+      //  pageContentDiv.setAttribute('obi-fab-menu', 'true');
+
     console.log('New - Attempt to attach angular to page content DIV');
 
     angular.bootstrap(pageContentDiv, ['bm.platform']);
-    console.log('Angular Bootstraped for View ' + 'bm.platform');
+    console.log('Angular Bootstraped: ' + 'bm.platform');
 
   }else{
 
@@ -138,7 +159,7 @@ function observeChatterSensitiveDOMChanges() {
 
       var pivotTables=$(viewElement).find('.PTChildPivotTable');
 
-      //TODO Finetune performance - to handle only specific DOM mutations
+      //TODO Fine-tune performance - to handle only specific DOM mutations
       if (!pivotTables.attr('obi-table'))  {
 
         console.log('Re-linking from mutation observer')
@@ -153,7 +174,6 @@ function observeChatterSensitiveDOMChanges() {
         var linkFn = compileService(pivotTables, scope);
         console.log('linking mutated DOM with scope...');
         var content = linkFn(scope);
-
 
       }
 
