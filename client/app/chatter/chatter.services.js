@@ -34,15 +34,24 @@ define(["index.module"],function() {
     return topicsInstance; // jshint ignore:line
   })
 
-  .factory('BIGate', function () {
+  .factory('BIGate', function (BIMetadata) {
+
+
+
     var gateInstance = {
 
       sawSessionId: obips_scid,
       currentDashPath: saw.session.SessionInfos().portalPath,
       currentUser: saw.session.SessionInfos().user,
       currentStateXML:saw.getXmlIsland("idClientStateXml", null , null , true),
+      reportXMLs:BIMetadata,
       baseURL: saw.getBaseURL(),
 
+      getReportIdFromElement:function(element){
+
+        return $(element).closest("[vid*='tableView']").attr('vid');
+
+      },
       getReportIdFromCell:function(elementId){
 
         return $('#' + elementId).closest("[vid*='tableView']").attr('vid');
@@ -50,7 +59,6 @@ define(["index.module"],function() {
       },
 
       getContextHash: function (elementID) {
-
 
         //return default Context if not within OBI
         if(!(typeof obips)){
@@ -127,6 +135,8 @@ define(["index.module"],function() {
 
 
     };
+
+
 
 
     return gateInstance;

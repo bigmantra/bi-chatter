@@ -30,10 +30,30 @@ if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loa
     require(['PLACEHOLDER_LOAD'], function (ang) {
         if ((typeof obips != 'undefined')) {
           console.log('Context inside OBI - Manually bootstrapping angular')
-          bmPlatformLoaded=true;
-          bmPlatformLoading=false;
-          bootstrapChatterApp();
-          observeChatterSensitiveDOMChanges();
+
+          initOBIMetadata().then(function(){
+
+            bmPlatformLoaded=true;
+            bmPlatformLoading=false;
+            bootstrapChatterApp();
+            observeChatterSensitiveDOMChanges();
+
+
+          });
+
+          function initOBIMetadata() {
+            var initInjector = angular.injector(["ng"]);
+            var $http = initInjector.get("$http");
+
+            return $http.get("http://pelobidev2.projected.ltd.uk:9704/analytics/saw.dll?getReportXmlFromSearchID&SearchID=1pmd2k8oq0t65mn25vich2dqlm"
+            ).then(function(response) {
+              console.log('received ReportXMLs...bootstrapping now...')
+              angular
+                .module('bm.platform').constant("BIMetadata", response.data);
+            }, function(errorResponse) {
+              console.log('Could not fetch ReportXMLs')
+            });
+          }
 
         } else {
 
