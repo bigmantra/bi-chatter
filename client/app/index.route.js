@@ -18,7 +18,9 @@ define(["index.module"],function() {
       .state('chatter', {
         url: '/chatter',
         templateUrl: 'app/chatter/chatter.html',
-        controller: 'commentsCtrl'})
+        controller: 'ConsoleChatter',
+        controllerAs: 'consoleChatter'
+      })
 
     $urlRouterProvider.otherwise('/');
   }

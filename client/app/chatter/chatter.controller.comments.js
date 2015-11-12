@@ -9,48 +9,56 @@ define(["index.module"],function() {
 
   function CommentsController($scope, $log, Topics, fbURL, Users) {
 
-    $scope.info = "";
-    $scope.uistatus = {"open": true};
-    $scope.editingNewTopic = false;
+
+    var vm=this;
+
+    vm.info = "";
+    vm.uistatus = {"open": true};
+    vm.editingNewTopic = false;
+
+//    vm.chatterContainer.chatterContext.dashboard=vm.chatterContainer.chatterContext && vm.chatterContainer.chatterContext.dashboard || ('/dummyDashboardSHA1');
 
 
-//    $scope.chatterContainer.chatterContext.dashboard=$scope.chatterContainer.chatterContext && $scope.chatterContainer.chatterContext.dashboard || ('/dummyDashboardSHA1');
+    var dashboardPath = (vm.chatterContainer && vm.chatterContainer.chatterContext.dashboard || ('/dummyDashboardSHA1'));
+
+    console.log('vm.chatterContainer',vm.chatterContainer);
+
+    //vm.contextId = CryptoJS.SHA1(dashboardPath).toString();
+    vm.rowContext = (vm.chatterContainer && vm.chatterContainer.chatterContext.rowContext.SHA1) || 'defaultRowContext';
+    //vm.topics = Topics.getTopics(vm.contextId + '/' + vm.rowContext);
+
+    console.log('Rowcontext : ' + vm.rowContext);
+
+    vm.topics = Topics.getTopics(vm.rowContext);
+    vm.newTopicUsers = ['Girish Lakshmanan'];
 
 
-    var dashboardPath = ($scope.chatterContainer && $scope.chatterContainer.chatterContext.dashboard || ('/dummyDashboardSHA1'));
 
-    $scope.contextId = CryptoJS.SHA1(dashboardPath).toString();
-    $scope.rowContext = ($scope.chatterContainer && $scope.chatterContainer.chatterContext.rowContext.SHA1) || 'defaultRowContext';
-    $scope.topics = Topics.getTopics($scope.contextId + '/' + $scope.rowContext);
-
-    $scope.newTopicUsers = ['Girish Lakshmanan'];
-
-
-
-
-    $scope.loadUsers = function (query) {
+    vm.loadUsers = function (query) {
       return Users.getUsers(query);
     };
 
 
-    $scope.addTopic = function () {
+    vm.addTopic = function () {
 
       var topicName = document.getElementById("topicNameTextArea").value;
+
+      console.log('topic:' + topicName);
+
       if (topicName.length > 0) {
 
         var currentTime = new Date();
         console.log(currentTime);
 
-
-        $scope.topics.$add({
+        vm.topics.$add({
           name: topicName,
           type: "topic",
           createdDate: new Date().getTime(),
           contextDashboardPath: dashboardPath,
-          taggedUsers: $scope.newTopicUsers,
+          taggedUsers: vm.newTopicUsers,
           comments: [],
-          sortOrder: $scope.topics.length,
-          context: ($scope.chatterContainer && $scope.chatterContainer.chatterContext) || 'defaultRowContext'
+          sortOrder: vm.topics.length,
+          context: (vm.chatterContainer && vm.chatterContainer.chatterContext) || 'defaultRowContext'
 
         });
         console.log('In Add topic...');
@@ -60,31 +68,31 @@ define(["index.module"],function() {
       }
     };
 
-    $scope.addedTag = function (tag) {
+    vm.addedTag = function (tag) {
 
       console.log(tag.text);
-      $scope.newTopicUsers.push(tag.text);
+      vm.newTopicUsers.push(tag.text);
 
     };
 
 
-    $scope.editTopic = function (topic) {
+    vm.editTopic = function (topic) {
       topic.editing = true;
     };
 
-    $scope.cancelEditingTopic = function (topic) {
+    vm.cancelEditingTopic = function (topic) {
       topic.editing = false;
     };
 
-    $scope.toggleAccordionOpen = function (topic) {
+    vm.toggleAccordionOpen = function (topic) {
       topic.accordionStatus = !topic.accordionStatus;
     };
 
 
-    $scope.saveTopic = function (topic) {
+    vm.saveTopic = function (topic) {
 
       topic.name = topic.newName;
-      $scope.topics.$save($scope.topics.$getRecord(topic.$id));
+      vm.topics.$save(vm.topics.$getRecord(topic.$id));
 
 
       topic.editing = false;
@@ -92,26 +100,28 @@ define(["index.module"],function() {
     };
 
 
-    $scope.removeTopic = function (topic) {
+
+
+    vm.removeTopic = function (topic) {
       if (window.confirm('Are you sure to remove this topic?')) {
-        $scope.topics.$remove($scope.topics.$getRecord(topic.$id));
+        vm.topics.$remove(vm.topics.$getRecord(topic.$id));
       }
     };
 
-    $scope.saveTopics = function () {
-      for (var i = $scope.topics.length - 1; i >= 0; i--) {
-        var topic = $scope.topics[i];
+    vm.saveTopics = function () {
+      for (var i = vm.topics.length - 1; i >= 0; i--) {
+        var topic = vm.topics[i];
         topic.sortOrder = i + 1;
-        $scope.topics.$save($scope.topics.$getRecord(topic.$id));
+        vm.topics.$save(vm.topics.$getRecord(topic.$id));
       }
     };
 
-    $scope.addComment = function (topic) {
+    vm.addComment = function (topic) {
       if (!topic.newCommentName || topic.newCommentName.length === 0) {
         return;
       }
 
-      var currentTopic = $scope.topics.$getRecord(topic.$id);
+      var currentTopic = vm.topics.$getRecord(topic.$id);
 
       if (!currentTopic.comments) currentTopic.comments = [];//Initialise if its the first comment for the topic.
 
@@ -120,15 +130,15 @@ define(["index.module"],function() {
 
         //Add if not already in list of tagged users
         if (((currentTopic.taggedUsers.indexOf(topic.newCommentUsers[key].text)) == -1)) {
-          $scope.topics.$getRecord(topic.$id).taggedUsers.push(topic.newCommentUsers[key].text);
+          vm.topics.$getRecord(topic.$id).taggedUsers.push(topic.newCommentUsers[key].text);
         }
 
       });
 
       //Append new Tags to topic
-      //    $scope.topics.$getRecord(topic.$id).taggedUsers.push.apply($scope.topics.$getRecord(topic.$id).taggedUsers, topic.newCommentUsers);
+      //    vm.topics.$getRecord(topic.$id).taggedUsers.push.apply(vm.topics.$getRecord(topic.$id).taggedUsers, topic.newCommentUsers);
 
-      $scope.topics.$getRecord(topic.$id).comments.push({
+      vm.topics.$getRecord(topic.$id).comments.push({
         name: topic.newCommentName,
         sortOrder: topic.comments.length,
         createdDate: new Date().getTime(),
@@ -139,24 +149,24 @@ define(["index.module"],function() {
       delete topic.newCommentUsers;
       delete topic.newCommentEditable;
 
-      $scope.topics.$save($scope.topics.$getRecord(topic.$id));
+      vm.topics.$save(vm.topics.$getRecord(topic.$id));
 
 
     };
 
-    $scope.removeComment = function (topic, comment) {
+    vm.removeComment = function (topic, comment) {
       if (window.confirm('Are you sure to remove this comment?')) {
         var index = topic.comments.indexOf(comment);
         if (index > -1) {
           topic.comments.splice(index, 1)[0];
         }
 
-        $scope.topics.$save($scope.topics.$getRecord(topic.$id));
+        vm.topics.$save(vm.topics.$getRecord(topic.$id));
 
       }
     };
 
-    $scope.options = {
+    vm.options = {
       accept: function (sourceNode, destNodes, destIndex) {
         var data = sourceNode.$modelValue;
         var destType = destNodes.$element.attr('data-type');
@@ -172,10 +182,16 @@ define(["index.module"],function() {
           var topic = destNodes.$nodeScope.$modelValue;
           topic.save();
         } else { // save all
-          $scope.saveTopics();
+          vm.saveTopics();
         }
       }
     };
+
+    //at the end destroy
+    $scope.$on('$destroy', function(){
+      vm = null;
+      console.log('scope destroyed');
+    });
 
 
   }

@@ -24,12 +24,6 @@ if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loa
   document.getElementsByTagName("head")[0].appendChild(materialIconsElement);
   console.log('added material icons to head');
 
-
-  //
-  //
-  //<script async src="//d1ks1friyst4m3.cloudfront.net/toolbar/prod/td.js" data-trackduck-id="563f8dfb3af4b747301d2f16"></script>
-  //
-
   requireJSScriptElement.onload = function () {
 
     console.log('calling requireJS Load...');
@@ -86,8 +80,7 @@ function bootstrapChatterApp() {
     //attach chatter directive - this will make angular loop through table elements and attach further directives
     pageContentDiv.setAttribute('obi-chatter-enable', 'true');
 
-
-    $('.DashboardPageContentDiv').append( "<div obi-fab-menu='true'>Test</div>" );
+    $('.DashboardPageContentDiv').append( "<div obi-fab-menu='true'></div>" );
 
       //  pageContentDiv.setAttribute('obi-fab-menu', 'true');
 
@@ -108,10 +101,12 @@ function bootstrapChatterApp() {
       if(value.getAttribute('obi-table')=='true') return;
 
       value.setAttribute('obi-table', 'true')
+
       var scope=((angular.element(value).scope()));
       var linkFn=compileService(value,scope);
-      console.log('linking mutated DOM with scope...');
+      console.log('In bootstrapChatterApp(): linking mutated DOM with scope...');
       var content = linkFn(scope);
+
 
     });
 
@@ -147,12 +142,12 @@ function observeChatterSensitiveDOMChanges() {
 
   $.each(targetViewElementArray,function(viewIdx,viewElement){
 
+    var newScope;
 
     var observer = new MutationObserver(function (mutations) {
       /*    mutations.forEach(function(mutation) {
        console.log(mutation.type);
        });*/
-
 
       console.log('mutated ' + viewElement.getAttribute('id'));
 
@@ -169,11 +164,16 @@ function observeChatterSensitiveDOMChanges() {
         var injector = angular.element($('#PageContentOuterDiv')[0]).injector()
         var compileService = injector.get('$compile');
 
-        pivotTables.attr('obi-table', 'true')
+        pivotTables.attr('obi-table', 'true');
+
+        if(newScope) {
+          newScope.$destroy();
+        }
         var scope = ((angular.element(pivotTables).scope()));
-        var linkFn = compileService(pivotTables, scope);
+        newScope=scope.$new();
+        var linkFn = compileService(pivotTables, newScope);
         console.log('linking mutated DOM with scope...');
-        var content = linkFn(scope);
+        var content = linkFn(newScope);
 
       }
 

@@ -37,7 +37,6 @@ define(["index.module"],function() {
   .factory('BIGate', function () {
     var gateInstance = {
 
-
       sawSessionId: obips_scid,
       currentDashPath: saw.session.SessionInfos().portalPath,
       currentUser: saw.session.SessionInfos().user,
@@ -51,6 +50,20 @@ define(["index.module"],function() {
       },
 
       getContextHash: function (elementID) {
+
+
+        //return default Context if not within OBI
+        if(!(typeof obips)){
+
+          return {
+            columnID: '',
+            heading: '',
+            currentRowColumns: '',
+            value: '',
+            SHA1:'defaultSHA1'
+          }
+
+        }
 
         var contextHash = {};
         var edgeCoords = obips.EdgeCoords.findCoords($('#' + (elementID)).children()[0]);
@@ -79,11 +92,16 @@ define(["index.module"],function() {
 
           var currentCol = obips.ViewModel.getCurrentColumn(currentColEdgeCoords);
 
+          var colFormulaSelector=$(currentCol).find('columnFormula').find('expr')[0];
+          var colHeadingSelector=$(currentCol).find('columnHeading').find('caption').find('text')[0];
+
           currentRowColumns.push({
             //Get the Column Formula for the element
-            formula: currentCol.querySelector('columnFormula expr').innerHTML,
+            //formula: currentCol.querySelector('columnFormula expr').innerHTML,
+            formula: colFormulaSelector && colFormulaSelector.innerHTML,
             //Get the Heading of current element
-            heading: ((currentCol.querySelector('columnHeading caption text') && currentCol.querySelector('columnHeading caption text').innerHTML) || (currentCol.querySelector('columnFormula expr').innerHTML)),
+            heading: ((colHeadingSelector && colHeadingSelector.innerHTML) || (colFormulaSelector && colFormulaSelector.innerHTML)),
+
             //Get the Column Value of the Current element
             value: currentColEdgeCoords.element.textContent
 
@@ -91,26 +109,6 @@ define(["index.module"],function() {
 
 
         })
-
-/*        //Loop through all columns in the same row as the current Element
-        for (var i = 0; i < numLayers; i++) {
-
-          var currentColumnElementId = 'e_' + sawViewModelID + '_1_' + i + '_' + edgeCoords.getSlice();
-
-          var currentColEdgeCoords = obips.EdgeCoords.findCoords($('#' + currentColumnElementId).children()[0]);
-
-          var currentCol = obips.ViewModel.getCurrentColumn(currentColEdgeCoords);
-
-          currentRowColumns.push({
-            //Get the Column Formula for the element
-            formula: currentCol.querySelector('columnFormula expr').innerHTML,
-            //Get the Heading of current element
-            heading: ((currentCol.querySelector('columnHeading caption text') && currentCol.querySelector('columnHeading caption text').innerHTML) || (currentCol.querySelector('columnFormula expr').innerHTML)),
-            //Get the Column Value of the Current element
-            value: currentColEdgeCoords.element.textContent
-
-          })
-        }*/
 
         contextHash = {
 

@@ -1,4 +1,6 @@
-(function() {
+define(["index.module"],function() {
+  'use strict';
+
 
   var app = angular.module('bm.platform');
 
@@ -39,4 +41,5 @@
     };
   });
 
-}());
+});
+

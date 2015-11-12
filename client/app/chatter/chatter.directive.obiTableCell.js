@@ -1,4 +1,4 @@
-define(["index.module"],function() {
+define(["index.module"], function () {
   'use strict';
 
 
@@ -23,11 +23,12 @@ define(["index.module"],function() {
         // Ugly hack to workaround delay caused by presentation services XHR
         scope.elemId = iElement.attr('id');
         setTimeout(function () {
-          var rowContextSHA1 = BIGate.getContextHash(scope.elemId).SHA1;
-          var topicsRef = Topics.getTopicsRef((CryptoJS.SHA1(BIGate.currentDashPath).toString()) + '/' + rowContextSHA1);
+          scope.contextData = BIGate.getContextHash(scope.elemId);
+          var rowContextSHA1 = scope.contextData.SHA1;
+          var topicsRef = Topics.getTopicsRef(rowContextSHA1);
           topicsRef.once('value', function (snapshot) {
             if (snapshot.val() !== null) {
-              scope.topicsExist == true
+              scope.topicsExist = true
               iElement.append('<i style="margin-left:8px;cursor: default;color: red;" class="fa fa-comments-o"></i>')
             }
           });
@@ -36,10 +37,23 @@ define(["index.module"],function() {
 
         //Watch for Cell topic existence and set red cell marker if topic exist
         scope.$watch(function () {
-          return scope.topicsExist;
-        }, function (newValue) {
-          if (scope.topicsExist == true) {
 
+          console.log('In cell watch...')
+
+          if (scope.contextData) {
+            var topicsRef = Topics.getTopicsRef(scope.contextData.SHA1);
+            topicsRef.once('value', function (snapshot) {
+              if (snapshot.val() !== null) {
+                return true;
+              }
+            });
+          }
+
+          return false;
+        }, function (newValue) {
+          if (newValue == true) {
+
+            scope.topicsExist = true;
             if (iElement.find('.fa-comments-o').length < 1) {
               iElement.append('<i style="margin-left:8px;cursor: default;color: red;" class="fa fa-comments-o"></i>')
             }

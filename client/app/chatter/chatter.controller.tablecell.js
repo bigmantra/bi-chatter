@@ -23,8 +23,6 @@ define(["index.module"],function() {
       contextId: CryptoJS.SHA1(BIGate.currentDashPath).toString()
     };
 
-
-
     //TODO
 
     /*$.each($(BIGate.currentStateXML).find('[folder]'),function(reportIndex,reportItem){
@@ -42,7 +40,14 @@ define(["index.module"],function() {
 
     vm.checkTopics = function () {
 
-      var topicsRef = Topics.getTopicsRef((CryptoJS.SHA1(BIGate.currentDashPath).toString()) + '/' + BIGate.getContextHash($scope.elemId).SHA1);
+      //var topicsRef = Topics.getTopicsRef((CryptoJS.SHA1(BIGate.currentDashPath).toString()) + '/' + BIGate.getContextHash($scope.elemId).SHA1);
+
+
+      console.log('get ref for:' + BIGate.getContextHash($scope.elemId).SHA1);
+
+      var topicsRef =  Topics.getTopicsRef(BIGate.getContextHash($scope.elemId).SHA1);
+
+
       topicsRef.once('value', function (snapshot) {
         if (snapshot.val() !== null) {
           vm.topicsExist = true;
@@ -67,6 +72,9 @@ define(["index.module"],function() {
       console.log('ReportId:' + vm.reportId);
 
       vm.chatterContext.rowContext = BIGate.getContextHash($scope.elemId);
+
+
+      console.log('vm.chatterContext.rowContext',vm.chatterContext.rowContext)
 
       var modalInstance = $modal.open({
         animation: vm.animationsEnabled,
@@ -96,6 +104,14 @@ define(["index.module"],function() {
     vm.toggleAnimation = function () {
       vm.animationsEnabled = !vm.animationsEnabled;
     };
+
+
+    //at the end destroy
+    $scope.$on('$destroy', function(){
+      vm = null;
+      console.log('scope destroyed');
+    });
+
 
   }
 

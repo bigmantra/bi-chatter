@@ -19,7 +19,6 @@ define(["index.module"],function() {
         var currentTableCells=tElement.find('td[id^=e_saw]');
 
         //do nothing if already compiled
-        console.log(currentTableCells.attr('bi-chatter-table-cell'));
         if(currentTableCells.attr('bi-chatter-table-cell')=='true') return;
 
         currentTableCells.attr('ng-controller', 'ChatterTableCellController as chatterCell');
