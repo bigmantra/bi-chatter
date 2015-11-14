@@ -52,7 +52,7 @@ define(["index.module"], function () {
 
           var reports = [];
 
-          $.each($(gateInstance.currentStateXML).find('[folder]'), function (reportIndex, reportItem) {
+          $.each($(saw.getXmlIsland("idClientStateXml", null, null, true)).find('[folder]'), function (reportIndex, reportItem) {
 
             reports.push({
               reportId: $(this).attr('cid'),
@@ -72,7 +72,7 @@ define(["index.module"], function () {
 
           var reports = [];
 
-          $.each($(gateInstance.currentStateXML).find('[folder]'), function (reportIndex, reportItem) {
+          $.each($(saw.getXmlIsland("idClientStateXml", null, null, true)).find('[folder]'), function (reportIndex, reportItem) {
 
             reports.push({
               reportId: $(this).attr('cid'),

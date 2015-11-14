@@ -31,45 +31,8 @@ if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loa
         if ((typeof obips != 'undefined')) {
           console.log('Context inside OBI - Manually bootstrapping angular')
 
-
-          var initInjector = angular.injector(["ng", "bm.platform"]);
-          var BIGate = initInjector.get("BIGate");
-
-
-
-          initOBIMetadata();
-
-          function initOBIMetadata() {
-
-
-            var AllReportsPromises = BIGate.getAllReportsXML();
-
-            AllReportsPromises.then(function (responses) {
-
-              var AllMetadataPromises = BIGate.getAllReportsMetadata(responses);
-              AllMetadataPromises.then(function (metaDataResponses) {
-
-                console.info('Report metadata loaded for ' + metaDataResponses.length + ' Reports.');
-                console.log(metaDataResponses);
-
-
-                //Load metadata into an app Constant so it is available as a service throughout
-                angular
-                  .module('bm.platform')
-                  .constant('metaDataResponses', metaDataResponses);
-
-                bmPlatformLoaded=true;
-                bmPlatformLoading=false;
-                bootstrapChatterApp();
-                observeChatterSensitiveDOMChanges();
-
-              })
-
-
-            });
-
-
-          }
+          //Load OBI report metadata into an angular constant and then bootstrap
+          initOBIMetadataAndBootstrap();
 
         } else {
 
@@ -89,6 +52,46 @@ else {
   } else {
     angular.bootstrap(document, ['bm.platform']);
   }
+
+}
+
+
+
+function initOBIMetadataAndBootstrap() {
+
+  var initInjector = angular.injector(["ng", "bm.platform"]);
+  var BIGate = initInjector.get("BIGate");
+
+  bmPlatformLoading = true;
+
+
+  console.log(saw.getXmlIsland("idClientStateXml", null, null, true));
+
+  var allReportsPromises = BIGate.getAllReportsXML();
+
+  allReportsPromises.then(function (responses) {
+
+    var allMetadataPromises = BIGate.getAllReportsMetadata(responses);
+
+    allMetadataPromises.then(function (metaDataResponses) {
+
+      console.info('Report metadata loaded for ' + metaDataResponses.length + ' Reports.');
+      console.log(metaDataResponses);
+
+      //Load metadata into an app Constant so it is available as a service throughout
+      angular
+        .module('bm.platform')
+        .constant('metaDataResponses', metaDataResponses);
+
+
+      bmPlatformLoaded=true;
+      bmPlatformLoading=false;
+      bootstrapChatterApp();
+      observeChatterSensitiveDOMChanges();
+
+    })
+
+  });
 
 }
 
