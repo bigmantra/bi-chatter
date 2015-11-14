@@ -13,8 +13,7 @@ define(["index.module"], function () {
 
     function init() {
 
-      vm.test='Girish';
-
+      // init controller
     }
 
     init();
@@ -44,8 +43,6 @@ define(["index.module"], function () {
 
       },
       compile: function (tElement, attrs) {
-
-
 
 
         console.log('Compiling BI Chatter Table directive!')
@@ -81,7 +78,6 @@ define(["index.module"], function () {
 
             console.log('printing XMLs....')
             console.log(BIGate.reportXMLs);
-
 
           }
 

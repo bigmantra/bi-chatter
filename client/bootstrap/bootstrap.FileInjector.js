@@ -8,7 +8,7 @@ var bmPlatformLoading;
 if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loaded for the first time - Load JS and CSS files
 
 
-  bmPlatformLoading=true;
+  bmPlatformLoading = true;
 
   var requireJSScriptElement = document.createElement("script");
 
@@ -31,28 +31,38 @@ if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loa
         if ((typeof obips != 'undefined')) {
           console.log('Context inside OBI - Manually bootstrapping angular')
 
-          initOBIMetadata().then(function(){
 
-            bmPlatformLoaded=true;
-            bmPlatformLoading=false;
-            bootstrapChatterApp();
-            observeChatterSensitiveDOMChanges();
+          var initInjector = angular.injector(["ng", "bm.platform"]);
+          var BIGate = initInjector.get("BIGate");
 
 
-          });
+
+          initOBIMetadata();
 
           function initOBIMetadata() {
-            var initInjector = angular.injector(["ng"]);
-            var $http = initInjector.get("$http");
 
-            return $http.get("http://pelobidev2.projected.ltd.uk:9704/analytics/saw.dll?getReportXmlFromSearchID&SearchID=1pmd2k8oq0t65mn25vich2dqlm"
-            ).then(function(response) {
-              console.log('received ReportXMLs...bootstrapping now...')
-              angular
-                .module('bm.platform').constant("BIMetadata", response.data);
-            }, function(errorResponse) {
-              console.log('Could not fetch ReportXMLs')
+
+            var AllReportsPromises = BIGate.getAllReportsXML();
+
+            AllReportsPromises.then(function (responses) {
+
+              var AllMetadataPromises = BIGate.getAllReportsMetadata(responses);
+              AllMetadataPromises.then(function (metaDataResponses) {
+
+                console.info('Report metadata loaded for ' + metaDataResponses.length + ' Reports.')
+                console.log(metaDataResponses);
+
+                bmPlatformLoaded=true;
+                bmPlatformLoading=false;
+                bootstrapChatterApp();
+                observeChatterSensitiveDOMChanges();
+
+              })
+
+
             });
+
+
           }
 
         } else {
@@ -77,21 +87,17 @@ else {
 }
 
 
-
-
-
 function bootstrapChatterApp() {
 
 
+  if ((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded) || bmPlatformLoading) return;
 
-  if((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded) || bmPlatformLoading) return;
 
-
-  bmPlatformLoading=true;
+  bmPlatformLoading = true;
   console.log('In Bootstrap!');
 
 
-  var pageContentDiv=$('#PageContentOuterDiv')[0];
+  var pageContentDiv = $('#PageContentOuterDiv')[0];
 
   //Bootstrap if not already.
   //The First view to set this attribute will have to responsibility of bootstrapping the entire app into context
@@ -100,51 +106,48 @@ function bootstrapChatterApp() {
     //attach chatter directive - this will make angular loop through table elements and attach further directives
     pageContentDiv.setAttribute('obi-chatter-enable', 'true');
 
-    $('.DashboardPageContentDiv').append( "<div obi-fab-menu='true'></div>" );
+    $('.DashboardPageContentDiv').append("<div obi-fab-menu='true'></div>");
 
-      //  pageContentDiv.setAttribute('obi-fab-menu', 'true');
+    //  pageContentDiv.setAttribute('obi-fab-menu', 'true');
 
     console.log('New - Attempt to attach angular to page content DIV');
 
     angular.bootstrap(pageContentDiv, ['bm.platform']);
     console.log('Angular Bootstraped: ' + 'bm.platform');
 
-  }else{
+  } else {
 
     //Angular is already bootstrapped but the views might have been re-rendered by OBI. This requires a re-compile of the views with the existing scope.
     //This is a more performant alternative to re-bootstrapping the entire App.
-    var injector=angular.element($('#PageContentOuterDiv')[0]).injector()
-    var compileService=injector.get('$compile');
+    var injector = angular.element($('#PageContentOuterDiv')[0]).injector()
+    var compileService = injector.get('$compile');
     angular.forEach($('.PTChildPivotTable'), function (value, key) {
 
       //Return if the directive is already attached to the view
-      if(value.getAttribute('obi-table')=='true') return;
+      if (value.getAttribute('obi-table') == 'true') return;
 
       value.setAttribute('obi-table', 'true')
 
-      var scope=((angular.element(value).scope()));
-      var linkFn=compileService(value,scope);
+      var scope = ((angular.element(value).scope()));
+      var linkFn = compileService(value, scope);
       console.log('In bootstrapChatterApp(): linking mutated DOM with scope...');
       var content = linkFn(scope);
 
 
     });
 
-
-
   }
 
-
-  bmPlatformLoading=false;
+  bmPlatformLoading = false;
 
 }
 
 
 function observeChatterSensitiveDOMChanges() {
 
-  if((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded) || bmPlatformLoading) return;
+  if ((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded) || bmPlatformLoading) return;
 
-  bmPlatformLoading=true;
+  bmPlatformLoading = true;
 
   var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
@@ -160,7 +163,7 @@ function observeChatterSensitiveDOMChanges() {
     targetViewElementArray = $('.ViewContainer');
   }
 
-  $.each(targetViewElementArray,function(viewIdx,viewElement){
+  $.each(targetViewElementArray, function (viewIdx, viewElement) {
 
     var newScope;
 
@@ -172,25 +175,25 @@ function observeChatterSensitiveDOMChanges() {
       console.log('mutated ' + viewElement.getAttribute('id'));
 
 
-      var pivotTables=$(viewElement).find('.PTChildPivotTable');
+      var pivotTables = $(viewElement).find('.PTChildPivotTable');
 
       //TODO Fine-tune performance - to handle only specific DOM mutations
-      if (!pivotTables.attr('obi-table'))  {
+      if (!pivotTables.attr('obi-table')) {
 
         console.log('Re-linking from mutation observer')
 
-       // bootstrapChatterApp();
+        // bootstrapChatterApp();
 
         var injector = angular.element($('#PageContentOuterDiv')[0]).injector()
         var compileService = injector.get('$compile');
 
         pivotTables.attr('obi-table', 'true');
 
-        if(newScope) {
+        if (newScope) {
           newScope.$destroy();
         }
         var scope = ((angular.element(pivotTables).scope()));
-        newScope=scope.$new();
+        newScope = scope.$new();
         var linkFn = compileService(pivotTables, newScope);
         console.log('linking mutated DOM with scope...');
         var content = linkFn(newScope);
@@ -209,7 +212,7 @@ function observeChatterSensitiveDOMChanges() {
 
   })
 
-  bmPlatformLoading=false;
+  bmPlatformLoading = false;
 
 }
 
