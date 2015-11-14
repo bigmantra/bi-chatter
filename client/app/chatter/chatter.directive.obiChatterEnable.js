@@ -15,7 +15,7 @@ define(["index.module"],function() {
       compile: function (tElement, attrs) {
         console.log('Compiling BI Chatter Enabler directive!')
 
-        angular.forEach(tElement.find('.PTChildPivotTable'), function (tableParentElement, key) {
+        angular.forEach($("[viewtype='tableView']"), function (tableParentElement, key) {
 
           tableParentElement.setAttribute('obi-table', 'true');
 

@@ -127,7 +127,7 @@ function bootstrapChatterApp() {
     //This is a more performant alternative to re-bootstrapping the entire App.
     var injector = angular.element($('#PageContentOuterDiv')[0]).injector()
     var compileService = injector.get('$compile');
-    angular.forEach($('.PTChildPivotTable'), function (value, key) {
+    angular.forEach($("[viewtype='tableView']" ), function (value, key) {
 
       //Return if the directive is already attached to the view
       if (value.getAttribute('obi-table') == 'true') return;
@@ -174,6 +174,7 @@ function observeChatterSensitiveDOMChanges() {
     var newScope;
 
     var observer = new MutationObserver(function (mutations) {
+
       /*    mutations.forEach(function(mutation) {
        console.log(mutation.type);
        });*/
@@ -181,10 +182,17 @@ function observeChatterSensitiveDOMChanges() {
       console.log('mutated ' + viewElement.getAttribute('id'));
 
 
-      var pivotTables = $(viewElement).find('.PTChildPivotTable');
+    //  var pivotTables = $(viewElement).find('.PTChildPivotTable');
+
+      //var tables = $(viewElement).find("[viewtype='tableView']");
+
+      var table=viewElement;
+
+
+      console.log(($(viewElement).find('td[id^=e_saw]')[0].getAttribute('bi-chatter-tableo-cell')));
 
       //TODO Fine-tune performance - to handle only specific DOM mutations
-      if (!pivotTables.attr('obi-table')) {
+      if (!table.getAttribute('obi-table') || (!($(viewElement).find('td[id^=e_saw]')[0].getAttribute('bi-chatter-table-cell')=='true'))) {
 
         console.log('Re-linking from mutation observer')
 
@@ -193,14 +201,14 @@ function observeChatterSensitiveDOMChanges() {
         var injector = angular.element($('#PageContentOuterDiv')[0]).injector()
         var compileService = injector.get('$compile');
 
-        pivotTables.attr('obi-table', 'true');
+        table.setAttribute('obi-table', 'true');
 
         if (newScope) {
           newScope.$destroy();
         }
-        var scope = ((angular.element(pivotTables).scope()));
+        var scope = ((angular.element(table).scope()));
         newScope = scope.$new();
-        var linkFn = compileService(pivotTables, newScope);
+        var linkFn = compileService(table, newScope);
         console.log('linking mutated DOM with scope...');
         var content = linkFn(newScope);
 

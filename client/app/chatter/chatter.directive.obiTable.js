@@ -50,11 +50,6 @@ define(["index.module"], function () {
         console.log('Compiling BI Chatter Table directive!')
 
 
-        var analysisPath,viewIdFromFullViewId;
-
-        //console.log(metaDataResponses);
-
-
         var viewUniqueId = BIGate.getReportIdFromElement(tElement);
 
         console.log(tElement);
@@ -72,7 +67,6 @@ define(["index.module"], function () {
 
 
         /*
-
                 //Get Report State Path
                 var reportStatePathRegex = /(.*?)~v:/;
                 var reportStatePath= reportStatePathRegex.exec(viewUniqueId)[1];
@@ -130,13 +124,12 @@ define(["index.module"], function () {
         if (currentTableCells.attr('bi-chatter-table-cell') == 'true') return;
 
 
+        currentTableCells.attr('bi-chatter-table-cell', 'true');
 
      /*   currentTableCells.attr('ng-controller', 'ChatterTableCellController as chatterCell');
         currentTableCells.attr('bi-chatter-table-cell', 'true');
         currentTableCells.attr('style', 'cursor: default');
         currentTableCells.attr('ng-dblclick', 'chatterCell.clickToOpen()');*/
-
-
 
 
         //currentTableCells.attr('ng-class',"{'bg-success': chatterCell.hover}");
@@ -164,19 +157,14 @@ define(["index.module"], function () {
         //The post-link function sets the analysis and view paths on the scope for subsequent use.
         return {
           pre: function (scope, iElem, iAttrs) {
-            console.log(name + ': pre link');
+            console.log('pre link - Do Nothing');
           },
           post: function (scope, iElem, iAttrs) {
-            console.log(name + ': post link');
-
+            console.log('post link - Copy attrs to VM');
             scope.reportSearchId=iElem.attr('sid');
 
 
-/*
-            scope.viewPath=iElem.attr('view');
-            scope.statePath=iElem.attr('vid');
-*/
-
+            console.log($(iElem).find('td[id^=e_saw]')[0]);
 
             scope.copyToVM();
 
