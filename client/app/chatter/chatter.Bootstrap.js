@@ -49,8 +49,14 @@ if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loa
               var AllMetadataPromises = BIGate.getAllReportsMetadata(responses);
               AllMetadataPromises.then(function (metaDataResponses) {
 
-                console.info('Report metadata loaded for ' + metaDataResponses.length + ' Reports.')
+                console.info('Report metadata loaded for ' + metaDataResponses.length + ' Reports.');
                 console.log(metaDataResponses);
+
+
+                //Load metadata into an app Constant so it is available as a service throughout
+                angular
+                  .module('bm.platform')
+                  .constant('metaDataResponses', metaDataResponses);
 
                 bmPlatformLoaded=true;
                 bmPlatformLoading=false;

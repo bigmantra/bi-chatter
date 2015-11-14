@@ -3,10 +3,10 @@ define(["index.module"], function () {
 
   angular
     .module('bm.platform')
-    .directive("obiTable", ['BIGate','$timeout','$http', OBITableDirective])
+    .directive("obiTable", ['BIGate','$timeout','$http','metaDataResponses', OBITableDirective])
 
 
-  function OBITableDirectiveController($scope, BIGate) {
+  function OBITableDirectiveController($scope, BIGate,metaDataResponses) {
 
 
     var vm = this;
@@ -21,18 +21,20 @@ define(["index.module"], function () {
 
     $scope.copyToVM=function(){
 
-
       console.log('Copying scope to View Model');
-      vm.analysisPath= $scope.analysisPath;
-      vm.viewpath=$scope.viewPath;
+      vm.reportSearchId= $scope.reportSearchId;
+
+      //Put a copy of the report Metadata in scope for ease of use when needed
+      var viewReport = $.grep(metaDataResponses, function(e){ return e.searchId === $scope.reportSearchId; });
+
+      vm.viewReport=viewReport[0];
 
     }
-
 
   }
 
 
-  function OBITableDirective(BIGate,$timeout,$http) {
+  function OBITableDirective(BIGate,$timeout,$http,metaDataResponses) {
     return {
       restrict: 'A',
       replace: true,
@@ -50,7 +52,43 @@ define(["index.module"], function () {
 
         var analysisPath,viewIdFromFullViewId;
 
-        //Loop through State XML and get the analysisPath and viewPath. These are then set as attributes on the table element which are subsequently set on the scope
+        //console.log(metaDataResponses);
+
+
+        var viewUniqueId = BIGate.getReportIdFromElement(tElement);
+
+        console.log(tElement);
+
+      //Find Report Metadata and put the searchId as an Attribute on the element. This will also be stored on the scope
+        var reportRegex = /~r:(.*?)~v:/;
+        var reportId = 'r:' + reportRegex.exec(viewUniqueId)[1]
+        var viewReport = $.grep(metaDataResponses, function(e){ return e.reportId == reportId; });
+
+
+        tElement.attr('sid',viewReport[0].searchId)
+
+        console.log(viewReport[0].searchId);
+
+
+
+        /*
+
+                //Get Report State Path
+                var reportStatePathRegex = /(.*?)~v:/;
+                var reportStatePath= reportStatePathRegex.exec(viewUniqueId)[1];
+
+
+                //Get View Id
+
+                var viewIdRegex = /.*?~v:(.*)/;
+                var viewId = viewIdRegex.exec(viewUniqueId)[1];
+        */
+
+
+
+
+
+/*        //Loop through State XML and get the analysisPath and viewPath. These are then set as attributes on the table element which are subsequently set on the scope
         $.each($(BIGate.currentStateXML).find('[folder]'), function (reportIndex, reportItem) {
 
 
@@ -82,11 +120,8 @@ define(["index.module"], function () {
           }
 
 
-        });
+        });*/
 
-
-        //var reportRegex=/phrase=(.*)/;
-        //reportRegex.exec(phrase);
 
 
         var currentTableCells = tElement.find('td[id^=e_saw]');
@@ -94,25 +129,29 @@ define(["index.module"], function () {
         //do nothing if already compiled
         if (currentTableCells.attr('bi-chatter-table-cell') == 'true') return;
 
-        currentTableCells.attr('ng-controller', 'ChatterTableCellController as chatterCell');
+
+
+     /*   currentTableCells.attr('ng-controller', 'ChatterTableCellController as chatterCell');
         currentTableCells.attr('bi-chatter-table-cell', 'true');
         currentTableCells.attr('style', 'cursor: default');
-        currentTableCells.attr('ng-dblclick', 'chatterCell.clickToOpen()');
+        currentTableCells.attr('ng-dblclick', 'chatterCell.clickToOpen()');*/
+
+
+
+
         //currentTableCells.attr('ng-class',"{'bg-success': chatterCell.hover}");
         //currentTableCells.append('<i ng-click="chatterCell.clickToOpen()" ng-show="chatterCell.hover && !chatterCell.commentExists" style="margin-left:8px;cursor: pointer" class="fa fa-comment"></i>')
         //currentTableCells.append('<button type="button" class="btn btn-success btn-mini" ng-click="chatterCell.clickToOpen()" ng-show="chatterCell.hover && !chatterCell.commentExists" style="margin-left:8px;"><i class="fa fa-pencil-square-o"></i></button>');
-
         //currentTableCells.attr('ng-mouseenter', "chatterCell.hover = true");
         //currentTableCells.attr('ng-mouseleave', "chatterCell.hover = false");
-
         //currentTableCells.attr('popover-placement','right');
         //currentTableCells.attr('popover','On the top!');
         //currentTableCells.attr('popover-append-to-body','true');
 
-        currentTableCells.append('<a ng-show="!chatterCell.commentExists && !chatterCell.hover"></a>');
 
-        currentTableCells.append('<p>Test: {{obiTblCtrl.test}}</p>')
 
+        /*currentTableCells.append('<a ng-show="!chatterCell.commentExists && !chatterCell.hover"></a>');
+        currentTableCells.append('<p>Test: {{obiTblCtrl.test}}</p>')*/
         //currentTableCells.append(BIGate.getContextHash(currentTableCells.attr('id')));
 
 
@@ -130,8 +169,14 @@ define(["index.module"], function () {
           post: function (scope, iElem, iAttrs) {
             console.log(name + ': post link');
 
-            scope.analysisPath=iElem.attr('analysis');
+            scope.reportSearchId=iElem.attr('sid');
+
+
+/*
             scope.viewPath=iElem.attr('view');
+            scope.statePath=iElem.attr('vid');
+*/
+
 
             scope.copyToVM();
 
