@@ -28,7 +28,6 @@ define(["index.module"],function() {
 
         vm.dashboardPath = (vm.chatterContext && vm.chatterContext.dashboard || ('/dummyDashboardSHA1'));
 
-
         //vm.contextId = CryptoJS.SHA1(dashboardPath).toString();
         vm.rowContext = (vm.chatterContext && vm.chatterContext.rowContext.SHA1) || 'defaultRowContext';
         //vm.topics = Topics.getTopics(vm.contextId + '/' + vm.rowContext);
@@ -37,28 +36,6 @@ define(["index.module"],function() {
 
         vm.topics = Topics.getTopics(vm.rowContext);
         vm.newTopicUsers = ['Girish Lakshmanan'];
-
-
-        vm.options = {
-          accept: function (sourceNode, destNodes, destIndex) {
-            var data = sourceNode.$modelValue;
-            var destType = destNodes.$element.attr('data-type');
-            return (data.type == destType); // only accept the same type
-          },
-          dropped: function (event) {
-            console.log(event);
-            var sourceNode = event.source.nodeScope;
-            var destNodes = event.dest.nodesScope;
-            // update changes to server
-            if (destNodes.isParent(sourceNode)
-              && destNodes.$element.attr('data-type') == 'comment') { // If it moves in the same topic, then only update topic
-              var topic = destNodes.$nodeScope.$modelValue;
-              topic.save();
-            } else { // save all
-              vm.saveTopics();
-            }
-          }
-        };
 
 
       }

@@ -1,78 +1,63 @@
-define(["index.module"], function () {
+define(["index.module"],function() {
   'use strict';
 
 
-  angular
-    .module('bm.platform')
-    .directive("biChatterTableCell", OBITableCellDirective)
-
-  function OBITableCellDirective(BIGate, Topics) {
+  var app = angular.module('bm.platform');
 
 
-    return {
-
-      restrict: 'A',
-      replace: true,
-      transclude: false,
-      link: function (scope, iElement, attrs, $timeout) {
-
-        //var elementPSId = obips.EdgeCoords.findCoords($('#' + (iElement.attr('id'))).children()[0]).getId();
 
 
-        //Check for comments only for the first time. - then the watch kicks in
-        // Ugly hack to workaround delay caused by presentation services XHR
-        scope.elemId = iElement.attr('id');
-        setTimeout(function () {
-          scope.contextData = BIGate.getContextHash(scope.elemId);
-          var rowContextSHA1 = scope.contextData.SHA1;
-          var topicsRef = Topics.getTopicsRef(rowContextSHA1);
-          topicsRef.once('value', function (snapshot) {
-            if (snapshot.val() !== null) {
-              scope.topicsExist = true
-              iElement.append('<i style="margin-left:8px;cursor: default;color: red;" class="fa fa-comments-o"></i>')
-            }
-          });
+  app.directive('obiTableCell',['$parse', CellDirective]);
 
-        }, 200);
+  function CellDirective ($parse) {
 
-        //Watch for Cell topic existence and set red cell marker if topic exist
-        scope.$watch(function () {
+    var OBITableCellDirectiveController = ['$scope', function ($scope) {
 
-          console.log('In cell watch...')
+      var vm=this;
 
-          if (scope.contextData) {
-            var topicsRef = Topics.getTopicsRef(scope.contextData.SHA1);
-            topicsRef.once('value', function (snapshot) {
-              if (snapshot.val() !== null) {
-                return true;
-              }
-            });
-          }
+      function init() {
+        //$scope.items = angular.copy($scope.datasource);
 
-          return false;
-        }, function (newValue) {
-          if (newValue == true) {
-
-            scope.topicsExist = true;
-            if (iElement.find('.fa-comments-o').length < 1) {
-              iElement.append('<i style="margin-left:8px;cursor: default;color: red;" class="fa fa-comments-o"></i>')
-            }
-          }
-          else {
-            iElement.find('.fa-comments-o').remove();
-          }
-
-        });
-
+        console.log('init cell...')
 
       }
 
+      init();
 
-    }
+      vm.showChatter = function () {
 
+        console.log('Clicked showChatter for '+ vm.elemId);
+        //do something
+      };
+    }]
 
+    return {
+      restrict: 'EA', //Default in 1.3+
+      scope: {
+        elemId:'@id'
+      },
+      controller: OBITableCellDirectiveController,
+      controllerAs: 'cellCtrl',
+      bindToController: true,
+      compile: function(tElm,tAttrs){
+        var exp = $parse('cellCtrl.showChatter()');
+        return function (scope,elm){
+          elm.bind('dblclick',function(){
+            exp(scope);
+          });
+        };
+      },
+   /*   link: function (scope, iElement, attrs) {
+        var exp = $parse('cellCtrl.showChatter()');
+        iElement.bind('dblclick',function(){
+          exp(scope);
+        })
+      }*/
+
+    };
   }
 
-});
 
+
+});
 

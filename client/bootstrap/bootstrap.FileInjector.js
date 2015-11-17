@@ -64,8 +64,7 @@ function initOBIMetadataAndBootstrap() {
 
   bmPlatformLoading = true;
 
-
-  console.log(saw.getXmlIsland("idClientStateXml", null, null, true));
+ // console.log(saw.getXmlIsland("idClientStateXml", null, null, true));
 
   var allReportsPromises = BIGate.getAllReportsXML();
 
@@ -82,7 +81,6 @@ function initOBIMetadataAndBootstrap() {
       angular
         .module('bm.platform')
         .constant('metaDataResponses', metaDataResponses);
-
 
       bmPlatformLoaded=true;
       bmPlatformLoading=false;
