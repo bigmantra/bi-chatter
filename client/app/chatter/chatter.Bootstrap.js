@@ -130,10 +130,10 @@ function bootstrapChatterApp() {
     var compileService = injector.get('$compile');
     angular.forEach($("[viewtype='tableView']" ), function (value, key) {
 
-      //Return if the directive is already attached to the view
-      if (value.getAttribute('obi-table') == 'true') return;
+      //Return if the directive is already compiled and linked.(if the searchId(sid) is associated to the table then it is already linked)
+      if (value.getAttribute('sid')) return;
 
-      value.setAttribute('obi-table', 'true')
+      //value.setAttribute('obi-table', 'true')
 
       var scope = ((angular.element(value).scope()));
       var linkFn = compileService(value, scope);
@@ -190,10 +190,11 @@ function observeChatterSensitiveDOMChanges() {
       var table=viewElement;
 
 
-      console.log(($(viewElement).find('td[id^=e_saw]')[0].getAttribute('bi-chatter-tableo-cell')));
+
+      console.log(($(viewElement).find('td[id^=e_saw]')[0].getAttribute('obi-table-cell')));
 
       //TODO Fine-tune performance - to handle only specific DOM mutations
-      if (!table.getAttribute('obi-table') || (!($(viewElement).find('td[id^=e_saw]')[0].getAttribute('bi-chatter-table-cell')=='true'))) {
+      if (!table.getAttribute('sid') || (!($(viewElement).find('td[id^=e_saw]')[0].getAttribute('obi-table-cell')=='true'))) {
 
         console.log('Re-linking from mutation observer')
 
@@ -211,7 +212,7 @@ function observeChatterSensitiveDOMChanges() {
         newScope = scope.$new();
         var linkFn = compileService(table, newScope);
         console.log('linking mutated DOM with scope...');
-        var content = linkFn(newScope);
+        linkFn(newScope);
 
       }
 

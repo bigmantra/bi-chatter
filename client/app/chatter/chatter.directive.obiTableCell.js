@@ -6,7 +6,6 @@ define(["index.module"],function() {
 
 
 
-
   app.directive('obiTableCell',['$parse', CellDirective]);
 
   function CellDirective ($parse) {
