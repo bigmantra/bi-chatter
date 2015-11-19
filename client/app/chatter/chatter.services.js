@@ -70,7 +70,8 @@ define(["index.module"], function () {
         getViewDataReferences:function(viewId){
 
 
-
+          var contextCollection=[];
+          var contextMeasures={};
 
           //Collect Data references for Table views
           $.each($("td[id*=tableView] .PTChildPivotTable table[id*='saw']"),function(viewIndex,view){
@@ -79,53 +80,93 @@ define(["index.module"], function () {
 
             var viewModel=obips.ViewModel.getViewModelById(view.getAttribute('Id'))
 
-            var edgeDefinition=viewModel.getEdgeDefinition(0);
+            var edgeDefinition=viewModel.getEdgeDefinition(view.getAttribute('Id'));
 
             console.log(edgeDefinition);
 
 
+
+
               //for each table cell collect data references
-              $.each($("td[id*=tableView] .PTChildPivotTable table[id*='saw']").find('td[id^=e_saw]'),function(elementIndex,element){
+              $.each($("td[id*=tableView] .PTChildPivotTable table[id='" + view.getAttribute('Id') + "']").find('td[id^=e_saw]'),function(elementIndex,element){
 
                 var elementId=element.getAttribute('Id');
-                var contextRef=[];
 
-                //console.log(elementId);
+                var edgeCoords=obips.EdgeCoords.parseCoordsFromID(elementId);
 
-                var edgeCoords=obips.EdgeCoords.findCoords($('#'+  elementId)[0]);
                 var edgeNum = edgeCoords.getEdge();
                 var layerNum = edgeCoords.getLayer();
                 var sliceNum = edgeCoords.getSlice();
                 var qdrObject = new obips.QDR();
                 var qdrString = qdrObject.getQDR(edgeDefinition, null , edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), edgeNum, layerNum, sliceNum, true);
                 qdrObject._setQDR(qdrString)
-                //console.log(qdrObject.qdr);
+
+
+                var currentColFormula,currentColValue;;
+                if(edgeDefinition.isMeasureLayer(edgeNum,layerNum)){
+
+                  var measureQDR=qdrObject.getTarget();
+
+                  angular.forEach(measureQDR._g, function(value, key) {
+
+                    contextMeasures[key]=value;
+                    currentColFormula=key;
+                    currentColValue=value[0];
+
+                  });
 
 
 
-                console.log(edgeDefinition.getLayerID(obips.JSDataLayout.SECTION_EDGE, 1));
+                  var contextRefs={};
+                  angular.forEach(qdrObject.qdr._m, function(item, index) {
+                    angular.forEach(item._g, function(value, key) {
+
+                      contextRefs[key]=value[0];
 
 
-                isMeasureEdge(edgeDefinition,obips.JSDataLayout.SECTION_EDGE)
+                    });
 
-                console.log(edgeDefinition.itemIsMeasureItem(obips.JSDataLayout.SECTION_EDGE,1, sliceNum));
+                  });
 
+                  contextCollection.push({element:elementId,columnFormula: currentColFormula, columnValue: currentColValue,refs:contextRefs })
 
-                angular.forEach(qdrObject.qdr._m[0]._g, function(value, key) {
-                contextRef.push({field:key,value:value[0]});
-
-
-                });
-
-                console.log(contextRef)
+                }
 
 
               });
 
 
+            console.log(contextMeasures);
+
+
 
           })
 
+
+
+
+          //Keep a copy of all data references before deleting measure references
+          angular.forEach(contextCollection, function (value, key) {
+
+            value.dimRefs=angular.copy(value.refs, value.dimRefs);
+
+          });
+
+
+
+          //Delete Measures from context Data references as ony dimensions are of interest
+          angular.forEach(contextCollection, function (value, key) {
+            angular.forEach(contextMeasures, function (measureValue, measureKey) {
+              delete value.dimRefs[measureKey];
+
+            });
+
+          });
+
+
+
+
+          console.log(contextCollection);
 
 
           //Collect Data references for Pivot views
