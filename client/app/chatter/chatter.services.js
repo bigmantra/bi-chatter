@@ -67,91 +67,123 @@ define(["index.module"], function () {
 
         },
 
-        getViewDataReferences:function(viewId){
+        getViewDataReferences: function (viewId) {
 
 
-          var contextCollection=[];
-          var contextMeasures={};
+          var contextCollection = [];
+          var contextMeasures = {};
 
           //Collect Data references for Table views
-          $.each($("td[id*=tableView] .PTChildPivotTable table[id*='saw']"),function(viewIndex,view){
+          $.each($("td[id*=tableView] .PTChildPivotTable table[id*='saw']"), function (viewIndex, view) {
 
             console.log('Getting Edge Definition for View Model Id: ' + view.getAttribute('Id'));
 
-            var viewModel=obips.ViewModel.getViewModelById(view.getAttribute('Id'))
+            var viewModel = obips.ViewModel.getViewModelById(view.getAttribute('Id'))
 
-            var edgeDefinition=viewModel.getEdgeDefinition(view.getAttribute('Id'));
+            var edgeDefinition = viewModel.getEdgeDefinition(view.getAttribute('Id'));
 
             console.log(edgeDefinition);
 
+            //for each table cell collect data references
+            $.each($("td[id*=tableView] .PTChildPivotTable table[id='" + view.getAttribute('Id') + "']").find('td[id^=e_saw]'), function (elementIndex, element) {
+
+              var elementId = element.getAttribute('Id');
+
+              var edgeCoords = obips.EdgeCoords.parseCoordsFromID(elementId);
+
+              var edgeNum = edgeCoords.getEdge();
+              var layerNum = edgeCoords.getLayer();
+              var sliceNum = edgeCoords.getSlice();
+              var qdrObject = new obips.QDR();
+              var qdrString = qdrObject.getQDR(edgeDefinition, null, edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), edgeNum, layerNum, sliceNum, true);
+              qdrObject._setQDR(qdrString)
 
 
+              var currentColFormula, currentColValue;
+              if (edgeDefinition.isMeasureLayer(edgeNum, layerNum)) {
 
-              //for each table cell collect data references
-              $.each($("td[id*=tableView] .PTChildPivotTable table[id='" + view.getAttribute('Id') + "']").find('td[id^=e_saw]'),function(elementIndex,element){
+                var measureQDR = qdrObject.getTarget();
 
-                var elementId=element.getAttribute('Id');
+                angular.forEach(measureQDR._g, function (value, key) {
 
-                var edgeCoords=obips.EdgeCoords.parseCoordsFromID(elementId);
+                  contextMeasures[key] = value;
+                  currentColFormula = key;
+                  currentColValue = value[0];
 
-                var edgeNum = edgeCoords.getEdge();
-                var layerNum = edgeCoords.getLayer();
-                var sliceNum = edgeCoords.getSlice();
-                var qdrObject = new obips.QDR();
-                var qdrString = qdrObject.getQDR(edgeDefinition, null , edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), edgeNum, layerNum, sliceNum, true);
-                qdrObject._setQDR(qdrString)
+                });
 
 
-                var currentColFormula,currentColValue;;
-                if(edgeDefinition.isMeasureLayer(edgeNum,layerNum)){
+                var contextRefs = {};
+                angular.forEach(qdrObject.qdr._m, function (item, index) {
+                  angular.forEach(item._g, function (value, key) {
 
-                  var measureQDR=qdrObject.getTarget();
+                    contextRefs[key] = value[0];
 
-                  angular.forEach(measureQDR._g, function(value, key) {
-
-                    contextMeasures[key]=value;
-                    currentColFormula=key;
-                    currentColValue=value[0];
 
                   });
 
+                });
+
+                contextCollection.push({
+                  element: elementId,
+                  columnFormula: currentColFormula,
+                  columnValue: currentColValue,
+                  refs: contextRefs
+                })
+
+              }
 
 
-                  var contextRefs={};
-                  angular.forEach(qdrObject.qdr._m, function(item, index) {
-                    angular.forEach(item._g, function(value, key) {
-
-                      contextRefs[key]=value[0];
-
-
-                    });
-
-                  });
-
-                  contextCollection.push({element:elementId,columnFormula: currentColFormula, columnValue: currentColValue,refs:contextRefs })
-
-                }
-
-
-              });
-
-
-            console.log(contextMeasures);
-
+            });
 
 
           })
 
 
+          //Collect Data references for Pivot views. The key difference is that we process db_saw elements and DatabodyCoords which means there is no need to extract measures.(As They are all measures)
+
+          $.each($("td[id*=pivotTableView] .PTChildPivotTable table[id*='saw']"), function (viewIndex, view) {
+
+            console.log('Getting Edge Definition for View Model Id: ' + view.getAttribute('Id'));
+
+            var viewModel = obips.ViewModel.getViewModelById(view.getAttribute('Id'))
+
+            var edgeDefinition = viewModel.getEdgeDefinition(view.getAttribute('Id'));
+
+
+            //for each pivot data cell, collect data references
+            $.each($("td[id*=pivotTableView] .PTChildPivotTable table[id='" + view.getAttribute('Id') + "']").find('td[id^=db_saw]'), function (elementIndex, element) {
+
+              var elementId = element.getAttribute('Id');
+
+              console.log(elementId);
+
+              var bodyCoords = obips.DatabodyCoords.findCoords($('#' + elementId)[0])
+              var rowNum = bodyCoords.getRow();
+              var colNum = bodyCoords.getCol();
+              var qdrObject = new obips.QDR();
+
+              var qdrString = qdrObject.getQDR(edgeDefinition, null, edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), obips.JSDataLayout.DATA_EDGE, rowNum, colNum, true);
+              qdrObject._setQDR(qdrString)
+              console.log(qdrObject.qdr);
+
+
+
+            });
+
+
+          })
+
+
+          console.log(contextMeasures);
 
 
           //Keep a copy of all data references before deleting measure references
           angular.forEach(contextCollection, function (value, key) {
 
-            value.dimRefs=angular.copy(value.refs, value.dimRefs);
+            value.dimRefs = angular.copy(value.refs, value.dimRefs);
 
           });
-
 
 
           //Delete Measures from context Data references as ony dimensions are of interest
@@ -164,58 +196,13 @@ define(["index.module"], function () {
           });
 
 
-
-
           console.log(contextCollection);
-
-
-          //Collect Data references for Pivot views
-
-          $.each($("td[id*=pivotTableView] .PTChildPivotTable table[id*='saw']"),function(viewIndex,view){
-
-            console.log('Getting Edge Definition for View Model Id: ' + view.getAttribute('Id'));
-
-            var viewModel=obips.ViewModel.getViewModelById(view.getAttribute('Id'))
-
-            var edgeDefinition=viewModel.getEdgeDefinition(0);
-
-
-            //for each pivot data cell, collect data references
-/*
-             $.each($("td[id*=pivotTableView] .PTChildPivotTable table[id*='saw']").find('td[id^=db_saw]'),function(elementIndex,element){
-
-             var elementId=element.getAttribute('Id');
-
-             console.log(elementId);
-
-
-
-             var bodyCoords=obips.DatabodyCoords.findCoords($('#' + elementId)[0])
-             var rowNum = bodyCoords.getRow();
-             var colNum = bodyCoords.getCol();
-             var qdrObject = new obips.QDR();
-
-             var qdrString = qdrObject.getQDR(edgeDefinition, null , edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), obips.JSDataLayout.DATA_EDGE, rowNum, colNum, true);
-             qdrObject._setQDR(qdrString)
-             console.log(qdrObject.qdr);
-
-
-
-
-             });
-             */
-
-
-
-          })
-
-
 
 
         },
 
 
-        getReportDetailsFromSearchId:function(){
+        getReportDetailsFromSearchId: function () {
 
           var reports = [];
 
@@ -240,7 +227,7 @@ define(["index.module"], function () {
           return $q(function (resolve, reject) {
             $http.get("/analytics/saw.dll?getReportXmlFromSearchID&SearchID=" + report.searchId
             ).then(function (response) {
-              resolve({report:report,xml:response})
+              resolve({report: report, xml: response})
             }, function (errResponse) {
               reject(errResponse)
             })
@@ -248,9 +235,9 @@ define(["index.module"], function () {
         },
 
 
-        getAllReportsXML:function(){
+        getAllReportsXML: function () {
 
-          var allReportXMLPromises=[];
+          var allReportXMLPromises = [];
 
           angular.forEach(gateInstance.getReportsFromStateXML(), function (value, key) {
             allReportXMLPromises.push(gateInstance.getReportXml(value));
@@ -264,7 +251,7 @@ define(["index.module"], function () {
 
         //Gets Report Data in a friendly JSON structure
         //Returns a Promise object.
-        getReportMetadata: function (reportXML,reportDetails) {
+        getReportMetadata: function (reportXML, reportDetails) {
 
           return $q(function (resolve, reject) {
 
@@ -281,7 +268,7 @@ define(["index.module"], function () {
 
                 //If hierarchy, just set colinfo to Top level
 
-                if (colInfo.hierarchyLevels){
+                if (colInfo.hierarchyLevels) {
                   colInfo = colInfo.hierarchyLevels[0].displayColumnInfo;
                 }
 
@@ -306,15 +293,12 @@ define(["index.module"], function () {
               }, colMap);
 
 
-
-
-
-              var reportMetadata={
-                colMap:colMap,
-                primarySubjectArea:response.primarySubjectArea,
-                analysisPath:reportDetails.analysisPath,
-                reportId:reportDetails.reportId,
-                searchId:reportDetails.searchId
+              var reportMetadata = {
+                colMap: colMap,
+                primarySubjectArea: response.primarySubjectArea,
+                analysisPath: reportDetails.analysisPath,
+                reportId: reportDetails.reportId,
+                searchId: reportDetails.searchId
               }
 
               resolve(reportMetadata);
@@ -323,18 +307,15 @@ define(["index.module"], function () {
             })
 
 
-
-
           });
         },
 
 
-
         //Returns an array of Promises resolving to all report Metadata
-        getAllReportsMetadata:function(reportXMLs){
+        getAllReportsMetadata: function (reportXMLs) {
 
 
-          var metadataPromisesArray=[];
+          var metadataPromisesArray = [];
 
           angular.forEach(reportXMLs, function (value, key) {
 
@@ -343,7 +324,7 @@ define(["index.module"], function () {
             var responseXML = regEx.exec(value.xml.data)[0];
 
             //Get and Load Report Metadata
-            var reportMetadataPromise = gateInstance.getReportMetadata(responseXML,value.report)
+            var reportMetadataPromise = gateInstance.getReportMetadata(responseXML, value.report)
             metadataPromisesArray.push(reportMetadataPromise)
 
           });
