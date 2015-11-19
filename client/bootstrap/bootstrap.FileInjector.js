@@ -2,8 +2,9 @@ var requirejs = 'PLACEHOLDER_CONF'
 
 
 //These variables are used as semaphores to ensure that only one view can load and bootstrap the app
-var bmPlatformLoaded;
-var bmPlatformLoading;
+var bmPlatformLoaded=false;
+var bmPlatformLoading=false;
+var bmPlatformBooting=false;
 
 if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loaded for the first time - Load JS and CSS files
 
@@ -65,6 +66,7 @@ function initOBIMetadataAndBootstrap() {
   bmPlatformLoading = true;
 
  // console.log(saw.getXmlIsland("idClientStateXml", null, null, true));
+  BIGate.getViewDataReferences();
 
   var allReportsPromises = BIGate.getAllReportsXML();
 
@@ -97,12 +99,13 @@ function initOBIMetadataAndBootstrap() {
 function bootstrapChatterApp() {
 
 
-  if ((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded) || bmPlatformLoading) return;
+  //Semaphore logic to habdle multiple analysis trying to bootstrap at the same time. One one is allowed to - and that becomes elected as the master analysis.
+  if ((!bmPlatformLoaded) || bmPlatformLoading || bmPlatformBooting) return;
 
 
-  bmPlatformLoading = true;
+  bmPlatformBooting = true;
+
   console.log('In Bootstrap!');
-
 
   var pageContentDiv = $('#PageContentOuterDiv')[0];
 
@@ -133,26 +136,26 @@ function bootstrapChatterApp() {
       //Return if the directive is already compiled and linked.(if the searchId(sid) is associated to the table then it is already linked)
       if (value.getAttribute('sid')) return;
 
-      //value.setAttribute('obi-table', 'true')
+      value.setAttribute('obi-table', 'true')
 
       var scope = ((angular.element(value).scope()));
       var linkFn = compileService(value, scope);
       console.log('In bootstrapChatterApp(): linking mutated DOM with scope...');
-      var content = linkFn(scope);
+      linkFn(scope);
 
 
     });
 
   }
 
-  bmPlatformLoading = false;
+  bmPlatformBooting = false;
 
 }
 
 
 function observeChatterSensitiveDOMChanges() {
 
-  if ((typeof bmPlatformLoaded == 'undefined') || (!bmPlatformLoaded) || bmPlatformLoading) return;
+  if ((!bmPlatformLoaded) || bmPlatformLoading || bmPlatformBooting) return;
 
   bmPlatformLoading = true;
 

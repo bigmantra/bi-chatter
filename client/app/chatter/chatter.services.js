@@ -67,6 +67,112 @@ define(["index.module"], function () {
 
         },
 
+        getViewDataReferences:function(viewId){
+
+
+
+
+          //Collect Data references for Table views
+          $.each($("td[id*=tableView] .PTChildPivotTable table[id*='saw']"),function(viewIndex,view){
+
+            console.log('Getting Edge Definition for View Model Id: ' + view.getAttribute('Id'));
+
+            var viewModel=obips.ViewModel.getViewModelById(view.getAttribute('Id'))
+
+            var edgeDefinition=viewModel.getEdgeDefinition(0);
+
+            console.log(edgeDefinition);
+
+
+              //for each table cell collect data references
+              $.each($("td[id*=tableView] .PTChildPivotTable table[id*='saw']").find('td[id^=e_saw]'),function(elementIndex,element){
+
+                var elementId=element.getAttribute('Id');
+                var contextRef=[];
+
+                //console.log(elementId);
+
+                var edgeCoords=obips.EdgeCoords.findCoords($('#'+  elementId)[0]);
+                var edgeNum = edgeCoords.getEdge();
+                var layerNum = edgeCoords.getLayer();
+                var sliceNum = edgeCoords.getSlice();
+                var qdrObject = new obips.QDR();
+                var qdrString = qdrObject.getQDR(edgeDefinition, null , edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), edgeNum, layerNum, sliceNum, true);
+                qdrObject._setQDR(qdrString)
+                //console.log(qdrObject.qdr);
+
+
+
+                console.log(edgeDefinition.getLayerID(obips.JSDataLayout.SECTION_EDGE, 1));
+
+
+                isMeasureEdge(edgeDefinition,obips.JSDataLayout.SECTION_EDGE)
+
+                console.log(edgeDefinition.itemIsMeasureItem(obips.JSDataLayout.SECTION_EDGE,1, sliceNum));
+
+
+                angular.forEach(qdrObject.qdr._m[0]._g, function(value, key) {
+                contextRef.push({field:key,value:value[0]});
+
+
+                });
+
+                console.log(contextRef)
+
+
+              });
+
+
+
+          })
+
+
+
+          //Collect Data references for Pivot views
+
+          $.each($("td[id*=pivotTableView] .PTChildPivotTable table[id*='saw']"),function(viewIndex,view){
+
+            console.log('Getting Edge Definition for View Model Id: ' + view.getAttribute('Id'));
+
+            var viewModel=obips.ViewModel.getViewModelById(view.getAttribute('Id'))
+
+            var edgeDefinition=viewModel.getEdgeDefinition(0);
+
+
+            //for each pivot data cell, collect data references
+/*
+             $.each($("td[id*=pivotTableView] .PTChildPivotTable table[id*='saw']").find('td[id^=db_saw]'),function(elementIndex,element){
+
+             var elementId=element.getAttribute('Id');
+
+             console.log(elementId);
+
+
+
+             var bodyCoords=obips.DatabodyCoords.findCoords($('#' + elementId)[0])
+             var rowNum = bodyCoords.getRow();
+             var colNum = bodyCoords.getCol();
+             var qdrObject = new obips.QDR();
+
+             var qdrString = qdrObject.getQDR(edgeDefinition, null , edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), obips.JSDataLayout.DATA_EDGE, rowNum, colNum, true);
+             qdrObject._setQDR(qdrString)
+             console.log(qdrObject.qdr);
+
+
+
+
+             });
+             */
+
+
+
+          })
+
+
+
+
+        },
+
 
         getReportDetailsFromSearchId:function(){
 
@@ -91,7 +197,7 @@ define(["index.module"], function () {
         //Returns a Promise object.
         getReportXml: function (report) {
           return $q(function (resolve, reject) {
-            $http.get("http://pelobidev2.projected.ltd.uk:9704/analytics/saw.dll?getReportXmlFromSearchID&SearchID=" + report.searchId
+            $http.get("/analytics/saw.dll?getReportXmlFromSearchID&SearchID=" + report.searchId
             ).then(function (response) {
               resolve({report:report,xml:response})
             }, function (errResponse) {
@@ -130,6 +236,15 @@ define(["index.module"], function () {
 
               angular.forEach(inst.columnIDToColumnInfo, function (value, key) {
                 var colInfo = inst.getColumnInfoByID(key);
+
+
+                //If hierarchy, just set colinfo to Top level
+
+                if (colInfo.hierarchyLevels){
+                  colInfo = colInfo.hierarchyLevels[0].displayColumnInfo;
+                }
+
+
                 this[key] = {
                   baseFormula: colInfo.getBaseFormula(),
                   businessModelAndDimensionID: colInfo.getBusinessModelAndDimensionID(),

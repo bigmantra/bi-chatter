@@ -24,18 +24,6 @@ define(["index.module"], function () {
     init();
 
 
-    /* $scope.copyToVM=function(){
-
-     console.log('Copying scope to View Model');
-     vm.reportSearchId= $scope.reportSearchId;
-
-     //Put a copy of the report Metadata in scope for ease of use when needed
-     var viewReport = $.grep(metaDataResponses, function(e){ return e.searchId === $scope.reportSearchId; });
-
-     vm.viewReport=viewReport[0];
-
-     }*/
-
   }
 
 
@@ -56,6 +44,8 @@ define(["index.module"], function () {
         tElement.removeAttr('obi-table'); // necessary to avoid infinite compile loop
 
         var viewUniqueId = BIGate.getReportIdFromElement(tElement);
+
+        console.log('viewUniqueId:'+  viewUniqueId)
 
         //Find Report Metadata and put the searchId as an Attribute on the element. This will also be stored on the scope
         var reportRegex = /~r:(.*?)~v:/;

@@ -15,10 +15,7 @@ define(["index.module"],function() {
       var vm=this;
 
       function init() {
-        //$scope.items = angular.copy($scope.datasource);
-
-        console.log('init cell...')
-
+          console.log('init cell...')
       }
 
       init();
@@ -28,7 +25,7 @@ define(["index.module"],function() {
         console.log('Clicked showChatter for '+ vm.elemId);
         //do something
       };
-    }]
+    }];
 
     return {
       restrict: 'EA', //Default in 1.3+
@@ -44,14 +41,10 @@ define(["index.module"],function() {
           elm.bind('dblclick',function(){
             exp(scope);
           });
+          //console.log($parse('cellCtrl.elemId')(scope));
+
         };
-      },
-   /*   link: function (scope, iElement, attrs) {
-        var exp = $parse('cellCtrl.showChatter()');
-        iElement.bind('dblclick',function(){
-          exp(scope);
-        })
-      }*/
+      }
 
     };
   }
