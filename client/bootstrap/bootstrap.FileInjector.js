@@ -65,7 +65,9 @@ function initOBIMetadataAndBootstrap() {
 
   bmPlatformLoading = true;
 
-   BIGate.getViewDataReferences();
+   var contextCollection=BIGate.getViewDataReferences();
+
+  console.log(contextCollection);
 
   var allReportsPromises = BIGate.getAllReportsXML();
 

@@ -56,6 +56,7 @@ define(["index.module"], function () {
           //Get Current Page
           var xmlIsland=saw.getXmlIsland("idClientStateXml", null, null, true);
           var statePath=$(xmlIsland).find('ref[statePath]').attr('statePath');
+
           var pageId = (/~p:(.*?)~r:/).exec(statePath)[1];
 
 
@@ -87,8 +88,6 @@ define(["index.module"], function () {
             var viewModel = obips.ViewModel.getViewModelById(view.getAttribute('Id'))
 
             var edgeDefinition = viewModel.getEdgeDefinition(view.getAttribute('Id'));
-
-            console.log(edgeDefinition);
 
             //for each table cell collect data references
             $.each($("td[id*=tableView] .PTChildPivotTable table[id='" + view.getAttribute('Id') + "']").find('td[id^=e_saw]'), function (elementIndex, element) {
@@ -139,7 +138,6 @@ define(["index.module"], function () {
 
               }
 
-
             });
 
 
@@ -149,8 +147,6 @@ define(["index.module"], function () {
           //Collect Data references for Pivot views. The key difference is that we process db_saw elements and DatabodyCoords which means there is no need to extract measures.(As They are all measures)
 
           $.each($("td[id*=pivotTableView] .PTChildPivotTable table[id*='saw']"), function (viewIndex, view) {
-
-            console.log('Getting Edge Definition for View Model Id: ' + view.getAttribute('Id'));
 
             var viewModel = obips.ViewModel.getViewModelById(view.getAttribute('Id'))
 
@@ -179,12 +175,24 @@ define(["index.module"], function () {
 
               var qdrString = qdrObject.getQDR(edgeDefinition, null, edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), obips.JSDataLayout.DATA_EDGE, rowNum, colNum, true);
               qdrObject._setQDR(qdrString)
+
               console.log(qdrObject.qdr);
 
+              //Get Context References from QDR
               var contextRefs = {};
               angular.forEach(qdrObject.qdr._m, function (item, index) {
                 angular.forEach(item._g, function (value, key) {
-                  contextRefs[key] = value[0];
+
+                  if(angular.isArray(value)) {
+                    contextRefs[key] = value[0];
+                  }
+                  else{
+                    angular.forEach(value, function (keyItem, keyProp) {
+                      key= key+ '.' + keyProp;
+                      contextRefs[key]=keyItem[0];
+                    })
+
+                  }
 
                 });
 
@@ -198,15 +206,10 @@ define(["index.module"], function () {
               })
 
 
-
             });
 
 
           })
-
-
-          console.log(contextMeasures);
-
 
           //Keep a copy of all data references before deleting measure references
           angular.forEach(contextCollection, function (value, key) {
@@ -226,7 +229,7 @@ define(["index.module"], function () {
           });
 
 
-          console.log(contextCollection);
+          return contextCollection;
 
 
         },
