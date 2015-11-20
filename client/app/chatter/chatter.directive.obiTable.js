@@ -3,49 +3,62 @@ define(["index.module"], function () {
 
   angular
     .module('bm.platform')
-    .directive("obiTable", ['BIGate','metaDataResponses','$compile', OBITableDirective])
+    .directive("obiTable", ['BIGate', 'metaDataResponses', '$compile', OBITableDirective])
 
 
   function OBITableDirectiveController($scope, BIGate, metaDataResponses) {
 
 
     var vm = this;
-    vm.viewReport={};
+    vm.viewReport = {};
 
     function init() {
 
       // init controller
-      var viewReport = $.grep(metaDataResponses, function(e){ return e.searchId === vm.sid; });
-        vm.viewReport=viewReport[0];
-        vm.viewReport=viewReport[0];
+      var viewReport = $.grep(metaDataResponses, function (e) {
+        return e.searchId === vm.sid;
+      });
+      vm.viewReport = viewReport[0];
+
+      //discard colmaps as we dont need them
+      //delete vm.viewReport.colMap;
 
     }
 
     init();
 
 
+    vm.getReportContext = function () {
+
+
+      return vm.viewReport;
+
+
+    }
+
+
   }
 
 
-  function OBITableDirective(BIGate, metaDataResponses,$compile) {
+  function OBITableDirective(BIGate, metaDataResponses, $compile) {
     return {
       restrict: 'A',
       replace: true,
       transclude: false,
-      priority:1001, // compiles first
-      terminal:true, // prevent lower priority directives to compile after it
+      priority: 1001, // compiles first
+      terminal: true, // prevent lower priority directives to compile after it
       controller: OBITableDirectiveController,
       controllerAs: 'obiTblCtrl',
       scope: {
-        sid : '@sid'
+        sid: '@sid'
       },
       bindToController: true,
-      compile: function(tElement, attrs) {
+      compile: function (tElement, attrs) {
         tElement.removeAttr('obi-table'); // necessary to avoid infinite compile loop
 
         var viewUniqueId = BIGate.getReportIdFromElement(tElement);
 
-        console.log('viewUniqueId:'+  viewUniqueId)
+        console.log('viewUniqueId:' + viewUniqueId)
 
         //Find Report Metadata and put the searchId as an Attribute on the element. This will also be stored on the scope
         var reportRegex = /~r:(.*?)~v:/;
@@ -53,18 +66,18 @@ define(["index.module"], function () {
         var viewReport = $.grep(metaDataResponses, function (e) {
           return e.reportId == reportId;
         });
-        attrs.$set('sid',viewReport[0].searchId);
+        attrs.$set('sid', viewReport[0].searchId);
 
         var currentTableCells = tElement.find('td[id^=e_saw]');
 
         //do nothing and return if already compiled
-        if (!(currentTableCells.attr('obi-table-cell') == 'true')){
+        if (!(currentTableCells.attr('obi-table-cell') == 'true')) {
           //Set child directives before compile
           currentTableCells.attr('obi-table-cell', 'true');
         }
 
         var fn = $compile(tElement);
-        return function(scope){
+        return function (scope) {
           fn(scope);
         };
       }

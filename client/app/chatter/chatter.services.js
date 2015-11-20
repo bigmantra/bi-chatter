@@ -24,6 +24,9 @@ define(["index.module"], function () {
     .factory('Topics', function ($firebaseArray, fbURL) {
 
       var topicsInstance = {
+
+
+
         getTopics: function (contextId) {
           return $firebaseArray(new Firebase(fbURL + contextId))
         },
@@ -32,6 +35,24 @@ define(["index.module"], function () {
         }
       }
       return topicsInstance; // jshint ignore:line
+    })
+
+
+    .factory("cellContext",function(metaDataResponses,BIGate){
+      return {
+
+        getContextCollection:function(){
+
+          var contextCollection=BIGate.getViewDataReferences();
+          var mergedCollection=BIGate.getMergedContextCollection(metaDataResponses,contextCollection)
+
+
+          return mergedCollection;
+
+
+        }
+
+      };
     })
 
     .factory('BIGate', function ($http, $q) {
@@ -45,31 +66,29 @@ define(["index.module"], function () {
         currentStateXML: saw.getXmlIsland("idClientStateXml", null, null, true),
         baseURL: saw.getBaseURL(),
 
-
         //Gets a list of Reports and their catalogPaths and SearchIds. Note that the SearchIds are session tokens and are only valid for a presentation services session.
         getReportsFromStateXML: function () {
-
 
 
           var reports = [];
 
 
           //Get Current Page
-          var xmlIsland=saw.getXmlIsland("idClientStateXml", null, null, true);
+          var xmlIsland = saw.getXmlIsland("idClientStateXml", null, null, true);
 
 
-          var statePath=$(xmlIsland).find('ref[statePath]').attr('statePath');
+          var statePath = $(xmlIsland).find('ref[statePath]').attr('statePath');
 
 
-          var pageId =(/~p:(.*?)~r:/).exec(statePath)[1];
+          var pageId = (/~p:(.*?)~r:/).exec(statePath)[1];
 
 
           //Extract report references in the current page
           //$.each($(xmlIsland).find(('container[cid$=' + pageId + ']')).find('[folder]'), function (reportIndex, reportItem) {
 
-         $.each($(xmlIsland).find('[folder]'), function (reportIndex, reportItem) {
+          $.each($(xmlIsland).find('[folder]'), function (reportIndex, reportItem) {
 
-            console.log("In " +reportIndex )
+            console.log("In " + reportIndex)
 
             reports.push({
               reportId: $(this).attr('cid'),
@@ -83,6 +102,7 @@ define(["index.module"], function () {
 
 
         },
+
 
         getViewDataReferences: function (viewId) {
 
@@ -112,7 +132,7 @@ define(["index.module"], function () {
               qdrObject._setQDR(qdrString)
 
 
-              var columnId=edgeDefinition.getColumnIDFromLayerID(edgeNum,layerNum,sliceNum);
+              var columnId = edgeDefinition.getColumnIDFromLayerID(edgeNum, layerNum, sliceNum);
 
               var currentColFormula, currentColValue;
               if (edgeDefinition.isMeasureLayer(edgeNum, layerNum)) {
@@ -139,7 +159,7 @@ define(["index.module"], function () {
 
                 contextCollection.push({
                   element: elementId,
-                  columnId:columnId,
+                  columnId: columnId,
                   columnValue: currentColValue,
                   refs: contextRefs
                 })
@@ -178,8 +198,8 @@ define(["index.module"], function () {
               var bodyDef = viewModel.getBodyDefinition(bodyCoords.getId());
 
 
-              var columnId=bodyDef.getID(bodyCoords.getRow(), bodyCoords.getCol());
-              var columnValue=bodyDef.getUnformattedValue(bodyCoords.getRow(), bodyCoords.getCol());
+              var columnId = bodyDef.getID(bodyCoords.getRow(), bodyCoords.getCol());
+              var columnValue = bodyDef.getUnformattedValue(bodyCoords.getRow(), bodyCoords.getCol());
 
               var qdrString = qdrObject.getQDR(edgeDefinition, null, edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), obips.JSDataLayout.DATA_EDGE, rowNum, colNum, true);
               qdrObject._setQDR(qdrString)
@@ -189,13 +209,13 @@ define(["index.module"], function () {
               angular.forEach(qdrObject.qdr._m, function (item, index) {
                 angular.forEach(item._g, function (value, key) {
 
-                  if(angular.isArray(value)) {
+                  if (angular.isArray(value)) {
                     contextRefs[key] = value[0];
                   }
-                  else{
+                  else {
                     angular.forEach(value, function (keyItem, keyProp) {
-                      key= key+ '.' + keyProp;
-                      contextRefs[key]=keyItem[0];
+                      key = key + '.' + keyProp;
+                      contextRefs[key] = keyItem[0];
                     })
 
                   }
@@ -206,8 +226,8 @@ define(["index.module"], function () {
 
               contextCollection.push({
                 element: elementId,
-                columnId:columnId,
-                columnValue:columnValue,
+                columnId: columnId,
+                columnValue: columnValue,
                 refs: contextRefs
               })
 
@@ -241,11 +261,33 @@ define(["index.module"], function () {
         },
 
 
+        getMergedContextCollection: function (metaData, contextCollection) {
+
+
+          console.log(metaData);
+
+          var mergedContextCollection=[];
+          var mergedContextCollection=angular.copy(contextCollection,mergedContextCollection)
+
+          //Loop through Context collection which contains all Table and pivot measure elements. For each measure element, try and match it to the metadata column ids from all the reports. If there is a match, copy it over.
+          angular.forEach(mergedContextCollection, function (collectionItem, index) {
+
+            angular.forEach(metaData, function (metaDataValue, metaDataIndex) {
+
+              if (metaData[metaDataIndex].colMap[collectionItem.columnId]) {
+                mergedContextCollection[index].columnDetails = angular.copy(metaData[metaDataIndex].colMap[collectionItem.columnId], contextCollection.columnDetails);
+              }
+            });
+
+          });
+
+          return mergedContextCollection;
+
+        },
+
         getReportDetailsFromSearchId: function () {
 
           var reports = [];
-
-
 
 
           $.each($(saw.getXmlIsland("idClientStateXml", null, null, true)).find('[folder]'), function (reportIndex, reportItem) {

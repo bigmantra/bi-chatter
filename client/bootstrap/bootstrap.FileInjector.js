@@ -6,7 +6,7 @@ var bmPlatformLoaded=false;
 var bmPlatformLoading=false;
 var bmPlatformBooting=false;
 
-if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loaded for the first time - Load JS and CSS files
+if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlatformLoading)) { //bm.platform Loaded for the first time - Load JS and CSS files
 
 
   bmPlatformLoading = true;
@@ -48,6 +48,8 @@ if ((typeof angular == 'undefined') && (!bmPlatformLoading)) { //bm.platform Loa
 else {
   console.log('Everything already loaded...just Rebootstrapping');
   if ((typeof obips != 'undefined')) {
+    bmPlatformLoaded=true;
+    bmPlatformLoading=false;
     bootstrapChatterApp();
     observeChatterSensitiveDOMChanges();
   } else {
@@ -80,32 +82,19 @@ function initOBIMetadataAndBootstrap() {
       console.info('Report metadata loaded for ' + metaDataResponses.length + ' Reports.');
       console.log(metaDataResponses);
 
-      //Loop through Context collection which contains all Table and pivot measure elements. For each measure element, try and match it to the metadata column ids from all the reports. If there is a match, copy it over.
-      angular.forEach(contextCollection, function (collectionItem, index) {
+      var mergedCollection=BIGate.getMergedContextCollection(metaDataResponses,contextCollection)
 
-        angular.forEach(metaDataResponses, function (metaDataResponsesValue, metaDataResponsesIndex) {
+      console.log('Merged:')
+      console.log(mergedCollection);
 
-          if(metaDataResponses[metaDataResponsesIndex].colMap[collectionItem.columnId]) {
-
-            contextCollection[index].columnDetails=angular.copy(metaDataResponses[metaDataResponsesIndex].colMap[collectionItem.columnId], contextCollection.columnDetails);
-
-          }
-
-
-        });
-
-
-
-
-      });
-
-
-      console.log(contextCollection);
-
-      //Load metadata into an app Constant so it is available as a service throughout
+      //Load metadata and Context Info into an app Constant so it is available as a service throughout
       angular
         .module('bm.platform')
         .constant('metaDataResponses', metaDataResponses);
+      angular
+        .module('bm.platform')
+        .value('contextCollection', mergedCollection);
+
 
       bmPlatformLoaded=true;
       bmPlatformLoading=false;
@@ -121,6 +110,8 @@ function initOBIMetadataAndBootstrap() {
 
 function bootstrapChatterApp() {
 
+
+  console.log(bmPlatformLoaded);
 
   //Semaphore logic to habdle multiple analysis trying to bootstrap at the same time. One one is allowed to - and that becomes elected as the master analysis.
   if ((!bmPlatformLoaded) || bmPlatformLoading || bmPlatformBooting) return;
@@ -226,6 +217,8 @@ function observeChatterSensitiveDOMChanges() {
 
         // bootstrapChatterApp();
 
+
+        //Recompile to cater to the changes
         var injector = angular.element($('#PageContentOuterDiv')[0]).injector()
         var compileService = injector.get('$compile');
 
