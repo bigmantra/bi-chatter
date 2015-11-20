@@ -65,8 +65,7 @@ function initOBIMetadataAndBootstrap() {
 
   bmPlatformLoading = true;
 
- // console.log(saw.getXmlIsland("idClientStateXml", null, null, true));
-  BIGate.getViewDataReferences();
+   BIGate.getViewDataReferences();
 
   var allReportsPromises = BIGate.getAllReportsXML();
 

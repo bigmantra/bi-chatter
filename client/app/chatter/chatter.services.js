@@ -52,7 +52,15 @@ define(["index.module"], function () {
 
           var reports = [];
 
-          $.each($(saw.getXmlIsland("idClientStateXml", null, null, true)).find('[folder]'), function (reportIndex, reportItem) {
+
+          //Get Current Page
+          var xmlIsland=saw.getXmlIsland("idClientStateXml", null, null, true);
+          var statePath=$(xmlIsland).find('ref[statePath]').attr('statePath');
+          var pageId = (/~p:(.*?)~r:/).exec(statePath)[1];
+
+
+          //Extract report references in the current page
+          $.each($(xmlIsland).find('container[cid=p\\:' + pageId + ']').find('[folder]'), function (reportIndex, reportItem) {
 
             reports.push({
               reportId: $(this).attr('cid'),
@@ -76,8 +84,6 @@ define(["index.module"], function () {
           //Collect Data references for Table views
           $.each($("td[id*=tableView] .PTChildPivotTable table[id*='saw']"), function (viewIndex, view) {
 
-            console.log('Getting Edge Definition for View Model Id: ' + view.getAttribute('Id'));
-
             var viewModel = obips.ViewModel.getViewModelById(view.getAttribute('Id'))
 
             var edgeDefinition = viewModel.getEdgeDefinition(view.getAttribute('Id'));
@@ -99,6 +105,8 @@ define(["index.module"], function () {
               qdrObject._setQDR(qdrString)
 
 
+              var columnId=edgeDefinition.getColumnIDFromLayerID(edgeNum,layerNum,sliceNum);
+
               var currentColFormula, currentColValue;
               if (edgeDefinition.isMeasureLayer(edgeNum, layerNum)) {
 
@@ -116,9 +124,7 @@ define(["index.module"], function () {
                 var contextRefs = {};
                 angular.forEach(qdrObject.qdr._m, function (item, index) {
                   angular.forEach(item._g, function (value, key) {
-
                     contextRefs[key] = value[0];
-
 
                   });
 
@@ -126,7 +132,7 @@ define(["index.module"], function () {
 
                 contextCollection.push({
                   element: elementId,
-                  columnFormula: currentColFormula,
+                  columnId:columnId,
                   columnValue: currentColValue,
                   refs: contextRefs
                 })
@@ -156,16 +162,40 @@ define(["index.module"], function () {
 
               var elementId = element.getAttribute('Id');
 
-              console.log(elementId);
 
               var bodyCoords = obips.DatabodyCoords.findCoords($('#' + elementId)[0])
+
               var rowNum = bodyCoords.getRow();
               var colNum = bodyCoords.getCol();
               var qdrObject = new obips.QDR();
 
+
+              //get Column Id so we can subsequently map it to the Metadata column details
+              var bodyDef = viewModel.getBodyDefinition(bodyCoords.getId());
+
+
+              var columnId=bodyDef.getID(bodyCoords.getRow(), bodyCoords.getCol());
+              var columnValue=bodyDef.getUnformattedValue(bodyCoords.getRow(), bodyCoords.getCol());
+
               var qdrString = qdrObject.getQDR(edgeDefinition, null, edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), obips.JSDataLayout.DATA_EDGE, rowNum, colNum, true);
               qdrObject._setQDR(qdrString)
               console.log(qdrObject.qdr);
+
+              var contextRefs = {};
+              angular.forEach(qdrObject.qdr._m, function (item, index) {
+                angular.forEach(item._g, function (value, key) {
+                  contextRefs[key] = value[0];
+
+                });
+
+              });
+
+              contextCollection.push({
+                element: elementId,
+                columnId:columnId,
+                columnValue:columnValue,
+                refs: contextRefs
+              })
 
 
 
@@ -205,6 +235,9 @@ define(["index.module"], function () {
         getReportDetailsFromSearchId: function () {
 
           var reports = [];
+
+
+
 
           $.each($(saw.getXmlIsland("idClientStateXml", null, null, true)).find('[folder]'), function (reportIndex, reportItem) {
 
