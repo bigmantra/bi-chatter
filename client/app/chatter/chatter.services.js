@@ -46,9 +46,7 @@ define(["index.module"], function () {
           var contextCollection=BIGate.getViewDataReferences();
           var mergedCollection=BIGate.getMergedContextCollection(metaDataResponses,contextCollection)
 
-
           return mergedCollection;
-
 
         }
 

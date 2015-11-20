@@ -3,11 +3,10 @@ define(["index.module"], function () {
 
   angular
     .module('bm.platform')
-    .directive("obiTable", ['BIGate', 'metaDataResponses', '$compile', OBITableDirective])
+    .directive("obiTable", ['BIGate', 'metaDataResponses', '$compile','cellContext', OBITableDirective])
 
 
-  function OBITableDirectiveController($scope, BIGate, metaDataResponses) {
-
+  function OBITableDirectiveController($scope, BIGate, metaDataResponses,cellContext) {
 
     var vm = this;
     vm.viewReport = {};
@@ -19,6 +18,8 @@ define(["index.module"], function () {
         return e.searchId === vm.sid;
       });
       vm.viewReport = viewReport[0];
+
+      vm.cellContextCollection=cellContext.getContextCollection()
 
       //discard colmaps as we dont need them
       //delete vm.viewReport.colMap;
@@ -33,6 +34,12 @@ define(["index.module"], function () {
 
       return vm.viewReport;
 
+
+    }
+
+    vm.getCellContextCollection = function () {
+
+      return vm.cellContextCollection;
 
     }
 

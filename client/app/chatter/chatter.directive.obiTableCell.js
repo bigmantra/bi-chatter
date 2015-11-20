@@ -6,9 +6,9 @@ define(["index.module"],function() {
 
 
 
-  app.directive('obiTableCell',['$parse','cellContext', CellDirective]);
+  app.directive('obiTableCell',['$parse',CellDirective]);
 
-  function CellDirective ($parse,cellContext) {
+  function CellDirective ($parse) {
 
     var OBITableCellDirectiveController = ['$scope', function ($scope) {
 
@@ -36,10 +36,6 @@ define(["index.module"],function() {
       }
 
       function init() {
-          console.log('init cell...')
-
-        console.log(cellContext.getContextCollection());
-
 
       }
 
@@ -68,7 +64,8 @@ define(["index.module"],function() {
           var tableController=controllers[0];
           var cellController=controllers[1];
 
-          var contextCollection=cellContext.getContextCollection()
+
+          var contextCollection =tableController.getCellContextCollection();
 
           elm.bind('dblclick',function(){
             exp(scope);
@@ -76,26 +73,18 @@ define(["index.module"],function() {
 
           var context = $.grep(contextCollection, function (e) {
             return e.element == elm.attr('Id');
-
           });
 
-          console.log('in link...');
-          console.log(contextCollection);
-
           if(context && context.length>0){
-
             cellController.setContext(context[0]);
             cellController.setCellType('Measure');
+
+            //Check if Topics exist and place cell Marker;
             elm.css({backgroundColor:'red'});
 
           }else{
-
             cellController.setCellType('Dimension');
-
           }
-
-
-
 
           cellController.setReportContext(tableController.getReportContext());
           //console.log($parse('cellCtrl.elemId')(scope));

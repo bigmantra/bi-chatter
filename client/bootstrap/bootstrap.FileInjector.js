@@ -206,10 +206,6 @@ function observeChatterSensitiveDOMChanges() {
 
       var table=viewElement;
 
-
-
-      console.log(($(viewElement).find('td[id^=e_saw]')[0].getAttribute('obi-table-cell')));
-
       //TODO Fine-tune performance - to handle only specific DOM mutations
       if (!table.getAttribute('sid') || (!($(viewElement).find('td[id^=e_saw]')[0].getAttribute('obi-table-cell')=='true'))) {
 
