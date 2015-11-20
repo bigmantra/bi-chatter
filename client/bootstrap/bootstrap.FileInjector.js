@@ -80,6 +80,28 @@ function initOBIMetadataAndBootstrap() {
       console.info('Report metadata loaded for ' + metaDataResponses.length + ' Reports.');
       console.log(metaDataResponses);
 
+      //Loop through Context collection which contains all Table and pivot measure elements. For each measure element, try and match it to the metadata column ids from all the reports. If there is a match, copy it over.
+      angular.forEach(contextCollection, function (collectionItem, index) {
+
+        angular.forEach(metaDataResponses, function (metaDataResponsesValue, metaDataResponsesIndex) {
+
+          if(metaDataResponses[metaDataResponsesIndex].colMap[collectionItem.columnId]) {
+
+            contextCollection[index].columnDetails=angular.copy(metaDataResponses[metaDataResponsesIndex].colMap[collectionItem.columnId], contextCollection.columnDetails);
+
+          }
+
+
+        });
+
+
+
+
+      });
+
+
+      console.log(contextCollection);
+
       //Load metadata into an app Constant so it is available as a service throughout
       angular
         .module('bm.platform')

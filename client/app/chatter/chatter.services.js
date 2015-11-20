@@ -50,18 +50,26 @@ define(["index.module"], function () {
         getReportsFromStateXML: function () {
 
 
+
           var reports = [];
 
 
           //Get Current Page
           var xmlIsland=saw.getXmlIsland("idClientStateXml", null, null, true);
+
+
           var statePath=$(xmlIsland).find('ref[statePath]').attr('statePath');
 
-          var pageId = (/~p:(.*?)~r:/).exec(statePath)[1];
+
+          var pageId =(/~p:(.*?)~r:/).exec(statePath)[1];
 
 
           //Extract report references in the current page
-          $.each($(xmlIsland).find('container[cid=p\\:' + pageId + ']').find('[folder]'), function (reportIndex, reportItem) {
+          //$.each($(xmlIsland).find(('container[cid$=' + pageId + ']')).find('[folder]'), function (reportIndex, reportItem) {
+
+         $.each($(xmlIsland).find('[folder]'), function (reportIndex, reportItem) {
+
+            console.log("In " +reportIndex )
 
             reports.push({
               reportId: $(this).attr('cid'),
@@ -176,8 +184,6 @@ define(["index.module"], function () {
               var qdrString = qdrObject.getQDR(edgeDefinition, null, edgeDefinition.getColLayerCount(), edgeDefinition.getRowLayerCount(), obips.JSDataLayout.DATA_EDGE, rowNum, colNum, true);
               qdrObject._setQDR(qdrString)
 
-              console.log(qdrObject.qdr);
-
               //Get Context References from QDR
               var contextRefs = {};
               angular.forEach(qdrObject.qdr._m, function (item, index) {
@@ -276,6 +282,11 @@ define(["index.module"], function () {
           var allReportXMLPromises = [];
 
           angular.forEach(gateInstance.getReportsFromStateXML(), function (value, key) {
+
+
+            console.log('From getReportsFromStateXML');
+            console.log(value);
+
             allReportXMLPromises.push(gateInstance.getReportXml(value));
 
           });
