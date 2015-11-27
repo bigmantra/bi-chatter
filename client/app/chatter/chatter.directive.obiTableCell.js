@@ -5,7 +5,6 @@ define(["index.module"],function() {
   var app = angular.module('bm.platform');
 
 
-
   app.directive('obiTableCell',['$parse',CellDirective]);
 
   function CellDirective ($parse) {
@@ -16,27 +15,19 @@ define(["index.module"],function() {
 
 
       vm.setContext=function(context){
-
         vm.cellContextInfo=context;
-
-
       };
 
       vm.setReportContext=function(reportContext){
-
         vm.reportContextInfo=reportContext;
-
       }
 
-
       vm.setCellType=function(type){
-
         vm.cellType=type;
-
       }
 
       function init() {
-
+        //Do any init activities - if any
       }
 
       init();

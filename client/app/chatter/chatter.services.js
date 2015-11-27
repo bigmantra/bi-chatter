@@ -86,8 +86,6 @@ define(["index.module"], function () {
 
           $.each($(xmlIsland).find('[folder]'), function (reportIndex, reportItem) {
 
-            console.log("In " + reportIndex)
-
             reports.push({
               reportId: $(this).attr('cid'),
               analysisPath: $(this).attr('folder') + '/' + $(this).attr('itemName'),
@@ -262,10 +260,8 @@ define(["index.module"], function () {
         getMergedContextCollection: function (metaData, contextCollection) {
 
 
-          console.log(metaData);
-
           var mergedContextCollection=[];
-          var mergedContextCollection=angular.copy(contextCollection,mergedContextCollection)
+          mergedContextCollection=angular.copy(contextCollection,mergedContextCollection)
 
           //Loop through Context collection which contains all Table and pivot measure elements. For each measure element, try and match it to the metadata column ids from all the reports. If there is a match, copy it over.
           angular.forEach(mergedContextCollection, function (collectionItem, index) {
@@ -309,7 +305,14 @@ define(["index.module"], function () {
           return $q(function (resolve, reject) {
             $http.get("/analytics/saw.dll?getReportXmlFromSearchID&SearchID=" + report.searchId
             ).then(function (response) {
+
+              console.log("Report XML from Search Id:");
+              console.log(response);
+
+
               resolve({report: report, xml: response})
+
+
             }, function (errResponse) {
               reject(errResponse)
             })
@@ -322,10 +325,6 @@ define(["index.module"], function () {
           var allReportXMLPromises = [];
 
           angular.forEach(gateInstance.getReportsFromStateXML(), function (value, key) {
-
-
-            console.log('From getReportsFromStateXML');
-            console.log(value);
 
             allReportXMLPromises.push(gateInstance.getReportXml(value));
 
@@ -346,8 +345,8 @@ define(["index.module"], function () {
 
             inst.loadReportMetadata(reportXML, function (response) {
 
-              var colMap = [];
 
+              var colMap = [];
 
               angular.forEach(inst.columnIDToColumnInfo, function (value, key) {
                 var colInfo = inst.getColumnInfoByID(key);

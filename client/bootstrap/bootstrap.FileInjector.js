@@ -111,8 +111,6 @@ function initOBIMetadataAndBootstrap() {
 function bootstrapChatterApp() {
 
 
-  console.log(bmPlatformLoaded);
-
   //Semaphore logic to habdle multiple analysis trying to bootstrap at the same time. One one is allowed to - and that becomes elected as the master analysis.
   if ((!bmPlatformLoaded) || bmPlatformLoading || bmPlatformBooting) return;
 
@@ -212,7 +210,6 @@ function observeChatterSensitiveDOMChanges() {
         console.log('Re-linking from mutation observer')
 
         // bootstrapChatterApp();
-
 
         //Recompile to cater to the changes
         var injector = angular.element($('#PageContentOuterDiv')[0]).injector()
