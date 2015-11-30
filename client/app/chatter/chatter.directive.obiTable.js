@@ -11,6 +11,7 @@ define(["index.module"], function () {
     var vm = this;
     vm.viewReport = {};
 
+
     function init() {
 
       // init controller
@@ -21,13 +22,12 @@ define(["index.module"], function () {
 
       vm.cellContextCollection=cellContext.getContextCollection()
 
-      //discard colmaps as we dont need them
+      // TODO discard colmaps as we dont need them. deletion  is causing an issue as the colmaps are refenced in the collection population
       //delete vm.viewReport.colMap;
 
     }
 
     init();
-
 
     vm.getReportContext = function () {
 

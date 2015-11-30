@@ -1,35 +1,64 @@
-/*jslint node: true */
+//Server Standalone Executable. index.js exposes a plugin that can in theory be included separately in a wider context Bigmantra project
+//everything is modularised as a plugin so required solutions can be assembled on demand. This also enforces separation of concerns.
 
-var loopback = require('loopback');
-var boot = require('loopback-boot');
+// Dependencies
+var Hapi = require('hapi');
 
-var app = module.exports = loopback();
+// Server Config
+var config = require('./config');
 
-app.start = function() {
-  'use strict';
-  // start the web server
-  return app.listen(function() {
-    app.emit('started');
-    var baseUrl = app.get('url').replace(/\/$/, '');
-    console.log('Web server listening at: %s', baseUrl);
-    if (app.get('loopback-component-explorer')) {
-      var explorerPath = app.get('loopback-component-explorer').mountPath;
-      console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
-    }
-  });
-};
+// Create a server with a host, port, and options
+var server = new Hapi.Server();
 
-// Bootstrap the application, configure models, datasources and middleware.
-// Sub-apps like REST API are mounted via boot scripts.
-boot(app, __dirname, function(err) {
-  'use strict';
-  if (err) {
-    throw err;
-  }
 
-  // start the server if `$ node server.js`
-  if (require.main === module){
-    app.start();
-  }
-
+//Connection object -  routes is a route options object used to set the default configuration for every route.
+server.connection({
+  host: config.host,
+  port: config.port,
+  routes: config.hapi.options.routes
 });
+
+
+//Reference the main plugin
+var registerOpts = [
+  {
+    register: require("./index")
+  }
+];
+
+
+
+var start = function(cb){
+
+  server.register(registerOpts, function(err) {
+
+    if (err) throw err;
+
+    server.start(function() {
+
+      console.log("Hapi server started @ " + server.info.uri.replace('0.0.0.0', 'localhost'));
+
+      if(cb) {
+          cb();
+      }
+
+    });
+
+  });
+
+}
+
+module.exports = {
+  server: server,
+  registerOpts: registerOpts,
+  start: start
+}
+
+
+start();
+
+/*
+if (!module.parent) {
+
+  start(startSync);
+}*/

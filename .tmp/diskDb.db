@@ -1,0 +1,178 @@
+{
+  "data": {
+    "comments_topicsid__topics_commentss": [],
+    "comments": [],
+    "topics": [
+      {
+        "text": null,
+        "createdAt": "2015-11-30T17:51:17.000Z",
+        "updatedAt": "2015-11-30T17:51:17.000Z",
+        "id": 1
+      },
+      {
+        "text": "First topics",
+        "createdAt": "2015-11-30T17:53:23.572Z",
+        "updatedAt": "2015-11-30T17:53:23.572Z",
+        "id": 2
+      },
+      {
+        "text": "Second topics",
+        "createdAt": "2015-11-30T17:53:31.301Z",
+        "updatedAt": "2015-11-30T17:53:31.301Z",
+        "id": 3
+      },
+      {
+        "text": "Second topics",
+        "createdAt": "2015-11-30T17:55:19.424Z",
+        "updatedAt": "2015-11-30T17:55:19.424Z",
+        "id": 4
+      },
+      {
+        "text": "4th topics",
+        "createdAt": "2015-11-30T18:01:44.508Z",
+        "updatedAt": "2015-11-30T18:01:44.508Z",
+        "id": 5
+      },
+      {
+        "text": "4th topics",
+        "createdAt": "2015-11-30T18:05:57.146Z",
+        "updatedAt": "2015-11-30T18:05:57.146Z",
+        "id": 6
+      },
+      {
+        "text": "4th topics",
+        "createdAt": "2015-11-30T18:06:02.279Z",
+        "updatedAt": "2015-11-30T18:06:02.279Z",
+        "id": 7
+      },
+      {
+        "text": "4th topics",
+        "createdAt": "2015-11-30T18:06:02.927Z",
+        "updatedAt": "2015-11-30T18:06:02.927Z",
+        "id": 8
+      },
+      {
+        "text": "10th topics",
+        "createdAt": "2015-11-30T18:09:54.022Z",
+        "updatedAt": "2015-11-30T18:09:54.022Z",
+        "id": 9
+      }
+    ],
+    "comments_topicid__topics_comments": []
+  },
+  "schema": {
+    "comments_topicsid__topics_commentss": {
+      "id": {
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true,
+        "type": "integer"
+      },
+      "topics_commentss": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "topics",
+        "on": "id",
+        "via": "comments_topicsId"
+      },
+      "comments_topicsId": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "comments",
+        "on": "id",
+        "via": "topics_commentss"
+      }
+    },
+    "comments": {
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "topicId": {
+        "type": "integer"
+      },
+      "text": {
+        "type": "string"
+      },
+      "createdBy": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "topics": {
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "contextDim": {
+        "type": "string"
+      },
+      "contextDimSHA1": {
+        "type": "string"
+      },
+      "contextFilter": {
+        "type": "string"
+      },
+      "contextFilterSHA1": {
+        "type": "string"
+      },
+      "dashboardPath": {
+        "type": "string"
+      },
+      "analysisPath": {
+        "type": "string"
+      },
+      "text": {
+        "type": "string"
+      },
+      "createdBy": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "comments_topicid__topics_comments": {
+      "id": {
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true,
+        "type": "integer"
+      },
+      "topics_comments": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "topics",
+        "on": "id",
+        "via": "comments_topicId"
+      },
+      "comments_topicId": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "comments",
+        "on": "id",
+        "via": "topics_comments"
+      }
+    }
+  },
+  "counters": {
+    "topics": {
+      "id": 9
+    },
+    "comments": {},
+    "comments_topicsid__topics_commentss": {},
+    "comments_topicid__topics_comments": {}
+  }
+}

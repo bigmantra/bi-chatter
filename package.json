@@ -1,17 +1,22 @@
 {
   "name": "biChatter",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "server/server.js",
   "dependencies": {
-    "compression": "^1.0.3",
-    "cors": "^2.5.2",
+    "bedwetter": "^1.8.2",
+    "blipp": "^2.3.0",
+    "dogwater": "^0.4.7 ",
+    "good": "^6.4.0",
+    "good-console": "^5.2.0",
+    "hapi": "^11.1.2",
+    "inert": "^3.2.0",
     "jsonfile": "^2.2.3",
-    "loopback": "^2.22.0",
-    "loopback-boot": "^2.6.5",
-    "loopback-component-explorer": "^2.1.0",
-    "loopback-connector-oracle": "^2.2.0",
-    "loopback-datasource-juggler": "^2.39.0",
-    "serve-favicon": "^2.0.1"
+    "require-directory": "^2.1.1",
+    "sails-disk": "^0.10.8",
+    "sails-memory": "^0.10.5",
+    "sails-oradb": "^0.1.0",
+    "shortid": "^2.2.4",
+    "underscore-node": "^0.1.2"
   },
   "scripts": {
     "test": "gulp test"
@@ -61,6 +66,6 @@
     "wrench": "~1.5.8"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4.2"
   }
 }
