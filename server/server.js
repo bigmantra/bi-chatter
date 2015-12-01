@@ -10,12 +10,14 @@ var config = require('./config');
 // Create a server with a host, port, and options
 var server = new Hapi.Server();
 
+server.select('api');
 
 //Connection object -  routes is a route options object used to set the default configuration for every route.
 server.connection({
   host: config.host,
   port: config.port,
-  routes: config.hapi.options.routes
+  routes: config.hapi.options.routes,
+  labels: ['api']
 });
 
 

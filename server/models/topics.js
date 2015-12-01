@@ -4,7 +4,7 @@ module.exports = {
 
   connection: 'diskDb',
 
-  /*migrate: 'safe',*/
+  migrate: 'safe',
 
   attributes: {
     id: {

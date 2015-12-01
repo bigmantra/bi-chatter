@@ -11,7 +11,7 @@ oracledb.getConnection({
     console.error(err.message);
     return;
   }
-  connection.execute( "SELECT 10 AS LUCKY FROM DUAL",
+  connection.execute( "SELECT 'PASSED' AS HOORAY FROM DUAL",
     [],
     function(err, result) {
       if (err) {

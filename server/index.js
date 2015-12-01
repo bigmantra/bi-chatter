@@ -14,7 +14,7 @@ var plugins = require('./config/plugins');
 
 exports.register = function(server, options, next) {
 
-  server.register(plugins, function(err) {
+  server.register(plugins,function(err) {
 
     if (err) return next(err);
 

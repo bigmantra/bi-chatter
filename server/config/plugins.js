@@ -18,11 +18,42 @@ module.exports = [
     }
   },
   {
-    register:require('inert')
+    register: require('inert')
 
   },
   {
     register: require('bedwetter')
 
+  },
+  {register: require('vision')},
+  {
+    register: require('hapi-swaggered'),
+    options: {
+      tags: {
+        'topics': 'Topics operations'
+      },
+      info: {
+        title: 'biChatter API Docs',
+        description: 'API Documentation for BI Chatter',
+        version: '0.1.0'
+      }
+    }
+  },
+  {
+    register: require('hapi-swaggered-ui'),
+    options: {
+      title: 'biChatter API Documentation',
+      path: '/docs',
+      authorization: { // see above
+        field: 'apiKey',
+        scope: 'header', // header works as well
+        // valuePrefix: 'bearer '// prefix incase
+        defaultValue: 'demoKey',
+        placeholder: 'Enter your apiKey here'
+      },
+      swaggerOptions: {"docExpansion": "list"}
+    }
   }
+
+
 ];

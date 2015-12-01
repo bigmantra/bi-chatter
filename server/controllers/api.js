@@ -7,7 +7,7 @@ module.exports = {
       // Grab the DB from dogwater
       var db = request.server.plugins['dogwater'];
 
-      db.topic.find().then(function (topics) {
+      db.topics.find().then(function (topics) {
         reply({topics: topics});
       });
 
@@ -15,12 +15,18 @@ module.exports = {
   },
 
   getTopic: {
+
+    tags: ['api'],
+
     handler: function (request, reply) {
+
+
+      console.log('In getTopic handler...');
 
       // Grab the DB from dogwater
       var db = request.server.plugins['dogwater'];
 
-      db.topic.findOne(request.params.id)
+      db.topics.findOne(request.params.id)
         .then(function (topic) {
           reply({topic: topic});
 
@@ -41,7 +47,7 @@ module.exports = {
 
       }
 
-      db.topic.create(topic)
+      db.topics.create(topic)
         .then(function (newtopic) {
           reply(newtopic).created('/api/topics/' + newtopic.id);
 

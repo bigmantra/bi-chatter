@@ -1,18 +1,17 @@
 {
   "data": {
     "comments_topicsid__topics_commentss": [],
-    "comments": [],
     "topics": [
       {
         "text": null,
         "createdAt": "2015-11-30T17:51:17.000Z",
-        "updatedAt": "2015-11-30T17:51:17.000Z",
+        "updatedAt": "2015-12-01T12:48:54.791Z",
         "id": 1
       },
       {
         "text": "First topics",
         "createdAt": "2015-11-30T17:53:23.572Z",
-        "updatedAt": "2015-11-30T17:53:23.572Z",
+        "updatedAt": "2015-12-01T12:15:42.347Z",
         "id": 2
       },
       {
@@ -56,9 +55,117 @@
         "createdAt": "2015-11-30T18:09:54.022Z",
         "updatedAt": "2015-11-30T18:09:54.022Z",
         "id": 9
+      },
+      {
+        "text": "4th topic",
+        "createdAt": "2015-11-30T21:47:30.195Z",
+        "updatedAt": "2015-11-30T21:47:30.195Z",
+        "id": 10
+      },
+      {
+        "text": "4th topic",
+        "createdAt": "2015-11-30T21:47:33.124Z",
+        "updatedAt": "2015-11-30T21:47:33.124Z",
+        "id": 11
+      },
+      {
+        "text": "4th topic",
+        "createdAt": "2015-11-30T21:50:19.940Z",
+        "updatedAt": "2015-11-30T21:50:19.940Z",
+        "id": 12
+      },
+      {
+        "text": "4th topic",
+        "createdAt": "2015-11-30T21:50:21.197Z",
+        "updatedAt": "2015-11-30T21:50:21.197Z",
+        "id": 13
+      },
+      {
+        "text": "4th topic",
+        "createdAt": "2015-11-30T21:52:54.637Z",
+        "updatedAt": "2015-11-30T21:52:54.637Z",
+        "id": 14
+      },
+      {
+        "text": "15th topic",
+        "createdAt": "2015-11-30T21:53:04.576Z",
+        "updatedAt": "2015-11-30T21:53:04.576Z",
+        "id": 15
+      },
+      {
+        "text": "16th topic",
+        "createdAt": "2015-11-30T21:53:09.538Z",
+        "updatedAt": "2015-11-30T21:53:09.538Z",
+        "id": 16
+      },
+      {
+        "text": "17th topic",
+        "createdAt": "2015-11-30T22:05:30.448Z",
+        "updatedAt": "2015-11-30T22:05:30.448Z",
+        "id": 17
+      },
+      {
+        "text": "18th topic",
+        "createdAt": "2015-12-01T08:03:21.215Z",
+        "updatedAt": "2015-12-01T08:03:21.215Z",
+        "id": 18
+      },
+      {
+        "tet": "18th topic",
+        "createdAt": "2015-12-01T08:03:25.937Z",
+        "updatedAt": "2015-12-01T08:03:25.937Z",
+        "id": 19
+      },
+      {
+        "tet": "18th topic",
+        "createdAt": "2015-12-01T08:03:32.199Z",
+        "updatedAt": "2015-12-01T08:03:32.199Z",
+        "id": 20
+      },
+      {
+        "text": "humteenthth topic",
+        "createdAt": "2015-12-01T09:16:33.041Z",
+        "updatedAt": "2015-12-01T09:16:33.041Z",
+        "id": 21
       }
     ],
-    "comments_topicid__topics_comments": []
+    "comments_topicid__topics_comments": [
+      {
+        "comments_topicId": 1,
+        "topics_comments": 1,
+        "id": 1
+      },
+      {
+        "comments_topicId": 2,
+        "topics_comments": 1,
+        "id": 2
+      },
+      {
+        "comments_topicId": 3,
+        "topics_comments": 2,
+        "id": 3
+      }
+    ],
+    "comments": [
+      {
+        "text": "My first Comment",
+        "createdAt": "2015-12-01T11:58:04.067Z",
+        "updatedAt": "2015-12-01T11:58:04.067Z",
+        "id": 1
+      },
+      {
+        "text": "My Second Comment",
+        "createdAt": "2015-12-01T12:14:35.571Z",
+        "updatedAt": "2015-12-01T12:14:35.571Z",
+        "id": 2
+      },
+      {
+        "text": "My Third Comment",
+        "createdAt": "2015-12-01T12:15:42.338Z",
+        "updatedAt": "2015-12-01T12:15:42.338Z",
+        "id": 3
+      }
+    ]
   },
   "schema": {
     "comments_topicsid__topics_commentss": {
@@ -81,29 +188,6 @@
         "references": "comments",
         "on": "id",
         "via": "topics_commentss"
-      }
-    },
-    "comments": {
-      "id": {
-        "type": "integer",
-        "autoIncrement": true,
-        "primaryKey": true,
-        "unique": true
-      },
-      "topicId": {
-        "type": "integer"
-      },
-      "text": {
-        "type": "string"
-      },
-      "createdBy": {
-        "type": "string"
-      },
-      "createdAt": {
-        "type": "datetime"
-      },
-      "updatedAt": {
-        "type": "datetime"
       }
     },
     "topics": {
@@ -165,14 +249,41 @@
         "on": "id",
         "via": "topics_comments"
       }
+    },
+    "comments": {
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "topicId": {
+        "type": "integer"
+      },
+      "text": {
+        "type": "string"
+      },
+      "createdBy": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
     }
   },
   "counters": {
     "topics": {
-      "id": 9
+      "id": 21
     },
-    "comments": {},
+    "comments": {
+      "id": 3
+    },
     "comments_topicsid__topics_commentss": {},
-    "comments_topicid__topics_comments": {}
+    "comments_topicid__topics_comments": {
+      "id": 3
+    }
   }
 }

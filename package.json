@@ -9,14 +9,18 @@
     "good": "^6.4.0",
     "good-console": "^5.2.0",
     "hapi": "^11.1.2",
+    "hapi-swaggered": "^2.4.1",
+    "hapi-swaggered-ui": "^2.1.1",
     "inert": "^3.2.0",
     "jsonfile": "^2.2.3",
+    "node-json2html": "^1.0.0",
     "require-directory": "^2.1.1",
     "sails-disk": "^0.10.8",
     "sails-memory": "^0.10.5",
     "sails-oradb": "^0.1.0",
     "shortid": "^2.2.4",
-    "underscore-node": "^0.1.2"
+    "underscore-node": "^0.1.2",
+    "vision": "^4.0.1"
   },
   "scripts": {
     "test": "gulp test"
