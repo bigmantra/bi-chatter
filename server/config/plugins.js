@@ -8,18 +8,17 @@ module.exports = [
     options: {
       reporters: [{
         reporter: require('good-console'),
-        events: [{
-          request: '*',
+        events: {
+          response : '*',
           log: '*',
           error: '*',
           ops: '*'
-        }]
+        }
       }]
     }
   },
   {
     register: require('inert')
-
   },
   {
     register: require('bedwetter')
