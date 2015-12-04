@@ -1,4 +1,4 @@
-define(["index.module"],function() {
+define(["index.module"], function () {
   'use strict';
 
 
@@ -6,8 +6,10 @@ define(["index.module"],function() {
 
   app.directive('obiFabMenu', function () {
 
-    var controller = ['$scope', function ($scope) {
+    var controller = ['$scope', 'State', function ($scope, State) {
 
+
+        var vm = this;
 
         this.topDirections = ['left', 'up'];
         this.bottomDirections = ['down', 'right'];
@@ -23,8 +25,11 @@ define(["index.module"],function() {
 
         init();
 
-        $scope.someFunction = function () {
+        vm.showSideNav = function () {
           //do something
+          State.sideNavOpened = !State.sideNavOpened;
+          console.log(State)
+
         };
       }],
 
@@ -32,9 +37,7 @@ define(["index.module"],function() {
 
     return {
       restrict: 'EA', //Default in 1.3+
-      scope: {
-
-      },
+      scope: {},
       controller: controller,
       controllerAs: 'ctrl',
       templateUrl: templateUrl

@@ -8,9 +8,9 @@ module.exports = {
             directory: { path: rootPath + '/client/app/' }
         }
     },
-    images: {
+    assets: {
         handler: {
-            directory: { path: rootPath + '/client/assets/images' }
+            directory: { path: rootPath + '/client/assets' }
         }
     },
     css: {
@@ -23,7 +23,7 @@ module.exports = {
             directory: { path: rootPath + '/client/app' }
         }
     },
-    bower: {
+  bower_components: {
         handler: {
             directory: { path: rootPath + '/client/bower_components' }
         }

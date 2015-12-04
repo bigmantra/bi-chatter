@@ -5,7 +5,7 @@
       {
         "text": null,
         "createdAt": "2015-11-30T17:51:17.000Z",
-        "updatedAt": "2015-12-01T12:48:54.791Z",
+        "updatedAt": "2015-12-04T16:06:27.907Z",
         "id": 1
       },
       {
@@ -144,6 +144,16 @@
         "comments_topicId": 3,
         "topics_comments": 2,
         "id": 3
+      },
+      {
+        "comments_topicId": 4,
+        "topics_comments": 1,
+        "id": 4
+      },
+      {
+        "comments_topicId": 5,
+        "topics_comments": 1,
+        "id": 5
       }
     ],
     "comments": [
@@ -164,6 +174,18 @@
         "createdAt": "2015-12-01T12:15:42.338Z",
         "updatedAt": "2015-12-01T12:15:42.338Z",
         "id": 3
+      },
+      {
+        "text": "My first Comment",
+        "createdAt": "2015-12-04T16:06:17.947Z",
+        "updatedAt": "2015-12-04T16:06:17.947Z",
+        "id": 4
+      },
+      {
+        "text": "blaadu Comment",
+        "createdAt": "2015-12-04T16:06:27.894Z",
+        "updatedAt": "2015-12-04T16:06:27.894Z",
+        "id": 5
       }
     ]
   },
@@ -279,11 +301,11 @@
       "id": 21
     },
     "comments": {
-      "id": 3
+      "id": 5
     },
     "comments_topicsid__topics_commentss": {},
     "comments_topicid__topics_comments": {
-      "id": 3
+      "id": 5
     }
   }
 }

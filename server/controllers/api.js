@@ -55,5 +55,15 @@ module.exports = {
     }
   }
 
+  , justLog: {
+
+    handler: function (request, reply) {
+
+      reply({comment:'whaaaat'});
+
+    }
+
+  }
+
 
 }

@@ -16,13 +16,18 @@ module.exports = [
     path: '/api/topics',
     config: {
       tags: ['api'], description: 'Get list of topics',
-      notes: json2html.transform(jsonDocs.findTopics, jsonDocTransform)
+      notes: json2html.transform(jsonDocs.findTopics, jsonDocTransform),
+      pre:[function(request,reply){
+
+        console.log('Processing Pre');
+        return reply();
+
+      }]
       , handler: {
         bedwetter: {prefix: '/api', populate: true}
       }
     }
   },
-
 
   //Returns the integer number of topics matched with an HTTP 200 OK response.
   {

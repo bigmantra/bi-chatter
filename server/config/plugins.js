@@ -21,6 +21,9 @@ module.exports = [
     register: require('inert')
   },
   {
+    register: require('blipp')
+  },
+  {
     register: require('bedwetter')
 
   },

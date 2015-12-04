@@ -13,10 +13,11 @@ console.log('node env', process.env.NODE_ENV);
 
 console.log(path.join(rootPath, 'client'));
 
+
 var config = {
   root: rootPath,
   host: '0.0.0.0',
-  port: parseInt(process.env.PORT, 10) || 3000,
+  port: parseInt(process.env.PORT, 10) || 8000,
   api: '',
   title: 'biChatter',
   package: pjson,
@@ -42,8 +43,8 @@ switch(config.env){
     config.api = 'http://localhost:' + config.port;
     break;
 
-}
 
+}
 
 
 config.serveBuild = (config.env === "production" || config.env === "staging");

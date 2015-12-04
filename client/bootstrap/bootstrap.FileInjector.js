@@ -128,7 +128,13 @@ function bootstrapChatterApp() {
     //attach chatter directive - this will make angular loop through table elements and attach further directives
     pageContentDiv.setAttribute('obi-chatter-enable', 'true');
 
+    $('.DashboardPageContentDiv').addClass('md-sidenav-push-in-target');
+
     $('.DashboardPageContentDiv').append("<div obi-fab-menu='true'></div>");
+    $('.DashboardPageContentDiv').after("<div obi-side-nav='true'></div>");
+
+
+
 
     //  pageContentDiv.setAttribute('obi-fab-menu', 'true');
 
