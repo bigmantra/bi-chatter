@@ -45,26 +45,49 @@ define(["index.module"],function() {
           $mdSidenav('right').close()
             .then(function () {
               $log.debug("close RIGHT is done");
+              State.sideNavOpened = false;
             });
         };
-
-        vm.isOpenRight = function(){
-          return $mdSidenav('right').isOpen();
-        };
-
-
-      vm.shouldLockOpen=true;
 
 
         $scope.$watch(function () {
           return State.sideNavOpened;
+        },function(newVal,oldval){
+
+          //vm.toggleRight();
+          if(newVal==true){
+            $mdSidenav('right').open();
+          }
+          else{
+            $mdSidenav('right').close();
+
+          }
+          console.log('open/close from watch inside sideNav directive....');
+
+        });
+
+
+        $scope.$watch(function () {
+          return $mdSidenav('right').isOpen();
         },function(){
 
-          vm.toggleRight();
-          console.log('open the sidenav');
+          if($mdSidenav('right').isOpen()){
+            State.sideNavOpened=true;
+          }
+          else{
+            State.sideNavOpened=false;
+          }
 
 
         });
+
+
+
+
+
+
+
+
 
 
 
@@ -108,10 +131,9 @@ define(["index.module"],function() {
         }
 
 
-
       }],
 
-      templateUrl = 'http://localhost:3000/app/chatter/chatter.sideNav.html';
+      templateUrl = 'http://localhost:3000/app/chatter/sideNav/chatter.sideNav.html';
 
     return {
       restrict: 'EA', //Default in 1.3+
@@ -125,3 +147,4 @@ define(["index.module"],function() {
   });
 
 });
+

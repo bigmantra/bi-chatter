@@ -49,7 +49,7 @@ gulp.task('includes', function () {
 
         }
 
-        //Only CSS will be needed in the LoadArray. To be used by the CSSLoaded RQjs plugin
+        //Only CSS will be needed in the LoadArray. To be used by the CSSLoader RQjs plugin
         if (wireDepDataJS.css.indexOf(packageObjects[packageItem].main[index]) > 0) {
 
           console.log('pushing css item: ' + packageObjects[packageItem].main[index]);
@@ -77,7 +77,8 @@ gulp.task('includes', function () {
 
     }
   }
-
+  //Push app.css into the css array before injection
+  requireLoadArray.push('css!app/app.css');
 
   var data = fs.readFileSync(path.join(conf.paths.src, '/bootstrap/bootstrap.FileInjector.js'), 'utf8');
 

@@ -1,10 +1,10 @@
-var requirejs = {"baseUrl":"http://localhost:3000","paths":{"angular":"bower_components/angular/angular","angular-animate":"bower_components/angular-animate/angular-animate","angular-cookies":"bower_components/angular-cookies/angular-cookies","angular-sanitize":"bower_components/angular-sanitize/angular-sanitize","jquery":"bower_components/jquery/dist/jquery","angular-ui-router":"bower_components/angular-ui-router/release/angular-ui-router","angular-bootstrap":"bower_components/angular-bootstrap/ui-bootstrap-tpls","malarkey":"bower_components/malarkey/dist/malarkey.min","toastr":"bower_components/toastr/toastr","angular-elastic":"bower_components/angular-elastic/elastic","ng-tags-input":"bower_components/ng-tags-input/ng-tags-input.min","angular-ui-tree":"bower_components/angular-ui-tree/dist/angular-ui-tree","firebase":"bower_components/firebase/firebase","angularfire":"bower_components/angularfire/dist/angularfire","cryptojslib":"bower_components/cryptojslib/rollups/sha1","moment":"bower_components/moment/moment","angular-moment":"bower_components/angular-moment/angular-moment","angular-aria":"bower_components/angular-aria/angular-aria","angular-material":"bower_components/angular-material/angular-material","angular-material-icons":"bower_components/angular-material-icons/angular-material-icons.min",/*BEGIN_APPDEPS*/ "dynamic.modules":  "app/dynamic.modules", "index.config":  "app/index.config", "index.constants":  "app/index.constants", "index.module":  "app/index.module", "index.route":  "app/index.route", "index.run":  "app/index.run", "chatter.Bootstrap":  "app/chatter/chatter.Bootstrap", "chatter.controller.consoleChatter":  "app/chatter/chatter.controller.consoleChatter", "chatter.controller.modalInstance":  "app/chatter/chatter.controller.modalInstance", "chatter.controller.tablecell":  "app/chatter/chatter.controller.tablecell", "chatter.directive.focusMe":  "app/chatter/chatter.directive.focusMe", "chatter.directive.morphInput":  "app/chatter/chatter.directive.morphInput", "chatter.directive.obiChatterEnable":  "app/chatter/chatter.directive.obiChatterEnable", "chatter.directive.obiFabMenu":  "app/chatter/chatter.directive.obiFabMenu", "chatter.directive.obiTable":  "app/chatter/chatter.directive.obiTable", "chatter.directive.obiTableCell":  "app/chatter/chatter.directive.obiTableCell", "chatter.directive.sidenav":  "app/chatter/chatter.directive.sidenav", "chatter.directive.topic":  "app/chatter/chatter.directive.topic", "chatter.filters":  "app/chatter/chatter.filters", "chatter.module":  "app/chatter/chatter.module", "chatter.service.state":  "app/chatter/chatter.service.state", "chatter.services":  "app/chatter/chatter.services", "main.controller":  "app/main/main.controller", "main.controller.spec":  "app/main/main.controller.spec", "sha1":  "app/components/cryptojs/sha1", "githubContributor.service":  "app/components/githubContributor/githubContributor.service", "navbar.directive":  "app/components/navbar/navbar.directive", "malarkey.directive":  "app/components/malarkey/malarkey.directive", "webDevTec.service":  "app/components/webDevTec/webDevTec.service", "css":  "app/components/CSSLoader/dist/css" /*END_APPDEPS*/},"shim":{"angular":{"deps":["jquery"],"exports":"angular"},"angular-animate":{"deps":["angular"]},"angular-cookies":{"deps":["angular"]},"angular-sanitize":{"deps":["angular"]},"jquery":{"deps":[]},"angular-ui-router":{"deps":["angular"]},"angular-bootstrap":{"deps":["angular"]},"malarkey":{"deps":[]},"toastr":{"deps":["jquery"]},"animate.css":{"deps":[]},"angular-elastic":{"deps":["angular"]},"ng-tags-input":{"deps":["angular"]},"angular-ui-tree":{"deps":["angular"]},"firebase":{"deps":[]},"angularfire":{"deps":["angular","firebase"]},"components-font-awesome":{"deps":[]},"cryptojslib":{"deps":[]},"moment":{"deps":[]},"angular-moment":{"deps":["angular","moment"]},"angular-aria":{"deps":["angular"]},"angular-material":{"deps":["angular","angular-animate","angular-aria"]},"angular-material-icons":{"deps":["angular"]},/*BEGIN_APPSHIM*/ "dynamic.modules": {"deps": ["angular"]}, "index.config": {"deps": ["angular"]}, "index.constants": {"deps": ["angular"]}, "index.module": {"deps": ["angular"]}, "index.route": {"deps": ["angular"]}, "index.run": {"deps": ["angular"]}, "chatter.Bootstrap": {"deps": ["angular"]}, "chatter.controller.consoleChatter": {"deps": ["angular"]}, "chatter.controller.modalInstance": {"deps": ["angular"]}, "chatter.controller.tablecell": {"deps": ["angular"]}, "chatter.directive.focusMe": {"deps": ["angular"]}, "chatter.directive.morphInput": {"deps": ["angular"]}, "chatter.directive.obiChatterEnable": {"deps": ["angular"]}, "chatter.directive.obiFabMenu": {"deps": ["angular"]}, "chatter.directive.obiTable": {"deps": ["angular"]}, "chatter.directive.obiTableCell": {"deps": ["angular"]}, "chatter.directive.sidenav": {"deps": ["angular"]}, "chatter.directive.topic": {"deps": ["angular"]}, "chatter.filters": {"deps": ["angular"]}, "chatter.module": {"deps": ["angular"]}, "chatter.service.state": {"deps": ["angular"]}, "chatter.services": {"deps": ["angular"]}, "main.controller": {"deps": ["angular"]}, "main.controller.spec": {"deps": ["angular"]}, "sha1": {"deps": ["angular"]}, "githubContributor.service": {"deps": ["angular"]}, "navbar.directive": {"deps": ["angular"]}, "malarkey.directive": {"deps": ["angular"]}, "webDevTec.service": {"deps": ["angular"]}, "css": {"deps": ["angular"]} /*END_APPSHIM*/}}
+var requirejs = {"baseUrl":"http://localhost:3000","paths":{"angular":"bower_components/angular/angular","angular-animate":"bower_components/angular-animate/angular-animate","angular-cookies":"bower_components/angular-cookies/angular-cookies","angular-sanitize":"bower_components/angular-sanitize/angular-sanitize","jquery":"bower_components/jquery/dist/jquery","angular-ui-router":"bower_components/angular-ui-router/release/angular-ui-router","angular-bootstrap":"bower_components/angular-bootstrap/ui-bootstrap-tpls","malarkey":"bower_components/malarkey/dist/malarkey.min","toastr":"bower_components/toastr/toastr","angular-elastic":"bower_components/angular-elastic/elastic","ng-tags-input":"bower_components/ng-tags-input/ng-tags-input.min","angular-ui-tree":"bower_components/angular-ui-tree/dist/angular-ui-tree","firebase":"bower_components/firebase/firebase","angularfire":"bower_components/angularfire/dist/angularfire","cryptojslib":"bower_components/cryptojslib/rollups/sha1","moment":"bower_components/moment/moment","angular-moment":"bower_components/angular-moment/angular-moment","angular-aria":"bower_components/angular-aria/angular-aria","angular-material":"bower_components/angular-material/angular-material","angular-material-icons":"bower_components/angular-material-icons/angular-material-icons.min",/*BEGIN_APPDEPS*/ "dynamic.modules":  "app/dynamic.modules", "index.config":  "app/index.config", "index.constants":  "app/index.constants", "index.module":  "app/index.module", "index.route":  "app/index.route", "index.run":  "app/index.run", "common.directive.paletteBackground":  "app/common/common.directive.paletteBackground", "chatter.Bootstrap":  "app/chatter/chatter.Bootstrap", "chatter.controller.consoleChatter":  "app/chatter/chatter.controller.consoleChatter", "chatter.controller.modalInstance":  "app/chatter/chatter.controller.modalInstance", "chatter.controller.tablecell":  "app/chatter/chatter.controller.tablecell", "chatter.directive.focusMe":  "app/chatter/chatter.directive.focusMe", "chatter.directive.morphInput":  "app/chatter/chatter.directive.morphInput", "chatter.directive.obiChatterEnable":  "app/chatter/chatter.directive.obiChatterEnable", "chatter.directive.obiTable":  "app/chatter/chatter.directive.obiTable", "chatter.directive.obiTableCell":  "app/chatter/chatter.directive.obiTableCell", "chatter.directive.topic":  "app/chatter/chatter.directive.topic", "chatter.filters":  "app/chatter/chatter.filters", "chatter.module":  "app/chatter/chatter.module", "chatter.service.state":  "app/chatter/chatter.service.state", "chatter.services":  "app/chatter/chatter.services", "main.controller":  "app/main/main.controller", "main.controller.spec":  "app/main/main.controller.spec", "chatter.controller.contextChatterDialog":  "app/chatter/contextChatterDialog/chatter.controller.contextChatterDialog", "chatter.directive.obiSideNavButton":  "app/chatter/sideNav/chatter.directive.obiSideNavButton", "chatter.directive.sideNav":  "app/chatter/sideNav/chatter.directive.sideNav", "sha1":  "app/components/cryptojs/sha1", "githubContributor.service":  "app/components/githubContributor/githubContributor.service", "malarkey.directive":  "app/components/malarkey/malarkey.directive", "navbar.directive":  "app/components/navbar/navbar.directive", "webDevTec.service":  "app/components/webDevTec/webDevTec.service", "css":  "app/components/CSSLoader/dist/css" /*END_APPDEPS*/},"shim":{"angular":{"deps":["jquery"],"exports":"angular"},"angular-animate":{"deps":["angular"]},"angular-cookies":{"deps":["angular"]},"angular-sanitize":{"deps":["angular"]},"jquery":{"deps":[]},"angular-ui-router":{"deps":["angular"]},"angular-bootstrap":{"deps":["angular"]},"malarkey":{"deps":[]},"toastr":{"deps":["jquery"]},"animate.css":{"deps":[]},"angular-elastic":{"deps":["angular"]},"ng-tags-input":{"deps":["angular"]},"angular-ui-tree":{"deps":["angular"]},"firebase":{"deps":[]},"angularfire":{"deps":["angular","firebase"]},"components-font-awesome":{"deps":[]},"cryptojslib":{"deps":[]},"moment":{"deps":[]},"angular-moment":{"deps":["angular","moment"]},"angular-aria":{"deps":["angular"]},"angular-material":{"deps":["angular","angular-animate","angular-aria"]},"angular-material-icons":{"deps":["angular"]},/*BEGIN_APPSHIM*/ "dynamic.modules": {"deps": ["angular"]}, "index.config": {"deps": ["angular"]}, "index.constants": {"deps": ["angular"]}, "index.module": {"deps": ["angular"]}, "index.route": {"deps": ["angular"]}, "index.run": {"deps": ["angular"]}, "common.directive.paletteBackground": {"deps": ["angular"]}, "chatter.Bootstrap": {"deps": ["angular"]}, "chatter.controller.consoleChatter": {"deps": ["angular"]}, "chatter.controller.modalInstance": {"deps": ["angular"]}, "chatter.controller.tablecell": {"deps": ["angular"]}, "chatter.directive.focusMe": {"deps": ["angular"]}, "chatter.directive.morphInput": {"deps": ["angular"]}, "chatter.directive.obiChatterEnable": {"deps": ["angular"]}, "chatter.directive.obiTable": {"deps": ["angular"]}, "chatter.directive.obiTableCell": {"deps": ["angular"]}, "chatter.directive.topic": {"deps": ["angular"]}, "chatter.filters": {"deps": ["angular"]}, "chatter.module": {"deps": ["angular"]}, "chatter.service.state": {"deps": ["angular"]}, "chatter.services": {"deps": ["angular"]}, "main.controller": {"deps": ["angular"]}, "main.controller.spec": {"deps": ["angular"]}, "chatter.controller.contextChatterDialog": {"deps": ["angular"]}, "chatter.directive.obiSideNavButton": {"deps": ["angular"]}, "chatter.directive.sideNav": {"deps": ["angular"]}, "sha1": {"deps": ["angular"]}, "githubContributor.service": {"deps": ["angular"]}, "malarkey.directive": {"deps": ["angular"]}, "navbar.directive": {"deps": ["angular"]}, "webDevTec.service": {"deps": ["angular"]}, "css": {"deps": ["angular"]} /*END_APPSHIM*/}}
 
 
 //These variables are used as semaphores to ensure that only one view can load and bootstrap the app
-var bmPlatformLoaded=false;
-var bmPlatformLoading=false;
-var bmPlatformBooting=false;
+var bmPlatformLoaded = false;
+var bmPlatformLoading = false;
+var bmPlatformBooting = false;
 
 if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlatformLoading)) { //bm.platform Loaded for the first time - Load JS and CSS files
 
@@ -28,7 +28,7 @@ if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlat
   requireJSScriptElement.onload = function () {
 
     console.log('calling requireJS Load...');
-    require(['angular','angular-animate','angular-cookies','angular-sanitize','jquery','angular-ui-router','angular-bootstrap','malarkey','toastr','css!bower_components/animate.css/animate.css','angular-elastic','ng-tags-input','css!bower_components/ng-tags-input/ng-tags-input.min.css','angular-ui-tree','firebase','angularfire','css!bower_components/components-font-awesome/css/font-awesome.css','cryptojslib','moment','angular-moment','angular-aria','angular-material','css!bower_components/angular-material/angular-material.css','angular-material-icons','css!bower_components/angular-material-icons/angular-material-icons.css' ,/*BEGIN_APPARRDEPS*/ "dynamic.modules", "index.config", "index.constants", "index.module", "index.route", "index.run", "chatter.controller.consoleChatter", "chatter.controller.modalInstance", "chatter.controller.tablecell", "chatter.directive.focusMe", "chatter.directive.morphInput", "chatter.directive.obiChatterEnable", "chatter.directive.obiFabMenu", "chatter.directive.obiTable", "chatter.directive.obiTableCell", "chatter.directive.sidenav", "chatter.directive.topic", "chatter.filters", "chatter.module", "chatter.service.state", "chatter.services", "main.controller", "main.controller.spec", "sha1", "githubContributor.service", "navbar.directive", "malarkey.directive", "webDevTec.service", "css", "css!app/app.css" /*END_APPARRDEPS*/], function (ang) {
+    require(['angular','angular-animate','angular-cookies','angular-sanitize','jquery','angular-ui-router','angular-bootstrap','malarkey','toastr','css!bower_components/animate.css/animate.css','angular-elastic','ng-tags-input','css!bower_components/ng-tags-input/ng-tags-input.min.css','angular-ui-tree','firebase','angularfire','css!bower_components/components-font-awesome/css/font-awesome.css','cryptojslib','moment','angular-moment','angular-aria','angular-material','css!bower_components/angular-material/angular-material.css','angular-material-icons','css!bower_components/angular-material-icons/angular-material-icons.css','css!app/app.css' ,/*BEGIN_APPARRDEPS*/ "dynamic.modules", "index.config", "index.constants", "index.module", "index.route", "index.run", "common.directive.paletteBackground", "chatter.controller.consoleChatter", "chatter.controller.modalInstance", "chatter.controller.tablecell", "chatter.directive.focusMe", "chatter.directive.morphInput", "chatter.directive.obiChatterEnable", "chatter.directive.obiTable", "chatter.directive.obiTableCell", "chatter.directive.topic", "chatter.filters", "chatter.module", "chatter.service.state", "chatter.services", "main.controller", "main.controller.spec", "chatter.controller.contextChatterDialog", "chatter.directive.obiSideNavButton", "chatter.directive.sideNav", "sha1", "githubContributor.service", "malarkey.directive", "navbar.directive", "webDevTec.service", "css" /*END_APPARRDEPS*/], function (ang) {
         if ((typeof obips != 'undefined')) {
           console.log('Context inside OBI - Manually bootstrapping angular')
 
@@ -48,8 +48,8 @@ if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlat
 else {
   console.log('Everything already loaded...just Rebootstrapping');
   if ((typeof obips != 'undefined')) {
-    bmPlatformLoaded=true;
-    bmPlatformLoading=false;
+    bmPlatformLoaded = true;
+    bmPlatformLoading = false;
     bootstrapChatterApp();
     observeChatterSensitiveDOMChanges();
   } else {
@@ -59,7 +59,6 @@ else {
 }
 
 
-
 function initOBIMetadataAndBootstrap() {
 
   var initInjector = angular.injector(["ng", "bm.platform"]);
@@ -67,7 +66,7 @@ function initOBIMetadataAndBootstrap() {
 
   bmPlatformLoading = true;
 
-   var contextCollection=BIGate.getViewDataReferences();
+  var contextCollection = BIGate.getViewDataReferences();
 
   console.log(contextCollection);
 
@@ -82,7 +81,7 @@ function initOBIMetadataAndBootstrap() {
       console.info('Report metadata loaded for ' + metaDataResponses.length + ' Reports.');
       console.log(metaDataResponses);
 
-      var mergedCollection=BIGate.getMergedContextCollection(metaDataResponses,contextCollection)
+      var mergedCollection = BIGate.getMergedContextCollection(metaDataResponses, contextCollection)
 
       console.log('Merged:')
       console.log(mergedCollection);
@@ -96,8 +95,8 @@ function initOBIMetadataAndBootstrap() {
         .value('contextCollection', mergedCollection);
 
 
-      bmPlatformLoaded=true;
-      bmPlatformLoading=false;
+      bmPlatformLoaded = true;
+      bmPlatformLoading = false;
       bootstrapChatterApp();
       observeChatterSensitiveDOMChanges();
 
@@ -130,10 +129,11 @@ function bootstrapChatterApp() {
 
     $('.DashboardPageContentDiv').addClass('md-sidenav-push-in-target');
 
-    $('.DashboardPageContentDiv').append("<div obi-fab-menu='true'></div>");
+//    $('.DashboardPageContentDiv').append("<div obi-fab-menu='true'></div>");
+
+    $('.DashboardPageContentDiv').append("<div obi-side-nav-button='true'></div>");
+
     $('.DashboardPageContentDiv').after("<div obi-side-nav='true'></div>");
-
-
 
 
     //  pageContentDiv.setAttribute('obi-fab-menu', 'true');
@@ -149,7 +149,7 @@ function bootstrapChatterApp() {
     //This is a more performant alternative to re-bootstrapping the entire App.
     var injector = angular.element($('#PageContentOuterDiv')[0]).injector()
     var compileService = injector.get('$compile');
-    angular.forEach($("[viewtype='tableView']" ), function (value, key) {
+    angular.forEach($("[viewtype='tableView']"), function (value, key) {
 
       //Return if the directive is already compiled and linked.(if the searchId(sid) is associated to the table then it is already linked)
       if (value.getAttribute('sid')) return;
@@ -204,14 +204,14 @@ function observeChatterSensitiveDOMChanges() {
       console.log('mutated ' + viewElement.getAttribute('id'));
 
 
-    //  var pivotTables = $(viewElement).find('.PTChildPivotTable');
+      //  var pivotTables = $(viewElement).find('.PTChildPivotTable');
 
       //var tables = $(viewElement).find("[viewtype='tableView']");
 
-      var table=viewElement;
+      var table = viewElement;
 
       //TODO Fine-tune performance - to handle only specific DOM mutations
-      if (!table.getAttribute('sid') || (!($(viewElement).find('td[id^=e_saw]')[0].getAttribute('obi-table-cell')=='true'))) {
+      if (!table.getAttribute('sid') || (!($(viewElement).find('td[id^=e_saw]')[0].getAttribute('obi-table-cell') == 'true'))) {
 
         console.log('Re-linking from mutation observer')
 

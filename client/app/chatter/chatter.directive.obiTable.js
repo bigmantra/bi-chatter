@@ -57,7 +57,8 @@ define(["index.module"], function () {
       controller: OBITableDirectiveController,
       controllerAs: 'obiTblCtrl',
       scope: {
-        sid: '@sid'
+        sid: '@sid',
+        viewId:'@id'
       },
       bindToController: true,
       compile: function (tElement, attrs) {

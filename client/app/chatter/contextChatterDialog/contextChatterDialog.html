@@ -1,0 +1,66 @@
+<style>
+
+  .dialogdemoBasicUsage #popupContainer {
+    position: relative; }
+  .dialogdemoBasicUsage .footer {
+    width: 100%;
+    text-align: center;
+    margin-left: 20px; }
+  .dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer > code {
+    font-size: 0.8em;
+    margin-top: 50px; }
+
+</style>
+
+
+
+<md-dialog aria-label="Mango (Fruit)" flex="50" flex-sm="80"  ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Mango (Fruit)</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div class="chatter-topic-messages" flex content-layout="column" content-layout-align="space-between">
+          <md-divider></md-divider>
+          <md-list class="padding-top-20 padding-bottom-0" flex>
+            <md-list-item ng-repeat="chat in ::conversation" class="md-3-line" ng-class="userClass($even)" ng-init="userColor = $even ? 'cyan' : 'light-green'">
+              <img class="md-avatar" ng-src="{{::chat.image}}" alt="{{::chat.name}}">
+              <div class="md-list-item-text">
+                <p palette-background="{{::userColor}}:200" ng-repeat="message in ::chat.messages">
+                  {{::message}}
+                </p>
+              </div>
+            </md-list-item>
+          </md-list>
+          <div layout="row" layout-align="space-between center">
+            <md-input-container flex class="margin-left-20 margin-right-20">
+              <label>Message</label>
+              <input type="text">
+            </md-input-container>
+          </div>
+
+        </div>
+
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+        More on Wikipedia
+      </md-button>
+      <span flex></span>
+      <md-button ng-click="answer('not useful')">
+        Not Useful
+      </md-button>
+      <md-button ng-click="answer('useful')" style="margin-right:20px;">
+        Useful
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

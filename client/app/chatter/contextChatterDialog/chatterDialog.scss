@@ -1,0 +1,69 @@
+// chatter topic messages
+.chatter-topic-messages {
+  .user-left, .user-right {
+    max-width: 70%;
+    height: auto;
+    .md-avatar {
+      margin-top: 0px !important;
+    }
+    .md-list-item-text {
+      padding-bottom: 16px;
+      position: relative;
+      h3 {
+        font-size: 1.4rem;
+      }
+      p {
+        padding: 5px 10px;
+        position: relative;
+        font-weight: normal;
+        &:not(:first-of-type) {
+          margin-top: 8px;
+          &:before {
+            display: none;
+          }
+        }
+        &:before {
+          content: "";
+          position: absolute;
+          top: 0;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-color: transparent;
+        }
+      }
+    }
+  }
+  .user-left {
+    clear: both;
+    .md-list-item-text {
+      p:before {
+        left: -8px;
+        border-width: 0px 8px 8px 0;
+        border-right-color: inherit;
+      }
+    }
+  }
+  .user-right {
+    float: right;
+    width: 100%;
+    .md-avatar {
+      order: 2;
+      margin-right: 0;
+      margin-left: 16px;
+    }
+    .md-list-item-text {
+      h3 {
+        text-align: right;
+      }
+      p {
+        float: right;
+        &:before {
+          right: -8px;
+          border-width: 8px 8px 0px 0px;
+          border-top-color: inherit;
+        }
+      }
+    }
+  }
+}

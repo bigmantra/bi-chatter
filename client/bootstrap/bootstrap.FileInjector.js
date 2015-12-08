@@ -2,9 +2,9 @@ var requirejs = 'PLACEHOLDER_CONF'
 
 
 //These variables are used as semaphores to ensure that only one view can load and bootstrap the app
-var bmPlatformLoaded=false;
-var bmPlatformLoading=false;
-var bmPlatformBooting=false;
+var bmPlatformLoaded = false;
+var bmPlatformLoading = false;
+var bmPlatformBooting = false;
 
 if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlatformLoading)) { //bm.platform Loaded for the first time - Load JS and CSS files
 
@@ -48,8 +48,8 @@ if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlat
 else {
   console.log('Everything already loaded...just Rebootstrapping');
   if ((typeof obips != 'undefined')) {
-    bmPlatformLoaded=true;
-    bmPlatformLoading=false;
+    bmPlatformLoaded = true;
+    bmPlatformLoading = false;
     bootstrapChatterApp();
     observeChatterSensitiveDOMChanges();
   } else {
@@ -59,7 +59,6 @@ else {
 }
 
 
-
 function initOBIMetadataAndBootstrap() {
 
   var initInjector = angular.injector(["ng", "bm.platform"]);
@@ -67,7 +66,7 @@ function initOBIMetadataAndBootstrap() {
 
   bmPlatformLoading = true;
 
-   var contextCollection=BIGate.getViewDataReferences();
+  var contextCollection = BIGate.getViewDataReferences();
 
   console.log(contextCollection);
 
@@ -82,7 +81,7 @@ function initOBIMetadataAndBootstrap() {
       console.info('Report metadata loaded for ' + metaDataResponses.length + ' Reports.');
       console.log(metaDataResponses);
 
-      var mergedCollection=BIGate.getMergedContextCollection(metaDataResponses,contextCollection)
+      var mergedCollection = BIGate.getMergedContextCollection(metaDataResponses, contextCollection)
 
       console.log('Merged:')
       console.log(mergedCollection);
@@ -96,8 +95,8 @@ function initOBIMetadataAndBootstrap() {
         .value('contextCollection', mergedCollection);
 
 
-      bmPlatformLoaded=true;
-      bmPlatformLoading=false;
+      bmPlatformLoaded = true;
+      bmPlatformLoading = false;
       bootstrapChatterApp();
       observeChatterSensitiveDOMChanges();
 
@@ -130,10 +129,11 @@ function bootstrapChatterApp() {
 
     $('.DashboardPageContentDiv').addClass('md-sidenav-push-in-target');
 
-    $('.DashboardPageContentDiv').append("<div obi-fab-menu='true'></div>");
+//    $('.DashboardPageContentDiv').append("<div obi-fab-menu='true'></div>");
+
+    $('.DashboardPageContentDiv').append("<div obi-side-nav-button='true'></div>");
+
     $('.DashboardPageContentDiv').after("<div obi-side-nav='true'></div>");
-
-
 
 
     //  pageContentDiv.setAttribute('obi-fab-menu', 'true');
@@ -149,7 +149,7 @@ function bootstrapChatterApp() {
     //This is a more performant alternative to re-bootstrapping the entire App.
     var injector = angular.element($('#PageContentOuterDiv')[0]).injector()
     var compileService = injector.get('$compile');
-    angular.forEach($("[viewtype='tableView']" ), function (value, key) {
+    angular.forEach($("[viewtype='tableView']"), function (value, key) {
 
       //Return if the directive is already compiled and linked.(if the searchId(sid) is associated to the table then it is already linked)
       if (value.getAttribute('sid')) return;
@@ -204,14 +204,14 @@ function observeChatterSensitiveDOMChanges() {
       console.log('mutated ' + viewElement.getAttribute('id'));
 
 
-    //  var pivotTables = $(viewElement).find('.PTChildPivotTable');
+      //  var pivotTables = $(viewElement).find('.PTChildPivotTable');
 
       //var tables = $(viewElement).find("[viewtype='tableView']");
 
-      var table=viewElement;
+      var table = viewElement;
 
       //TODO Fine-tune performance - to handle only specific DOM mutations
-      if (!table.getAttribute('sid') || (!($(viewElement).find('td[id^=e_saw]')[0].getAttribute('obi-table-cell')=='true'))) {
+      if (!table.getAttribute('sid') || (!($(viewElement).find('td[id^=e_saw]')[0].getAttribute('obi-table-cell') == 'true'))) {
 
         console.log('Re-linking from mutation observer')
 
