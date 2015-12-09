@@ -15,7 +15,16 @@ if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlat
 
   requireJSScriptElement["src"] = "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js";
   document.getElementsByTagName("head")[0].appendChild(requireJSScriptElement);
+
   console.log('added Requirejs to head');
+
+
+  var svgJSScriptElement = document.createElement("script");
+
+  svgJSScriptElement["src"] = "https://jonathantneal.github.io/svg4everybody/svg4everybody.min.js";
+  document.getElementsByTagName("head")[0].appendChild(svgJSScriptElement);
+  console.log('added svg polyfill to head');
+
 
   var materialIconsElement = document.createElement("link");
 
@@ -24,6 +33,15 @@ if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlat
 
   document.getElementsByTagName("head")[0].appendChild(materialIconsElement);
   console.log('added material icons to head');
+
+
+
+  //run svg polyfill
+  svgJSScriptElement.onload = function () {
+    svg4everybody();
+    console.log('svg polyfill loaded');
+
+  }
 
   requireJSScriptElement.onload = function () {
 
