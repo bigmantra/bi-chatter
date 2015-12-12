@@ -3,7 +3,7 @@ define(["index.module"],function() {
 
 
   angular.module('bm.platform')
-    .directive('chatterTopic',['Topics','fbURL', 'Users',ChatterTopicDirective] );
+    .directive('chatterOldTopic',['Topics','fbURL', 'Users',ChatterTopicDirective] );
 
 
   function ChatterTopicDirective(Topics,fbURL, Users) {

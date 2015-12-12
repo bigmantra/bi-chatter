@@ -88,10 +88,11 @@ define(["index.module"], function () {
     init();
 
 
+
     vm.showChatterDialog = function (ev) {
       $mdDialog.show({
           controller: 'chatterDialogController',
-          templateUrl: 'http://localhost:3000/app/chatter/contextChatterDialog/contextChatterDialog.html',
+          templateUrl: 'http://localhost:3000/app/chatter/contextChatterDialog/chatter-dialog.html',
           /*parent: angular.element(angular.element(document.getElementById('d:dashboard~p:2i41s4pgps2jop6q~r:gvf5n0lc1ns2vva2~v:compoundView!1ViewContainer'))),*/
           parent: angular.element(document.body),
           targetEvent: ev,

@@ -18,6 +18,7 @@ if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlat
 
   console.log('added Requirejs to head');
 
+/*
 
   var svgJSScriptElement = document.createElement("script");
 
@@ -25,6 +26,7 @@ if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlat
   document.getElementsByTagName("head")[0].appendChild(svgJSScriptElement);
   console.log('added svg polyfill to head');
 
+*/
 
   var materialIconsElement = document.createElement("link");
 
@@ -37,11 +39,13 @@ if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlat
 
 
   //run svg polyfill
+/*
   svgJSScriptElement.onload = function () {
     svg4everybody();
     console.log('svg polyfill loaded');
 
   }
+*/
 
   requireJSScriptElement.onload = function () {
 
@@ -221,10 +225,6 @@ function observeChatterSensitiveDOMChanges() {
 
       console.log('mutated ' + viewElement.getAttribute('id'));
 
-
-      //  var pivotTables = $(viewElement).find('.PTChildPivotTable');
-
-      //var tables = $(viewElement).find("[viewtype='tableView']");
 
       var table = viewElement;
 
