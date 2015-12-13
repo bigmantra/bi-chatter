@@ -18,15 +18,6 @@ if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlat
 
   console.log('added Requirejs to head');
 
-/*
-
-  var svgJSScriptElement = document.createElement("script");
-
-  svgJSScriptElement["src"] = "https://jonathantneal.github.io/svg4everybody/svg4everybody.min.js";
-  document.getElementsByTagName("head")[0].appendChild(svgJSScriptElement);
-  console.log('added svg polyfill to head');
-
-*/
 
   var materialIconsElement = document.createElement("link");
 
@@ -36,22 +27,34 @@ if (((typeof angular == 'undefined') || (typeof $ == 'undefined')  ) && (!bmPlat
   document.getElementsByTagName("head")[0].appendChild(materialIconsElement);
   console.log('added material icons to head');
 
+/*
+
+  var socketIOScriptElement = document.createElement("script");
+  socketIOScriptElement["src"] = "https://cdn.socket.io/socket.io-1.3.7.js";
+  document.getElementsByTagName("head")[0].appendChild(socketIOScriptElement);
+  console.log('added socket client to head');
+
+*/
+
 
 
   //run svg polyfill
-/*
-  svgJSScriptElement.onload = function () {
-    svg4everybody();
-    console.log('svg polyfill loaded');
+  /*
+   svgJSScriptElement.onload = function () {
+   svg4everybody();
+   console.log('svg polyfill loaded');
 
-  }
-*/
+   }
+   */
 
   requireJSScriptElement.onload = function () {
 
+
     console.log('calling requireJS Load...');
     require(['PLACEHOLDER_LOAD'], function (ang) {
-        if ((typeof obips != 'undefined')) {
+
+
+      if ((typeof obips != 'undefined')) {
           console.log('Context inside OBI - Manually bootstrapping angular')
 
           //Load OBI report metadata into an angular constant and then bootstrap

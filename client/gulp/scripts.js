@@ -12,14 +12,13 @@ var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
 
 
-
 //This gulp task is meant to produce the includes file that will be used to load all required files when the app is bootstrapped from inside OBIEE
 gulp.task('includes', function () {
 
 
   var wireDepDataJS = require('wiredep')({
     //exclude: [/bootstrap.js$/, /bootstrap-sass-official\/.*\.js/, /bootstrap\.css/, /\/.*\.css/, /\/.*\.scss/],
-    exclude: [/bootstrap.js$/, /bootstrap-sass-official\/.*\.js/, /\/.*\.scss/,/\/.*\.less/],
+    exclude: [/bootstrap.js$/, /bootstrap-sass-official\/.*\.js/, /\/.*\.scss/, /\/.*\.less/],
     directory: 'bower_components'
   })
 
@@ -53,7 +52,7 @@ gulp.task('includes', function () {
         if (wireDepDataJS.css.indexOf(packageObjects[packageItem].main[index]) > 0) {
 
           console.log('pushing css item: ' + packageObjects[packageItem].main[index]);
-          requireLoadArray.push('css!'+(packageObjects[packageItem].main[index]).replace(/\\/g, '/'));
+          requireLoadArray.push('css!' + (packageObjects[packageItem].main[index]).replace(/\\/g, '/'));
         }
 
       });
@@ -67,13 +66,16 @@ gulp.task('includes', function () {
       }
 
       //Force a jquery dependency on Angular so that it uses full-jquery instead of jqlite
-      if(packageItem=="angular"){
+      if (packageItem == "angular") {
         depArray.push("jquery");
-        requireConf.shim[packageItem] = {deps: depArray,exports: 'angular'}
-      }else{
-
+        requireConf.shim[packageItem] = {deps: depArray, exports: 'angular'}
+      } else {
         requireConf.shim[packageItem] = {deps: depArray}
       }
+      if (packageItem == "socket.io.client") {
+        requireConf.shim[packageItem] = {exports: 'io'}
+      }
+
 
     }
   }
@@ -102,8 +104,8 @@ gulp.task('includes', function () {
       transform: function (filepath, file, i, length) {
         //Extract filename and use it as the itemname for app dependencies
         var filename = filepath.replace(/^.*[\\\/]/, '')
-        filename = filename.replace(filename.substr(filename.lastIndexOf('.')),'')
-        return '"' + filename + '":  "' + filepath.replace('.js','').replace('/app/','app/') + '"' + (i + 1 < length ? ',' : '');
+        filename = filename.replace(filename.substr(filename.lastIndexOf('.')), '')
+        return '"' + filename + '":  "' + filepath.replace('.js', '').replace('/app/', 'app/') + '"' + (i + 1 < length ? ',' : '');
       }
     }))
     .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js')], {read: false}), {
@@ -112,29 +114,29 @@ gulp.task('includes', function () {
       transform: function (filepath, file, i, length) {
         //Extract filename and use it as the itemname for app dependencies
         var filename = filepath.replace(/^.*[\\\/]/, '')
-        filename = filename.replace(filename.substr(filename.lastIndexOf('.')),'')
+        filename = filename.replace(filename.substr(filename.lastIndexOf('.')), '')
 
         return '"' + filename + '": {"deps": ["angular"]}' + (i + 1 < length ? ',' : '');
       }
     }))
-    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'),path.join(conf.paths.src, '/app/**/*.css'),'!'+ path.join(conf.paths.src, '/app/chatter/chatter.Bootstrap.js')])/*.pipe($.angularFilesort())*/, {
+    .pipe($.inject(gulp.src([path.join(conf.paths.src, '/app/**/*.js'), path.join(conf.paths.src, '/app/**/*.css'), '!' + path.join(conf.paths.src, '/app/chatter/chatter.Bootstrap.js')])/*.pipe($.angularFilesort())*/, {
       starttag: '/*BEGIN_APPARRDEPS*/',
       endtag: '/*END_APPARRDEPS*/',
       transform: function (filepath, file, i, length) {
 
 
-        console.log('file:'+ filepath)
-       //use the css loader requirejs plugin syntax for all non-js files
-       if((/(?:\.([^.]+))?$/).exec(filepath)[1]=='js'){
+        console.log('file:' + filepath)
+        //use the css loader requirejs plugin syntax for all non-js files
+        if ((/(?:\.([^.]+))?$/).exec(filepath)[1] == 'js') {
 
-         //Extract filename and use it as the itemname for app dependencies
-         var filename = filepath.replace(/^.*[\\\/]/, '')
-         filename = filename.replace(filename.substr(filename.lastIndexOf('.')),'')
+          //Extract filename and use it as the itemname for app dependencies
+          var filename = filepath.replace(/^.*[\\\/]/, '')
+          filename = filename.replace(filename.substr(filename.lastIndexOf('.')), '')
 
-         return '"' + filename + '"' + (i + 1 < length ? ',' : '');
-       }else{
-         return '"css!' + filepath.replace('/app/','app/') + '"' + (i + 1 < length ? ',' : '');
-       }
+          return '"' + filename + '"' + (i + 1 < length ? ',' : '');
+        } else {
+          return '"css!' + filepath.replace('/app/', 'app/') + '"' + (i + 1 < length ? ',' : '');
+        }
 
       }
     }))

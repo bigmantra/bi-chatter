@@ -17,17 +17,19 @@ define(["index.module"],function() {
 
   angular
     .module('bm.platform')
-    .directive("chatterFeed", ChatterFeedDirective);
+    .directive("chatterFeed", ['Topic',ChatterFeedDirective]);
 
-  function ChatterFeedDirective() {
+  function ChatterFeedDirective(Topic) {
     return {
       restrict: 'E',
       link:function(){
         console.log('Linked chatter-feed');
+        console.log(Topic.getAll());
+
+
       }
     };
   }
-
 
 
 
@@ -43,7 +45,6 @@ define(["index.module"],function() {
       }
     };
   }
-
 
 
 
