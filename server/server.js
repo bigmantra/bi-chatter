@@ -9,9 +9,9 @@ var config = require('./config');
 
 // Create a server with a host, port, and options
 var server = new Hapi.Server({
-  debug: {
+/*  debug: {
     log: ['error', 'log']
-  }
+  }*/
 });
 
 

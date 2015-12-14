@@ -5,7 +5,6 @@ var jsonDocTransform = require('../utils/J2HTransform')
 var jsonDocs = require('../utils/apiDocs');
 
 
-
 module.exports = [
 
   //Returns an array of topics with an HTTP 200 OK response.
@@ -30,13 +29,8 @@ module.exports = [
       ext: {
         onPostHandler: {
           method: function (request, reply) {
-
-            console.log(request.response.isBoom);
-
-            request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('getAll.Topics');
-
-            console.log('emitting event...');
-
+            request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.getAll',request.response.source);
+            //request.server.log('log', request.response.source);
             return reply.continue();
           }
         }
@@ -103,7 +97,7 @@ module.exports = [
   {
     method: 'GET',
     path: '/api/topics/{id}/comments/count',
-      config: {
+    config: {
       tags: ['api'], description: 'Get comments count for a topic',
       notes: json2html.transform(jsonDocs.getTopicCommentsCount, jsonDocTransform),
       handler: {
@@ -141,9 +135,9 @@ module.exports = [
         onPostHandler: {
           method: function (request, reply) {
             if (!request.response.isBoom) {
-              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.Create');
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.Create', request.response.source);
             }
-             return reply.continue();
+            return reply.continue();
           }
         }
       }
@@ -175,7 +169,6 @@ module.exports = [
   },
 
   //Associates comment childId with topic id. Returns an HTTP 204 No Content response on success. If the topic or comment are not found, returns an HTTP 404 Not Found response.
-
   {
     method: 'PUT',
     path: '/api/topics/{id}/comments/{childId}',
@@ -223,7 +216,6 @@ module.exports = [
   },
 
 //Removes association between topic id and comment childId. Returns an HTTP 204 No Content response on success. If the topic or comment doesn't exist, returns an HTTP 404 Not Found response.
-
   {
     method: 'DELETE',
     path: '/api/topics/{id}/comment/{childId}',
@@ -271,10 +263,10 @@ module.exports = [
 ]
 //Using a non-bedwetter endpoint -  controller handler
 /*
-  {
-    method: 'GET',
-    path: '/api/topic1/{id}',
-    config: controller.getTopic
-  }
-]
-*/
+ {
+ method: 'GET',
+ path: '/api/topic1/{id}',
+ config: controller.getTopic
+ }
+ ]
+ */

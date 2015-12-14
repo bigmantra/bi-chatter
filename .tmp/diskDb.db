@@ -127,6 +127,60 @@
         "createdAt": "2015-12-01T09:16:33.041Z",
         "updatedAt": "2015-12-01T09:16:33.041Z",
         "id": 21
+      },
+      {
+        "tet": "Girish you are amazing!!!!",
+        "createdAt": "2015-12-14T20:39:38.248Z",
+        "updatedAt": "2015-12-14T20:39:38.248Z",
+        "id": 22
+      },
+      {
+        "tet": "2 Girish you are amazing!!!!",
+        "createdAt": "2015-12-14T20:39:55.399Z",
+        "updatedAt": "2015-12-14T20:39:55.399Z",
+        "id": 23
+      },
+      {
+        "tet": "3 Girish you are amazing!!!!",
+        "createdAt": "2015-12-14T20:42:09.390Z",
+        "updatedAt": "2015-12-14T20:42:09.390Z",
+        "id": 24
+      },
+      {
+        "tet": "4 Girish you are amazing!!!!",
+        "createdAt": "2015-12-14T20:42:31.340Z",
+        "updatedAt": "2015-12-14T20:42:31.340Z",
+        "id": 25
+      },
+      {
+        "tet": "5 Girish you are amazing!!!!",
+        "createdAt": "2015-12-14T20:43:03.099Z",
+        "updatedAt": "2015-12-14T20:43:03.099Z",
+        "id": 26
+      },
+      {
+        "tet": "6 Girish you are amazing!!!!",
+        "createdAt": "2015-12-14T20:44:22.956Z",
+        "updatedAt": "2015-12-14T20:44:22.956Z",
+        "id": 27
+      },
+      {
+        "tet": "7 Girish you are amazing!!!!",
+        "createdAt": "2015-12-14T20:44:37.647Z",
+        "updatedAt": "2015-12-14T20:44:37.647Z",
+        "id": 28
+      },
+      {
+        "tet": "9 Girish you are amazing!!!!",
+        "createdAt": "2015-12-14T20:46:41.875Z",
+        "updatedAt": "2015-12-14T20:46:41.875Z",
+        "id": 29
+      },
+      {
+        "tet": "10 Girish you are amazing!!!!",
+        "createdAt": "2015-12-14T20:46:55.103Z",
+        "updatedAt": "2015-12-14T20:46:55.103Z",
+        "id": 30
       }
     ],
     "comments_topicid__topics_comments": [
@@ -298,7 +352,7 @@
   },
   "counters": {
     "topics": {
-      "id": 21
+      "id": 30
     },
     "comments": {
       "id": 5
