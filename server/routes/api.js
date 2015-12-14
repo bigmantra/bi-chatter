@@ -2,7 +2,8 @@
 var controller = require('../controllers/api');
 var json2html = require('node-json2html');
 var jsonDocTransform = require('../utils/J2HTransform')
-var jsonDocs=require('../utils/apiDocs');
+var jsonDocs = require('../utils/apiDocs');
+
 
 
 module.exports = [
@@ -17,7 +18,7 @@ module.exports = [
     config: {
       tags: ['api'], description: 'Get list of topics',
       notes: json2html.transform(jsonDocs.findTopics, jsonDocTransform),
-      pre:[function(request,reply){
+      pre: [function (request, reply) {
 
         console.log('Processing Pre');
         return reply();
@@ -25,6 +26,20 @@ module.exports = [
       }]
       , handler: {
         bedwetter: {prefix: '/api', populate: true}
+      },
+      ext: {
+        onPostHandler: {
+          method: function (request, reply) {
+
+            console.log(request.response.isBoom);
+
+            request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('getAll.Topics');
+
+            console.log('emitting event...');
+
+            return reply.continue();
+          }
+        }
       }
     }
   },
@@ -33,8 +48,13 @@ module.exports = [
   {
     method: 'GET',
     path: '/api/topics/count',
-    handler: {
-      bedwetter: {prefix: '/api'}
+
+    config: {
+      tags: ['api'], description: 'Get topic count',
+      notes: json2html.transform(jsonDocs.getTopicCount, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api'}
+      }
     }
   },
 
@@ -43,17 +63,38 @@ module.exports = [
   {
     method: 'GET',
     path: '/api/topics/{id}',
-    handler: {
-      bedwetter: {prefix: '/api', populate: true}
+    config: {
+      tags: ['api'], description: 'Get topic',
+      notes: json2html.transform(jsonDocs.findTopic, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api', populate: true}
+      },
+      ext: {
+        onPostHandler: {
+          method: function (request, reply) {
+
+            if (!request.response.isBoom) {
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.Get');
+            }
+
+            return reply.continue();
+          }
+        }
+      }
     }
+
   },
 
 //  Returns an array of comments associated with topic id. Returns HTTP 200 OK if that topic is found. Returns an HTTP 404 Not Found response if that topic is not found.
   {
     method: 'GET',
     path: '/api/topics/{id}/comments',
-    handler: {
-      bedwetter: {prefix: '/api', populate: true}
+    config: {
+      tags: ['api'], description: 'Get comments for a topic',
+      notes: json2html.transform(jsonDocs.getTopicComments, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api'}
+      }
     }
   },
 
@@ -62,8 +103,12 @@ module.exports = [
   {
     method: 'GET',
     path: '/api/topics/{id}/comments/count',
-    handler: {
-      bedwetter: {prefix: '/api', populate: true}
+      config: {
+      tags: ['api'], description: 'Get comments count for a topic',
+      notes: json2html.transform(jsonDocs.getTopicCommentsCount, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api', populate: true}
+      }
     }
   },
 
@@ -72,8 +117,12 @@ module.exports = [
   {
     method: 'GET',
     path: '/api/topics/{id}/comments/{childId}',
-    handler: {
-      bedwetter: {prefix: '/api', populate: true}
+    config: {
+      tags: ['api'], description: 'Get a specific comment under a topic',
+      notes: json2html.transform(jsonDocs.getTopicComment, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api', populate: true}
+      }
     }
   },
 
@@ -82,8 +131,22 @@ module.exports = [
   {
     method: 'POST',
     path: '/api/topics',
-    handler: {
-      bedwetter: {prefix: '/api'}
+    config: {
+      tags: ['api'], description: 'Create a new Topic',
+      notes: json2html.transform(jsonDocs.createTopic, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api'}
+      },
+      ext: {
+        onPostHandler: {
+          method: function (request, reply) {
+            if (!request.response.isBoom) {
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.Create');
+            }
+             return reply.continue();
+          }
+        }
+      }
     }
   },
 
@@ -92,8 +155,22 @@ module.exports = [
   {
     method: 'POST',
     path: '/api/topics/{id}/comments',
-    handler: {
-      bedwetter: {prefix: '/api'}
+    config: {
+      tags: ['api'], description: 'Associate an existing comment with a Topic',
+      notes: json2html.transform(jsonDocs.createComment, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api'}
+      },
+      ext: {
+        onPostHandler: {
+          method: function (request, reply) {
+            if (!request.response.isBoom) {
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Comment.Create');
+            }
+            return reply.continue();
+          }
+        }
+      }
     }
   },
 
@@ -102,8 +179,22 @@ module.exports = [
   {
     method: 'PUT',
     path: '/api/topics/{id}/comments/{childId}',
-    handler: {
-      bedwetter: {prefix: '/api'}
+    config: {
+      tags: ['api'], description: 'Associate an existing with a Topic',
+      notes: json2html.transform(jsonDocs.associateComment, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api'}
+      },
+      ext: {
+        onPostHandler: {
+          method: function (request, reply) {
+            if (!request.response.isBoom) {
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Comment.Associate');
+            }
+            return reply.continue();
+          }
+        }
+      }
     }
   },
 
@@ -112,8 +203,22 @@ module.exports = [
   {
     method: 'DELETE',
     path: '/api/topics/{id}',
-    handler: {
-      bedwetter: {prefix: '/api'}
+    config: {
+      tags: ['api'], description: 'Destroy a Topic',
+      notes: json2html.transform(jsonDocs.deleteTopic, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api'}
+      },
+      ext: {
+        onPostHandler: {
+          method: function (request, reply) {
+            if (!request.response.isBoom) {
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.Delete');
+            }
+            return reply.continue();
+          }
+        }
+      }
     }
   },
 
@@ -122,8 +227,22 @@ module.exports = [
   {
     method: 'DELETE',
     path: '/api/topics/{id}/comment/{childId}',
-    handler: {
-      bedwetter: {prefix: '/api'}
+    config: {
+      tags: ['api'], description: 'Remove association between topic id and comment childId',
+      notes: json2html.transform(jsonDocs.disassociateComment, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api'}
+      },
+      ext: {
+        onPostHandler: {
+          method: function (request, reply) {
+            if (!request.response.isBoom) {
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Comment.Disassociate');
+            }
+            return reply.continue();
+          }
+        }
+      }
     }
   },
 
@@ -131,15 +250,31 @@ module.exports = [
   {
     method: 'PATCH',
     path: '/api/topics/{id}',
-    handler: {
-      bedwetter: {prefix: '/api'}
+    config: {
+      tags: ['api'], description: 'Patch a Topic',
+      notes: json2html.transform(jsonDocs.patchTopic, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api'}
+      },
+      ext: {
+        onPostHandler: {
+          method: function (request, reply) {
+            if (!request.response.isBoom) {
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.Patch');
+            }
+            return reply.continue();
+          }
+        }
+      }
     }
   },
-
+]
 //Using a non-bedwetter endpoint -  controller handler
+/*
   {
     method: 'GET',
     path: '/api/topic1/{id}',
     config: controller.getTopic
   }
 ]
+*/

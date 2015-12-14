@@ -9,7 +9,7 @@ module.exports = [
       reporters: [{
         reporter: require('good-console'),
         events: {
-          response : '*',
+          response: '*',
           log: '*',
           error: '*',
           ops: '*'
@@ -24,9 +24,13 @@ module.exports = [
     register: require('blipp')
   },
   {
+    register:require('../modules/socket-handler')
+  },
+  {
     register: require('bedwetter')
 
   },
+
   {register: require('vision')},
   {
     register: require('hapi-swaggered'),
@@ -56,6 +60,4 @@ module.exports = [
       swaggerOptions: {"docExpansion": "list"}
     }
   }
-
-
 ];

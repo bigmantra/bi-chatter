@@ -8,7 +8,19 @@ var Hapi = require('hapi');
 var config = require('./config');
 
 // Create a server with a host, port, and options
-var server = new Hapi.Server();
+var server = new Hapi.Server({
+  debug: {
+    log: ['error', 'log']
+  }
+});
+
+
+//Added this as for some reason Hapi doesnt seem to log errors properly otherwise
+
+process.on('uncaughtException', function(err) {
+  console.log('Caught exception: ' + err);
+});
+
 
 server.select('api');
 
@@ -29,19 +41,23 @@ var registerOpts = [
 ];
 
 
+var start = function (cb) {
 
-var start = function(cb){
+  server.register(registerOpts, function (err) {
 
-  server.register(registerOpts, function(err) {
+    if (err) {
 
-    if (err) throw err;
+      console.log('An error................')
+      console.error(err);
+      throw err;
 
-    server.start(function() {
+    }
+    server.start(function () {
 
       console.log("Hapi server started @ " + server.info.uri.replace('0.0.0.0', 'localhost'));
 
-      if(cb) {
-          cb();
+      if (cb) {
+        cb();
       }
 
     });
@@ -60,7 +76,7 @@ module.exports = {
 start();
 
 /*
-if (!module.parent) {
+ if (!module.parent) {
 
-  start(startSync);
-}*/
+ start(startSync);
+ }*/

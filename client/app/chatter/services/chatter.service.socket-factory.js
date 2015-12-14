@@ -7,7 +7,7 @@ define(["https://cdn.socket.io/socket.io-1.3.7.js","index.module"], function (io
 
       var chatterIoSocket, chatterSocket;
 
-      chatterIoSocket = io.connect();
+      chatterIoSocket = io.connect("http://localhost:8000");
 
       return socketFactory({
         ioSocket: chatterIoSocket
@@ -16,3 +16,4 @@ define(["https://cdn.socket.io/socket.io-1.3.7.js","index.module"], function (io
     });
 
 });
+

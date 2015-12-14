@@ -76,11 +76,20 @@ define(["index.module"], function () {
       });
 
 
+      Socket.on('getAll.Topics', function (data) {
+        // as we already have new Topic we just add it to cache with
+        // initObject call
+        console.log('Topics Retreived by someone............');
+        console.log(data);
+      });
+
+
       Socket.on('UpdateTopic', function (updatedTopic) {
         // as we already have new Topic we just add it to cache with
         // initObject call
         initObject(updatedTopic);
       });
+
 
 
       Socket.on('DeleteTopic', function (id) {

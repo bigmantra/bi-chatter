@@ -23,6 +23,7 @@ var config = {
   package: pjson,
   hapi: {
     options: {
+
       routes: {
         cors: true,
         files: {
