@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "noImplicitAny": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "moduleResolution": "classic",
+    "sourceMap": true
+  },
+  "exclude": [
+    "bower_components",
+    "dist",
+    ".tmp"
+  ]
+}

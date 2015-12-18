@@ -141,9 +141,7 @@ define(["index.module"], function () {
       Socket.on('Topic.Delete', function (id) {
         // here we can find the Topic in the cache by its ID and remove it
         delete cache[id];
-        // if we cache in array we should do something like
-        //var index = lodash.findIndex(cache, {id: id});
-        //cache.splice(index, 1);
+
       });
 
       Socket.on('Comment.Delete', function (commentId) {
@@ -156,9 +154,6 @@ define(["index.module"], function () {
           });
 
         });
-//
-
-
 
 
 
