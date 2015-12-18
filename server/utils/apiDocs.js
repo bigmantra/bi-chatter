@@ -28,7 +28,7 @@ module.exports={
   getTopicComment:{
     description:'Get a specific comment under a topic.',
     returns: 'Object: A comment object under a topic.Returns HTTP 204 No Content if comment childId is associated with topic id. Returns an HTTP 404 Not Found response if that topic is not found or that comment is not associated with the topic.',
-    usage: 'GET /api/topics/{topicId}/comments/{commentId}'
+    usage: 'GET /api/comments/{commentId}'
   },
   createTopic:{
     description:'Creates a new topic using the request payload and returns it with an HTTP 201 Created response.',
@@ -62,7 +62,11 @@ module.exports={
     returns: 'Object: Responds with the updated topic. Returns an HTTP 200 OK response on success. If the topic doesnt exist, returns an HTTP 404 Not Found response',
     usage: 'PATCH /api/topics/{topicId}'
   },
-
+  deleteComment:{
+    description:'Destroys comment with id. ',
+    returns: 'Returns an HTTP 204 No Content response on success. If the comment doesnt exist, returns an HTTP 404 Not Found response.',
+    usage: 'DELETE /api/comments/{commentId}'
+  },
 
 
 

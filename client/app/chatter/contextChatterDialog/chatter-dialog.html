@@ -30,6 +30,8 @@
 
 
         <chatter-feed resource="/api/feeds/1">
+          {{ topics | json : 2}}
+
           <chatter-topics>
             <chatter-new-topic></chatter-new-topic>
             <chatter-topic>
@@ -43,6 +45,9 @@
 
 
       </div>
+
+
+
     </md-dialog-content>
 
 

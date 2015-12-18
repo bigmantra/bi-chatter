@@ -22,15 +22,23 @@ define(["index.module"],function() {
   function ChatterFeedDirective(Topic) {
     return {
       restrict: 'E',
-      link:function(){
+      link:function(scope, iElement, iAttrs){
         console.log('Linked chatter-feed');
-        console.log(Topic.getAll());
+
+        Topic.getAll().then(function(data){
+          scope.topics=data;
+          console.log(data);
+        });
+
+        Topic.getOne(1).then(function(data){
+          console.log('logging 1');
+          console.log(data);
+        });
 
 
       }
     };
   }
-
 
 
   angular

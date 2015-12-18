@@ -106,16 +106,18 @@ module.exports = [
     }
   },
 
+
+
 //Returns HTTP 204 No Content if comment childId is associated with topic id. Returns an HTTP 404 Not Found response if that topic is not found or that comment is not associated with the topic.
 
   {
     method: 'GET',
-    path: '/api/topics/{id}/comments/{childId}',
+    path: '/api/comments/{id}',
     config: {
       tags: ['api'], description: 'Get a specific comment under a topic',
       notes: json2html.transform(jsonDocs.getTopicComment, jsonDocTransform),
       handler: {
-        bedwetter: {prefix: '/api', populate: true}
+        bedwetter: {prefix: '/api'}
       }
     }
   },
@@ -159,7 +161,7 @@ module.exports = [
         onPostHandler: {
           method: function (request, reply) {
             if (!request.response.isBoom) {
-              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Comment.Create');
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Comment.Create',request.params.id,request.response.source);
             }
             return reply.continue();
           }
@@ -206,7 +208,9 @@ module.exports = [
         onPostHandler: {
           method: function (request, reply) {
             if (!request.response.isBoom) {
-              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.Delete');
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.Delete',request.params.id);
+              console.log('deleted topic');
+
             }
             return reply.continue();
           }
@@ -229,7 +233,7 @@ module.exports = [
         onPostHandler: {
           method: function (request, reply) {
             if (!request.response.isBoom) {
-              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Comment.Disassociate');
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Comment.Disassociate',request.params.id,request.params.childId);
             }
             return reply.continue();
           }
@@ -252,7 +256,7 @@ module.exports = [
         onPostHandler: {
           method: function (request, reply) {
             if (!request.response.isBoom) {
-              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.Patch');
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Topic.Patch',request.response.source);
             }
             return reply.continue();
           }
@@ -260,6 +264,30 @@ module.exports = [
       }
     }
   },
+  //Destroys Comment with id. Returns an HTTP 204 No Content response on success. If the comment doesn't exist, returns an HTTP 404 Not Found response.
+
+  {
+    method: 'DELETE',
+    path: '/api/comments/{id}',
+    config: {
+      tags: ['api'], description: 'Destroy a Comment',
+      notes: json2html.transform(jsonDocs.deleteComment, jsonDocTransform),
+      handler: {
+        bedwetter: {prefix: '/api'}
+      },
+      ext: {
+        onPostHandler: {
+          method: function (request, reply) {
+            if (!request.response.isBoom) {
+              request.server.plugins['ChatterSocketConnectionManager'].io.sockets.emit('Comment.Delete',request.params.id);
+
+            }
+            return reply.continue();
+          }
+        }
+      }
+    }
+  }
 ]
 //Using a non-bedwetter endpoint -  controller handler
 /*
