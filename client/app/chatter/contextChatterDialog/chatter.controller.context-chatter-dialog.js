@@ -32,7 +32,7 @@ define(["index.module"], function () {
     },{
       name: 'Morris Onions',
       image: 'assets/images/avatars/avatar-6.png',
-      messages: ['We need those images ASAP!', 'Client asked about them.']
+      messages: ['We need those images ASAP!', 'Client asked about them.wow']
     },{
       name: 'Danny Ings',
       image: 'assets/images/avatars/avatar-3.png',

@@ -3,154 +3,22 @@
     "comments_topicsid__topics_commentss": [],
     "topics": [
       {
-        "text": null,
-        "createdAt": "2015-11-30T17:51:17.000Z",
-        "updatedAt": "2015-12-15T17:49:00.874Z",
-        "id": 1
+        "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "createdAt": "2015-12-19T20:56:53.909Z",
+        "updatedAt": "2015-12-19T20:56:53.909Z",
+        "id": 85
       },
       {
-        "text": "First topics",
-        "createdAt": "2015-11-30T17:53:23.572Z",
-        "updatedAt": "2015-12-17T19:00:43.601Z",
-        "id": 2
+        "text": "Why is the profit sooo low",
+        "createdAt": "2015-12-19T21:17:35.158Z",
+        "updatedAt": "2015-12-19T21:17:35.158Z",
+        "id": 88
       },
       {
-        "text": "Second topics",
-        "createdAt": "2015-11-30T17:53:31.301Z",
-        "updatedAt": "2015-11-30T17:53:31.301Z",
-        "id": 3
-      },
-      {
-        "text": "Second topics",
-        "createdAt": "2015-11-30T17:55:19.424Z",
-        "updatedAt": "2015-11-30T17:55:19.424Z",
-        "id": 4
-      },
-      {
-        "text": "4th topics",
-        "createdAt": "2015-11-30T18:01:44.508Z",
-        "updatedAt": "2015-11-30T18:01:44.508Z",
-        "id": 5
-      },
-      {
-        "text": "4th topics",
-        "createdAt": "2015-11-30T18:05:57.146Z",
-        "updatedAt": "2015-11-30T18:05:57.146Z",
-        "id": 6
-      },
-      {
-        "text": "4th topics",
-        "createdAt": "2015-11-30T18:06:02.279Z",
-        "updatedAt": "2015-11-30T18:06:02.279Z",
-        "id": 7
-      },
-      {
-        "text": "4th topics",
-        "createdAt": "2015-11-30T18:06:02.927Z",
-        "updatedAt": "2015-11-30T18:06:02.927Z",
-        "id": 8
-      },
-      {
-        "text": "10th topics",
-        "createdAt": "2015-11-30T18:09:54.022Z",
-        "updatedAt": "2015-11-30T18:09:54.022Z",
-        "id": 9
-      },
-      {
-        "text": "4th topic",
-        "createdAt": "2015-11-30T21:50:21.197Z",
-        "updatedAt": "2015-11-30T21:50:21.197Z",
-        "id": 13
-      },
-      {
-        "text": "4th topic",
-        "createdAt": "2015-11-30T21:52:54.637Z",
-        "updatedAt": "2015-11-30T21:52:54.637Z",
-        "id": 14
-      },
-      {
-        "text": "15th topic",
-        "createdAt": "2015-11-30T21:53:04.576Z",
-        "updatedAt": "2015-11-30T21:53:04.576Z",
-        "id": 15
-      },
-      {
-        "text": "16th topic",
-        "createdAt": "2015-11-30T21:53:09.538Z",
-        "updatedAt": "2015-11-30T21:53:09.538Z",
-        "id": 16
-      },
-      {
-        "text": "17th topic",
-        "createdAt": "2015-11-30T22:05:30.448Z",
-        "updatedAt": "2015-11-30T22:05:30.448Z",
-        "id": 17
-      },
-      {
-        "text": "18th topic",
-        "createdAt": "2015-12-01T08:03:21.215Z",
-        "updatedAt": "2015-12-01T08:03:21.215Z",
-        "id": 18
-      },
-      {
-        "tet": "18th topic",
-        "createdAt": "2015-12-01T08:03:25.937Z",
-        "updatedAt": "2015-12-01T08:03:25.937Z",
-        "id": 19
-      },
-      {
-        "tet": "18th topic",
-        "createdAt": "2015-12-01T08:03:32.199Z",
-        "updatedAt": "2015-12-01T08:03:32.199Z",
-        "id": 20
-      },
-      {
-        "text": "humteenthth topic",
-        "createdAt": "2015-12-01T09:16:33.041Z",
-        "updatedAt": "2015-12-01T09:16:33.041Z",
-        "id": 21
-      },
-      {
-        "tet": "Girish you are amazing!!!!",
-        "createdAt": "2015-12-14T20:39:38.248Z",
-        "updatedAt": "2015-12-14T20:39:38.248Z",
-        "id": 22
-      },
-      {
-        "tet": "2 Girish you are amazing!!!!",
-        "createdAt": "2015-12-14T20:39:55.399Z",
-        "updatedAt": "2015-12-14T20:39:55.399Z",
-        "id": 23
-      },
-      {
-        "tet": "4 Girish you are amazing!!!!",
-        "createdAt": "2015-12-14T20:42:31.340Z",
-        "updatedAt": "2015-12-14T20:42:31.340Z",
-        "id": 25
-      },
-      {
-        "tet": "32nd topic",
-        "createdAt": "2015-12-17T15:05:57.477Z",
-        "updatedAt": "2015-12-17T15:05:57.477Z",
-        "id": 33
-      },
-      {
-        "tet": "34nd topic",
-        "createdAt": "2015-12-17T15:06:11.096Z",
-        "updatedAt": "2015-12-17T15:06:11.096Z",
-        "id": 34
-      },
-      {
-        "text": "Ham bresaola tail spare ribs fatback strip steak doner swine, bacon leberkas.Venison tenderloin salami, ground round beef jowl filet mignon cow hamburger rump fatback landjaeger. Salami meatball ground round spare ribs turducken pork chop.Pastrami ribeye shoulder jowl meatball. T-bone turkey venison salami pancetta shoulder shankle meatball doner ground round. Rump ham boudin,leberkas venison short loin swine pancetta beef ribs doner drumstick pork pig. T-bone rump strip steak swine bresaola leberkas shoulder picanha andouille spare ribs.",
-        "createdAt": "2015-12-17T15:07:41.486Z",
-        "updatedAt": "2015-12-17T15:07:41.486Z",
-        "id": 35
-      },
-      {
-        "text": "whaaaaaaaaaaaaaaaaaaaaaaaaat",
-        "createdAt": "2015-12-18T09:07:53.627Z",
-        "updatedAt": "2015-12-18T10:10:21.954Z",
-        "id": 37
+        "text": "Why is the profit sooo low",
+        "createdAt": "2015-12-19T21:17:41.364Z",
+        "updatedAt": "2015-12-19T21:17:41.364Z",
+        "id": 89
       }
     ],
     "comments_topicid__topics_comments": [],
@@ -265,7 +133,7 @@
   },
   "counters": {
     "topics": {
-      "id": 37
+      "id": 105
     },
     "comments": {
       "id": 21

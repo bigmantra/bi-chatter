@@ -1,13 +1,37 @@
-
-
-define(["index.module"],function() {
+define(["index.module"], function () {
   'use strict';
 
   angular
     .module('bm.platform')
-    .factory('TopicApi', function($resource) {
-      return $resource('http://localhost:8000/api/topics/:id'); // Note the full endpoint address
+    .factory('TopicApi', function ($resource) {
+      return $resource('http://localhost:8000/api/topics/:id', {
+        sort: '@sort' //pass in param using @ syntax
+      }, {
+        'query': {
+          method: 'GET', isArray: true,
+          /*transformResponse: function (data, header) {
+
+            //Getting string data in response
+            var jsonData = JSON.parse(data); //or angular.fromJson(data)
+            var topics = [];
+
+            angular.forEach(jsonData, function(topic){
+              topics.push(topic);
+            });
+
+            console.log(topics);
+
+            return topics;
+
+          }
+*/
+        }
+      });
     });
 
 
 });
+
+
+
+

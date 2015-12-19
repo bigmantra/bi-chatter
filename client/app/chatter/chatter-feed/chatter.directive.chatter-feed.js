@@ -1,143 +1,123 @@
-//<chatter-feed resource="/api/feeds/1">
-//  <chatter-topics>
-//    <chatter-new-topic></chatter-new-topic>
-//    <chatter-topic>
-//      <chatter-comments>
-//        <chatter-comment></chatter-comment>
-//      </chatter-comments>
-//      <chatter-new-comment></chatter-new-comment>
-//    </chatter-topic>
-//  </chatter-topics>
-//</chatter-feed>
-
-
-
-define(["index.module"],function() {
-  'use strict';
-
-  angular
-    .module('bm.platform')
-    .directive("chatterFeed", ['Topic',ChatterFeedDirective]);
-
-  function ChatterFeedDirective(Topic) {
-    return {
-      restrict: 'E',
-      link:function(scope, iElement, iAttrs){
-        console.log('Linked chatter-feed');
-
-        Topic.getAll().then(function(data){
-          scope.topics=data;
-          console.log(data);
-        });
-
-        Topic.getOne(1).then(function(data){
-          console.log('logging 1');
-          console.log(data);
-        });
-
-
-      }
-    };
-  }
-
-
-  angular
-    .module('bm.platform')
-    .directive("chatterTopics", ChatterTopicsDirective);
-
-  function ChatterTopicsDirective() {
-    return {
-      restrict: 'E',
-      link:function(){
-        console.log('Linked chatter-topics');
-      }
-    };
-  }
-
-
-
-  angular
-    .module('bm.platform')
-    .directive("chatterNewTopic", ChatterNewTopicDirective);
-
-  function ChatterNewTopicDirective() {
-    return {
-      restrict: 'E',
-      link:function(){
-        console.log('Linked chatter-new-topic');
-      }
-    };
-  }
-
-
-
-  angular
-    .module('bm.platform')
-    .directive("chatterTopic", ChatterTopicDirective);
-
-  function ChatterTopicDirective() {
-    return {
-      restrict: 'E',
-      link:function(){
-        console.log('Linked chatter-topic');
-      }
-    };
-  }
-
-
-
-  angular
-    .module('bm.platform')
-    .directive("chatterComments", ChatterCommentsDirective);
-
-  function ChatterCommentsDirective() {
-    return {
-      restrict: 'E',
-      link:function(){
-        console.log('Linked chatter-comments');
-      }
-    };
-  }
-
-
-
-  angular
-    .module('bm.platform')
-    .directive("chatterComment", ChatterCommentDirective);
-
-  function ChatterCommentDirective() {
-    return {
-      restrict: 'E',
-      link:function(){
-        console.log('Linked chatter-comment');
-      }
-    };
-  }
-
-
-  angular
-    .module('bm.platform')
-    .directive("chatterNewComment", ChatterNewCommentDirective);
-
-  function ChatterNewCommentDirective() {
-    return {
-      restrict: 'E',
-      link:function(){
-        console.log('Linked chatter-new-comment');
-      }
-    };
-  }
-
-
-
-
-
-
-
+define(["require", "exports", 'index.module'], function (require, exports, bmPlatformApp) {
+    var ChatterFeedDirectiveController = (function () {
+        function ChatterFeedDirectiveController(TopicService) {
+            var _this = this;
+            this.TopicService = TopicService;
+            TopicService.getAll().then(function (data) {
+                _this.topics = data;
+                console.log(data);
+                console.log('logging from ctrller');
+            });
+        }
+        ChatterFeedDirectiveController.prototype.addTopic = function () {
+            return { name: 'newly added topic' }; // return newly added topic
+        };
+        ChatterFeedDirectiveController.$inject = ['TopicService'];
+        return ChatterFeedDirectiveController;
+    })();
+    var ChatterFeedDirective = (function () {
+        function ChatterFeedDirective(TopicService) {
+            this.TopicService = TopicService;
+            this.restrict = 'E';
+            //require = 'ngModel';
+            this.controller = ChatterFeedDirectiveController;
+            this.controllerAs = 'chatterFeedCtrl';
+            this.templateUrl = 'http://localhost:3000/app/chatter/chatter-feed/chatter-feed.html';
+        }
+        /*  link = (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: any) => {
+        
+            this.TopicService.getAll().then(function(data:any){
+              //scope.topics=data;
+              console.log(data);
+            });
+        
+          };*/
+        ChatterFeedDirective.factory = function () {
+            var directive = function (TopicService) { return new ChatterFeedDirective(TopicService); };
+            directive.$inject = ['TopicService'];
+            return directive;
+        };
+        return ChatterFeedDirective;
+    })();
+    bmPlatformApp.directive('chatterFeed', ChatterFeedDirective.factory());
 });
+/*
+
+bmPlatformApp.directive("chatterTopics", ChatterTopicsDirective);
+
+function ChatterTopicsDirective() {
+  return {
+    restrict: 'E',
+    link:function(){
+      console.log('Linked chatter-topics');
+    }
+  };
+}
 
 
 
+bmPlatformApp.directive("chatterNewTopic", ChatterNewTopicDirective);
+
+function ChatterNewTopicDirective() {
+  return {
+    restrict: 'E',
+    link:function(){
+      console.log('Linked chatter-new-topic');
+    }
+  };
+}
 
 
 
+bmPlatformApp.directive("chatterTopic", ChatterTopicDirective);
+
+function ChatterTopicDirective() {
+  return {
+    restrict: 'E',
+    link:function(){
+      console.log('Linked chatter-topic');
+    }
+  };
+}
+
+
+
+bmPlatformApp.directive("chatterComments", ChatterCommentsDirective);
+
+function ChatterCommentsDirective() {
+  return {
+    restrict: 'E',
+    link:function(){
+      console.log('Linked chatter-comments');
+    }
+  };
+}
+
+
+
+bmPlatformApp.directive("chatterComment", ChatterCommentDirective);
+
+function ChatterCommentDirective() {
+  return {
+    restrict: 'E',
+    link:function(){
+      console.log('Linked chatter-comment');
+    }
+  };
+}
+
+
+bmPlatformApp.directive("chatterNewComment", ChatterNewCommentDirective);
+
+function ChatterNewCommentDirective() {
+  return {
+    restrict: 'E',
+    link:function(){
+      console.log('Linked chatter-new-comment');
+    }
+  };
+}
+
+
+ */
+//# sourceMappingURL=chatter.directive.chatter-feed.js.map

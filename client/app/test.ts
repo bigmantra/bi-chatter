@@ -1,22 +1,13 @@
 
-import angular=require('jquery');
+module mod1{
 
+interface ClockInterface {
+  time:Date
+}
 
-
-import angular2=require('index.module');
-
-
-
-
-
-class Person1{
-
-  constructor(private firstName:string,public lastName:string){
-
-
-
-
-  }
-
+class Clock implements ClockInterface  {
+  time: Date;
+  constructor(h: number, m: number) { };
+}
 
 }

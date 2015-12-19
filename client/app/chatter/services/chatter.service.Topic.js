@@ -4,7 +4,7 @@ define(["index.module"], function () {
 
   angular
     .module('bm.platform')
-    .factory('Topic', ['$rootScope', '$q', 'TopicApi','CommentApi', 'Socket','lodash', function ($rootScope, $q, TopicApi,CommentApi, Socket,lodash) {
+    .factory('TopicService', ['$rootScope', '$q', 'TopicApi','CommentApi', 'Socket','lodash', function ($rootScope, $q, TopicApi,CommentApi, Socket,lodash) {
       // here we use a simple in memory cache in order to keep actual data
       var cache = {};
 
@@ -26,8 +26,11 @@ define(["index.module"], function () {
 
 
       Topic.getAll = function (options) {
-        var apiResult = TopicApi.query(options).$promise.then(function (Topics) {
+        var apiResult = TopicApi.query({sort:'id DESC'}).$promise.then(function (Topics) {
           angular.copy({}, cache);
+
+
+
           lodash.map(Topics, function (Topic) {
             return initObject(Topic);
           });
@@ -89,10 +92,6 @@ define(["index.module"], function () {
             delete cache[self.id];
             console.log('deleted ',self.id);
           });
-
-      /*  TopicApi.remove(self.id).then(function () {
-          delete cache[self.id];
-        });*/
 
 
       };
@@ -158,7 +157,6 @@ define(["index.module"], function () {
 
 
       });
-
 
       return Topic;
     }]);

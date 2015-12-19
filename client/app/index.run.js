@@ -11,7 +11,6 @@ define(["index.module"],function() {
 
     $log.debug('runBlock end');
 
-
 //To remove later
     $templateCache.put("template/accordion/accordion-group.html",
       "<div class=\"topic\">\n" +
