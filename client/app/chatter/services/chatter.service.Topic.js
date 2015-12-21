@@ -4,8 +4,8 @@ define(["index.module"], function () {
 
   angular
     .module('bm.platform')
-    .factory('TopicService', ['$rootScope', '$q', 'TopicApi','CommentApi', 'Socket','lodash', function ($rootScope, $q, TopicApi,CommentApi, Socket,lodash) {
-      // here we use a simple in memory cache in order to keep actual data
+    .factory('TopicService', ['$rootScope', '$q', 'TopicApi', 'CommentApi', 'Socket', 'lodash', function ($rootScope, $q, TopicApi, CommentApi, Socket, lodash) {
+      // here we use a simple in memory cache in order to keep actual data synced up in the client
       var cache = {};
 
       var initObject = function (data) {
@@ -26,9 +26,8 @@ define(["index.module"], function () {
 
 
       Topic.getAll = function (options) {
-        var apiResult = TopicApi.query({sort:'id DESC'}).$promise.then(function (Topics) {
+        var apiResult = TopicApi.query({sort: 'id DESC'}).$promise.then(function (Topics) {
           angular.copy({}, cache);
-
 
 
           lodash.map(Topics, function (Topic) {
@@ -47,12 +46,12 @@ define(["index.module"], function () {
 
       Topic.getOne = function (id) {
 
-        var apiResult=TopicApi.get({id:id}).$promise.then(
-          function(topic) {
+        var apiResult = TopicApi.get({id: id}).$promise.then(
+          function (topic) {
 
             return initObject(topic);
 
-        });
+          });
 
         if (lodash.isEmpty(cache[id])) {
           return apiResult;
@@ -66,8 +65,8 @@ define(["index.module"], function () {
 
       Topic.create = function (data) {
 
-        var apiResult=TopicApi.save(data).$promise.then(
-          function(topic) {
+        var apiResult = TopicApi.save(data).$promise.then(
+          function (topic) {
             return initObject(topic);
           });
 
@@ -77,28 +76,29 @@ define(["index.module"], function () {
           return $q.when(cache[data.id]);
         }
 
-/*        return TopicApi.create(data).then(function (Topic) {
-          return initObject(Topic);
-        });
-*/
+        /*        return TopicApi.create(data).then(function (Topic) {
+         return initObject(Topic);
+         });
+         */
       };
 
 
       Topic.prototype.remove = function () {
         var self = this;
 
-        var apiResult=TopicApi.remove({id:self.id}).$promise.then(
-          function() {
+        var apiResult = TopicApi.remove({id: self.id}).$promise.then(
+          function () {
             delete cache[self.id];
-            console.log('deleted ',self.id);
+            console.log('deleted ', self.id);
           });
 
 
       };
 
-      Topic.prototype.removeComment = function (commentId) {
+
+      Topic.removeComment = function (commentId) {
         var self = this;
-        CommentApi.remove({commentId:commentId});
+        CommentApi.remove({commentId: commentId});
         console.log('comment removed...');
 
       };
@@ -114,19 +114,25 @@ define(["index.module"], function () {
       });
 
 
-      Socket.on('Comment.Create', function (topicId,newComment) {
+      Socket.on('Comment.Create', function (topicId, newComment) {
         // as we should already have the Topic we just add the comment to cache ...
-        console.log('new comment received for topic:',topicId);
+        console.log('new comment received for topic:', topicId);
         console.log(newComment);
-        var index = lodash.findIndex(cache, {id: topicId});
-        if(index>0){
+
+        var result = lodash.pick(cache, function (value, key) {
+          return (key == topicId);
+        });
+
+        if (result) {
           cache[topicId].comments.push(newComment)
           console.log('added comment into topic');
         }
-        else console.log('cannot find topic in local memory cache so cant add comment into cache...');
+        else {
+          console.log('cannot find topic in local memory cache so cant add comment into cache...');
+
+        }
 
       });
-
 
 
       Socket.on('Topic.Patch', function (updatedTopic) {
@@ -134,7 +140,6 @@ define(["index.module"], function () {
         // initObject call
         initObject(updatedTopic);
       });
-
 
 
       Socket.on('Topic.Delete', function (id) {
@@ -145,15 +150,14 @@ define(["index.module"], function () {
 
       Socket.on('Comment.Delete', function (commentId) {
 
-        console.log('comment to be deleted:',commentId);
+        console.log('comment to be deleted:', commentId);
 
-        lodash.forEach(cache, function(topic) {
-          lodash.remove(cache[topic.id].comments, function(currentObject) {
+        lodash.forEach(cache, function (topic) {
+          lodash.remove(cache[topic.id].comments, function (currentObject) {
             return currentObject.id == commentId;
           });
 
         });
-
 
 
       });

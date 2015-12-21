@@ -3,26 +3,42 @@
     "comments_topicsid__topics_commentss": [],
     "topics": [
       {
-        "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        "createdAt": "2015-12-19T20:56:53.909Z",
-        "updatedAt": "2015-12-19T20:56:53.909Z",
-        "id": 85
-      },
-      {
-        "text": "Why is the profit sooo low",
-        "createdAt": "2015-12-19T21:17:35.158Z",
-        "updatedAt": "2015-12-19T21:17:35.158Z",
-        "id": 88
-      },
-      {
-        "text": "Why is the profit sooo low",
-        "createdAt": "2015-12-19T21:17:41.364Z",
-        "updatedAt": "2015-12-19T21:17:41.364Z",
-        "id": 89
+        "text": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,",
+        "createdAt": "2015-12-21T10:46:10.775Z",
+        "updatedAt": "2015-12-21T12:11:36.727Z",
+        "id": 187
       }
     ],
-    "comments_topicid__topics_comments": [],
-    "comments": []
+    "comments_topicid__topics_comments": [
+      {
+        "comments_topicId": 38,
+        "topics_comments": 187,
+        "id": 38
+      }
+    ],
+    "comments": [
+      {
+        "text": "comment 2 whaaaaaaaaaaaaaaaaaaaaaaaaat",
+        "topicId": 186,
+        "createdAt": "2015-12-21T10:42:54.770Z",
+        "updatedAt": "2015-12-21T10:42:54.770Z",
+        "id": 22
+      },
+      {
+        "text": "comment 2 whaaaaaaaaaaaaaaaaaaaaaaaaat",
+        "topicId": 178,
+        "createdAt": "2015-12-21T10:43:42.768Z",
+        "updatedAt": "2015-12-21T10:43:42.768Z",
+        "id": 23
+      },
+      {
+        "text": "comment 9 whaaaaaaaaaaaaaaaaaaaaaaaaat",
+        "topicId": 187,
+        "createdAt": "2015-12-21T12:11:36.719Z",
+        "updatedAt": "2015-12-21T12:11:36.719Z",
+        "id": 38
+      }
+    ]
   },
   "schema": {
     "comments_topicsid__topics_commentss": {
@@ -133,14 +149,14 @@
   },
   "counters": {
     "topics": {
-      "id": 105
+      "id": 189
     },
     "comments": {
-      "id": 21
+      "id": 38
     },
     "comments_topicsid__topics_commentss": {},
     "comments_topicid__topics_comments": {
-      "id": 21
+      "id": 38
     }
   }
 }

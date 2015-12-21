@@ -1,8 +1,9 @@
 <div>
-<ul class="slds-feed__list">
-  <div ng-repeat="topic in chatterTopicsCtrl.topics | toArray | orderBy:'id': true" class="chatter-topic" ng-a>
-    <chatter-topic topic-data="topic"></chatter-topic>
-  </div>
-</ul>
+  <ul class="slds-feed__list">
+    <li ng-repeat="topic in chatterTopicsCtrl.topics | toArray | orderBy:'id': true" class="chatter-topics">
+      <chatter-topic topic-data="topic"></chatter-topic>
+    </li>
+  </ul>
 </div>
+
 

@@ -4,7 +4,7 @@ import bmPlatformApp=require('index.module');
 interface IChatterTopicDirectiveController {
   // specify exposed controller methods and properties here
 
-  deleteTopic():boolean;
+/*  deleteTopic():boolean;*/
 
 }
 
@@ -22,10 +22,12 @@ class ChatterTopicDirectiveController implements IChatterTopicDirectiveControlle
 
   }
 
+/*
   deleteTopic = ()=> {
     this.topicData.remove();
     return true;
   };
+*/
 
 }
 

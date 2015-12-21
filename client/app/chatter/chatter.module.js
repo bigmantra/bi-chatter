@@ -3,7 +3,7 @@ define([], (function () {
 
   console.log('defining chatter.module..');
   angular
-    .module('bm.platform.chatter', ['ui.bootstrap.tpls', 'ui.bootstrap', 'monospaced.elastic', 'ngTagsInput', 'ui.tree', 'firebase', 'angularMoment', 'ngResource', 'btford.socket-io', 'ngLodash', 'angular-toArrayFilter'])
+    .module('bm.platform.chatter', ['ui.bootstrap.tpls', 'ui.bootstrap', 'monospaced.elastic', 'ngTagsInput', 'ui.tree', 'firebase', 'angularMoment', 'ngResource', 'btford.socket-io', 'ngLodash'])
 
 
 })());

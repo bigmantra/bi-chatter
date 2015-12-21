@@ -2,12 +2,7 @@ define(["require", "exports", 'index.module'], function (require, exports, bmPla
     var ChatterTopicDirectiveController = (function () {
         function ChatterTopicDirectiveController(TopicService) {
             //TODO Do nothing at the moment. Will add more to this
-            var _this = this;
             this.TopicService = TopicService;
-            this.deleteTopic = function () {
-                _this.topicData.remove();
-                return true;
-            };
         }
         ChatterTopicDirectiveController.$inject = ['TopicService'];
         return ChatterTopicDirectiveController;

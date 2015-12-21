@@ -1,13 +1,14 @@
 define(["require", "exports", 'index.module'], function (require, exports, bmPlatformApp) {
     var ChatterFeedDirectiveController = (function () {
         function ChatterFeedDirectiveController(TopicService) {
-            var _this = this;
+            /*
+                TopicService.getAll().then((data:any)=>{
+                  this.topics=data;
+                  console.log(data);
+                  console.log('logging from ctrller');
+                });
+            */
             this.TopicService = TopicService;
-            TopicService.getAll().then(function (data) {
-                _this.topics = data;
-                console.log(data);
-                console.log('logging from ctrller');
-            });
         }
         ChatterFeedDirectiveController.prototype.addTopic = function () {
             return { name: 'newly added topic' }; // return newly added topic

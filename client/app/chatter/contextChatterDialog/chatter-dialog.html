@@ -1,5 +1,9 @@
-<!--Lightning seems to use the "Use" tag. Pls see https://css-tricks.com/svg-use-external-source/-->
 
+
+
+
+
+<!--Lightning seems to use the "Use" tag. Pls see https://css-tricks.com/svg-use-external-source/-->
 <!--utility sprite-->
 <ng-include
   src="'http://localhost:3000/app/chatter/contextChatterDialog/utility-sprite.html'">
@@ -13,7 +17,7 @@
 
 <md-dialog aria-label="Chatter" flex="50" flex-sm="80" ng-cloak>
   <form>
-    <md-toolbar>
+<!--    <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>BI Chatter</h2>
         <span flex></span>
@@ -21,7 +25,7 @@
           <i class="material-icons">clear</i>
         </md-button>
       </div>
-    </md-toolbar>
+    </md-toolbar>-->
 
 
     <md-dialog-content>
@@ -41,21 +45,20 @@
 
       </div>
 
-
     </md-dialog-content>
 
-
-    <md-dialog-actions layout="row">
-      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
-        More on Wikipedia
+    <md-dialog-actions class="chatter-dialog-actions" layout="row">
+      <md-button href="https://en.wikipedia.org/wiki/Conversation" target="_blank" md-autofocus>
+        Help: How do I start a Chatter Conversation?
       </md-button>
       <span flex></span>
-      <md-button ng-click="answer('not useful')">
-        Not Useful
-      </md-button>
-      <md-button ng-click="answer('useful')" style="margin-right:20px;">
-        Useful
+<!--      <md-button ng-click="answer('Cancel')">
+        Cancel
+      </md-button>-->
+      <md-button ng-click="answer('Done')" style="margin-right:20px;">
+        Done
       </md-button>
     </md-dialog-actions>
   </form>
 </md-dialog>
+

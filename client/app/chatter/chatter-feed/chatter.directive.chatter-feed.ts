@@ -12,11 +12,13 @@ class ChatterFeedDirectiveController implements IChatterFeedDirectiveController 
   static $inject = ['TopicService'];
   constructor(private TopicService: any) {
 
+/*
     TopicService.getAll().then((data:any)=>{
       this.topics=data;
       console.log(data);
       console.log('logging from ctrller');
     });
+*/
 
   }
 

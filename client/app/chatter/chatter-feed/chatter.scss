@@ -1,28 +1,53 @@
-.chatter-topic.ng-enter,
-.chatter-topic.ng-leave
-{
-  -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-  -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-  -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-  -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-  transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-  position: relative;
-  display: block;
-  overflow: hidden;
-  text-overflow: clip;
-  white-space:nowrap;
+.chatter-topics {
+
 }
 
-.chatter-topic.ng-leave.ng-leave-active,
-.chatter-topic.ng-enter {
+.chatter-comments {
+
+}
+
+
+
+.chatter-topics.ng-move,
+.chatter-topics.ng-enter,
+.chatter-topics.ng-leave,
+.chatter-comments.ng-move,
+.chatter-comments.ng-enter,
+.chatter-comments.ng-leave{
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+}
+
+.chatter-topics.ng-leave.ng-leave-active,
+.chatter-topics.ng-move,
+.chatter-topics.ng-enter,
+.chatter-comments.ng-leave.ng-leave-active,
+.chatter-comments.ng-move,
+.chatter-comments.ng-enter{
   opacity: 0;
-  width: 0px;
-  height: 0px;
 }
 
-.chatter-topic.ng-enter.ng-enter-active,
-.chatter-topic.ng-leave {
+.chatter-topics.ng-leave,
+.chatter-topics.ng-move.ng-move-active,
+.chatter-topics.ng-enter.ng-enter-active ,
+.chatter-comments.ng-leave,
+.chatter-comments.ng-move.ng-move-active,
+.chatter-comments.ng-enter.ng-enter-active {
   opacity: 1;
-  width: 150px;
-  height: 30px;
 }
+
+.chatter-new-topic
+{
+  border: 1px solid rgb(216, 221, 230);
+  display: block;
+  margin-bottom: 20px;
+}
+
+.chatter-new-topic .md-tab {
+  text-transform: none
+}
+
+.chatter-new-topic .share-button {
+  margin-top: 10px;
+}
+
