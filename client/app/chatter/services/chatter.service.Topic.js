@@ -4,7 +4,7 @@ define(["index.module"], function () {
 
   angular
     .module('bm.platform')
-    .factory('TopicService', ['$rootScope', '$q', 'TopicApi', 'CommentApi', 'Socket', 'lodash', function ($rootScope, $q, TopicApi, CommentApi, Socket, lodash) {
+    .factory('TopicService', ['$rootScope', '$q', 'TopicApi', 'CommentApi','TopicCommentApi', 'Socket', 'lodash', function ($rootScope, $q, TopicApi, CommentApi,TopicCommentApi, Socket, lodash) {
       // here we use a simple in memory cache in order to keep actual data synced up in the client
       var cache = {};
 
@@ -104,6 +104,20 @@ define(["index.module"], function () {
       };
 
 
+
+      Topic.createComment = function (params,data) {
+        var self = this;
+        TopicCommentApi.save(params,data).$promise.then(
+          function(newComment){
+            cache[params.topicId].comments.push(newComment)
+            console.log('comment ADDED...');
+          }
+        );
+
+      };
+
+
+
       // include SocketIO notifications service that will fire all the listeners on specified evnts
       // register listener for NewTopic event
       Socket.on('Topic.Create', function (newTopic) {
@@ -112,6 +126,7 @@ define(["index.module"], function () {
         console.log(newTopic);
         initObject(newTopic);
       });
+
 
 
       Socket.on('Comment.Create', function (topicId, newComment) {
@@ -124,8 +139,11 @@ define(["index.module"], function () {
         });
 
         if (result) {
-          cache[topicId].comments.push(newComment)
-          console.log('added comment into topic');
+          if(!(lodash.find(cache[topicId].comments, 'id', newComment.id))){
+            cache[topicId].comments.push(newComment)
+            console.log('added comment into topic');
+          }
+
         }
         else {
           console.log('cannot find topic in local memory cache so cant add comment into cache...');

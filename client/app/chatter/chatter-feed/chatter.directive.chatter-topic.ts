@@ -4,7 +4,6 @@ import bmPlatformApp=require('index.module');
 interface IChatterTopicDirectiveController {
   // specify exposed controller methods and properties here
 
-/*  deleteTopic():boolean;*/
 
 }
 
@@ -12,22 +11,14 @@ interface IChatterTopicDirectiveController {
 class ChatterTopicDirectiveController implements IChatterTopicDirectiveController {
 
   topicData:any;
-
   static $inject = ['TopicService'];
 
   constructor(private TopicService:any) {
-
-    //TODO Do nothing at the moment. Will add more to this
+  //TODO Do nothing at the moment. Will add more to this
 
 
   }
 
-/*
-  deleteTopic = ()=> {
-    this.topicData.remove();
-    return true;
-  };
-*/
 
 }
 

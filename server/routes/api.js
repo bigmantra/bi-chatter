@@ -152,7 +152,7 @@ module.exports = [
     method: 'POST',
     path: '/api/topics/{id}/comments',
     config: {
-      tags: ['api'], description: 'Associate an existing comment with a Topic',
+      tags: ['api'], description: 'Create a new Comment under a Topic',
       notes: json2html.transform(jsonDocs.createComment, jsonDocTransform),
       handler: {
         bedwetter: {prefix: '/api'}
@@ -169,6 +169,7 @@ module.exports = [
       }
     }
   },
+
 
   //Associates comment childId with topic id. Returns an HTTP 204 No Content response on success. If the topic or comment are not found, returns an HTTP 404 Not Found response.
   {

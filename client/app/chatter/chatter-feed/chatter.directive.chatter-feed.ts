@@ -12,13 +12,8 @@ class ChatterFeedDirectiveController implements IChatterFeedDirectiveController 
   static $inject = ['TopicService'];
   constructor(private TopicService: any) {
 
-/*
-    TopicService.getAll().then((data:any)=>{
-      this.topics=data;
-      console.log(data);
-      console.log('logging from ctrller');
-    });
-*/
+    //TODO Add init code
+
 
   }
 
@@ -39,6 +34,10 @@ class ChatterFeedDirective implements ng.IDirective {
   constructor(private TopicService: any) {
   }
 
+
+
+
+
 /*  link = (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: any) => {
 
     this.TopicService.getAll().then(function(data:any){
@@ -58,6 +57,11 @@ class ChatterFeedDirective implements ng.IDirective {
 
 
 bmPlatformApp.directive('chatterFeed', ChatterFeedDirective.factory());
+
+
+
+
+
 
 
 

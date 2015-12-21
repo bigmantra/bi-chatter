@@ -1,13 +1,7 @@
 define(["require", "exports", 'index.module'], function (require, exports, bmPlatformApp) {
     var ChatterFeedDirectiveController = (function () {
         function ChatterFeedDirectiveController(TopicService) {
-            /*
-                TopicService.getAll().then((data:any)=>{
-                  this.topics=data;
-                  console.log(data);
-                  console.log('logging from ctrller');
-                });
-            */
+            //TODO Add init code
             this.TopicService = TopicService;
         }
         ChatterFeedDirectiveController.prototype.addTopic = function () {

@@ -9,26 +9,22 @@ interface IChatterCommentDirectiveController {
 
 }
 
-
 class ChatterCommentDirectiveController implements IChatterCommentDirectiveController {
 
   commentData:any;
-  topicService:any;
+
 
   static $inject = ['TopicService'];
-
   constructor(private TopicService:any) {
 
-    //TODO Do nothing at the moment. Will add more to this
-    this.topicService=TopicService;
+  //TODO do nothing
 
   };
 
    deleteComment = ()=> {
-     this.topicService.removeComment(this.commentData.id);
+     this.TopicService.removeComment(this.commentData.id);
      return true;
    };
-
 
 }
 
@@ -44,7 +40,6 @@ class ChatterCommentDirective implements ng.IDirective {
   bindToController = true;
 
   constructor(private TopicService:any) {
-
     console.log('in ChatterCommentDirective ')
 
   }

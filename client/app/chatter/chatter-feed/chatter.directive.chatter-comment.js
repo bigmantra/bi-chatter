@@ -1,14 +1,13 @@
 define(["require", "exports", 'index.module'], function (require, exports, bmPlatformApp) {
     var ChatterCommentDirectiveController = (function () {
         function ChatterCommentDirectiveController(TopicService) {
+            //TODO do nothing
             var _this = this;
             this.TopicService = TopicService;
             this.deleteComment = function () {
-                _this.topicService.removeComment(_this.commentData.id);
+                _this.TopicService.removeComment(_this.commentData.id);
                 return true;
             };
-            //TODO Do nothing at the moment. Will add more to this
-            this.topicService = TopicService;
         }
         ;
         ChatterCommentDirectiveController.$inject = ['TopicService'];

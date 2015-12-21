@@ -15,7 +15,8 @@ define(["require", "exports", 'index.module'], function (require, exports, bmPla
             this.controllerAs = 'chatterCommentsCtrl';
             this.templateUrl = 'http://localhost:3000/app/chatter/chatter-feed/chatter-Comments.html';
             this.scope = {
-                comments: '='
+                comments: '=',
+                topicId: '='
             };
             this.bindToController = true;
             console.log('in ChatterCommentsDirective ');

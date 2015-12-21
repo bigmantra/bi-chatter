@@ -29,7 +29,8 @@ class ChatterCommentsDirective implements ng.IDirective {
   controllerAs='chatterCommentsCtrl';
   templateUrl = 'http://localhost:3000/app/chatter/chatter-feed/chatter-Comments.html';
   scope = {
-    comments: '='
+    comments: '=',
+    topicId:'='
   };
   bindToController = true;
 

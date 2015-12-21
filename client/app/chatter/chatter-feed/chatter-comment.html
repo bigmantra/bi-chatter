@@ -15,7 +15,6 @@
       </p>
 
 
-
       <!--Added Material Design Menu-->
       <md-menu md-position-mode="target-right target">
         <button ng-click="$mdOpenMenu($event)"
@@ -37,20 +36,25 @@
       </md-menu>
 
 
-<!--      <button
-        class="slds-button slds-button&#45;&#45;icon-border-filled slds-button&#45;&#45;icon-x-small slds-shrink-none">
-        <svg aria-hidden="true"
-             class="slds-button__icon slds-button__icon&#45;&#45;hint slds-button__icon&#45;&#45;small">
-          <use xlink:href="#down"></use>
-        </svg>
-        <span class="slds-assistive-text">Show More</span>
-      </button>
-      -->
+      <!--      <button
+              class="slds-button slds-button&#45;&#45;icon-border-filled slds-button&#45;&#45;icon-x-small slds-shrink-none">
+              <svg aria-hidden="true"
+                   class="slds-button__icon slds-button__icon&#45;&#45;hint slds-button__icon&#45;&#45;small">
+                <use xlink:href="#down"></use>
+              </svg>
+              <span class="slds-assistive-text">Show More</span>
+            </button>
+            -->
 
 
     </div>
     <div class="slds-comment__content slds-text-longform">
-      <p><a href="javascript:void(0)" title="Jason Rodgers">@Jason Rodgers</a>{{chatterCommentCtrl.commentData.text}}</p>
+      <!--<p><a href="javascript:void(0)" title="Jason Rodgers">@Jason Rodgers</a>{{chatterCommentCtrl.commentData.text}}-->
+
+      <p>{{chatterCommentCtrl.commentData.text}}
+
+
+      </p>
     </div>
     <ul class="slds-list--horizontal slds-has-dividers slds-text-body--small">
       <li class="slds-list__item"><a href="javascript:void(0)" title="Like this item">Like</a>
