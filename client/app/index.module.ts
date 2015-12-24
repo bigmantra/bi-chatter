@@ -1,5 +1,5 @@
 
-var bmPlatformApp=angular.module('bm.platform', ['ngAnimate','ngMaterial','ngCookies', 'ui.router', 'ngSanitize', 'bm.platform.chatter']);
+var bmPlatformApp=angular.module('bm.platform', ['ngMaterial','ngCookies', 'ui.router', 'ngSanitize', 'bm.platform.chatter']);
 
 
 export=bmPlatformApp;

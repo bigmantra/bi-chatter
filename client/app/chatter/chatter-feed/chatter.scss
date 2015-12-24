@@ -4,10 +4,6 @@
 
 }
 
-.chatter-comments {
-
-}
-
 .chatter-topics .md-menu {
 
   padding: 0px;
@@ -15,7 +11,6 @@
 }
 
 /*************ng-Animate classes BEGIN****************/
-
 
 
 .chatter-topics.ng-move,
@@ -46,7 +41,19 @@
   opacity: 1;
 }
 
+
+
 /*************ng-Animate classes END****************/
+
+
+
+.slds-comment__replies .slds-comment__content{
+
+background-color: #ededed;
+
+}
+
+
 
 .chatter-new-topic {
   border: 1px solid rgb(216, 221, 230);
@@ -61,6 +68,7 @@
 .chatter-new-topic .slds-is-active .share-button {
   margin-top: 10px;
 }
+/*
 
 .slds-comment__replies .slds-comment {
 
@@ -70,3 +78,4 @@
 
 }
 
+*/

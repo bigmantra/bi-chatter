@@ -3,25 +3,7 @@
     "comments_topicsid__topics_commentss": [],
     "topics": [
       {
-        "text": "cowd",
-        "level1Context": "/shared/Human Resources/_portal/Absence",
-        "level2Context": "/shared/Human Resources/QDR",
-        "level3Context": {
-          "dimRefs": {
-            "CASE%20WHEN%20%22Dim%20-%20Date%22.%22PERIOD%22%20IS%20NOT%20NULL%20%20THEN%20%22Dim%20-%20Date%22.%22PERIOD%22%20%20%20ELSE%20%22Dim%20-%20Date%22.%22PERIOD%22%20%20END": "04/15",
-            "%22Dim%20-%20Date%22.%22YEAR%22": "14/15"
-          },
-          "baseFormula": "\"Fact - Project\".\"COWD_YTD\""
-        },
-        "level1ContextHash": "983362c771eb0f0115d0e74678bb3b4bfa5b96c9",
-        "level2ContextHash": "ba092a2a724ec26a98a8d9825b649bbd64f7beeb",
-        "level3ContextHash": "de0936b78209989c23b033532543825cd582206c",
-        "createdAt": "2015-12-24T13:02:30.380Z",
-        "updatedAt": "2015-12-24T13:50:12.201Z",
-        "id": 204
-      },
-      {
-        "text": "Mate",
+        "text": "sdada",
         "level1Context": "/shared/Human Resources/_portal/Absence",
         "level2Context": "/shared/Human Resources/QDR",
         "level3Context": {
@@ -34,41 +16,39 @@
         "level1ContextHash": "983362c771eb0f0115d0e74678bb3b4bfa5b96c9",
         "level2ContextHash": "ba092a2a724ec26a98a8d9825b649bbd64f7beeb",
         "level3ContextHash": "dfcb89f0879a8f8e7a2bea187bd375e952231c68",
-        "createdAt": "2015-12-24T13:52:02.640Z",
-        "updatedAt": "2015-12-24T15:34:08.271Z",
-        "id": 217
+        "createdAt": "2015-12-24T17:00:43.169Z",
+        "updatedAt": "2015-12-24T18:19:02.882Z",
+        "id": 233
+      },
+      {
+        "text": "Alright my friend",
+        "level1Context": "/shared/Human Resources/_portal/Absence",
+        "level2Context": "/shared/Human Resources/QDR",
+        "level3Context": {
+          "dimRefs": {
+            "CASE%20WHEN%20%22Dim%20-%20Date%22.%22PERIOD%22%20IS%20NOT%20NULL%20%20THEN%20%22Dim%20-%20Date%22.%22PERIOD%22%20%20%20ELSE%20%22Dim%20-%20Date%22.%22PERIOD%22%20%20END": "04/15",
+            "%22Dim%20-%20Date%22.%22YEAR%22": "14/15"
+          },
+          "baseFormula": "\"Fact - Project\".\"AFC_ALL_STAGES_CUM\""
+        },
+        "level1ContextHash": "983362c771eb0f0115d0e74678bb3b4bfa5b96c9",
+        "level2ContextHash": "ba092a2a724ec26a98a8d9825b649bbd64f7beeb",
+        "level3ContextHash": "0a7963fb1c984c940d41b49d36c1dfb056945304",
+        "createdAt": "2015-12-24T18:19:45.606Z",
+        "updatedAt": "2015-12-24T18:19:45.606Z",
+        "id": 238
       }
     ],
     "comments_topicid__topics_comments": [
       {
-        "comments_topicId": 81,
-        "topics_comments": 204,
-        "id": 81
+        "comments_topicId": 145,
+        "topics_comments": 233,
+        "id": 145
       },
       {
-        "comments_topicId": 86,
-        "topics_comments": 217,
-        "id": 86
-      },
-      {
-        "comments_topicId": 88,
-        "topics_comments": 217,
-        "id": 88
-      },
-      {
-        "comments_topicId": 90,
-        "topics_comments": 217,
-        "id": 90
-      },
-      {
-        "comments_topicId": 92,
-        "topics_comments": 217,
-        "id": 92
-      },
-      {
-        "comments_topicId": 93,
-        "topics_comments": 217,
-        "id": 93
+        "comments_topicId": 146,
+        "topics_comments": 233,
+        "id": 146
       }
     ],
     "comments": [
@@ -145,6 +125,144 @@
         "createdAt": "2015-12-24T15:34:08.264Z",
         "updatedAt": "2015-12-24T15:34:08.264Z",
         "id": 93
+      },
+      {
+        "text": "dasas",
+        "createdAt": "2015-12-24T15:40:33.249Z",
+        "updatedAt": "2015-12-24T15:40:33.249Z",
+        "id": 94
+      },
+      {
+        "text": "dwqw",
+        "createdAt": "2015-12-24T16:08:34.384Z",
+        "updatedAt": "2015-12-24T16:08:34.384Z",
+        "id": 107
+      },
+      {
+        "text": "qweqeq",
+        "createdAt": "2015-12-24T16:08:49.415Z",
+        "updatedAt": "2015-12-24T16:08:49.415Z",
+        "id": 108
+      },
+      {
+        "text": "adfafa",
+        "createdAt": "2015-12-24T16:10:13.900Z",
+        "updatedAt": "2015-12-24T16:10:13.900Z",
+        "id": 109
+      },
+      {
+        "text": "adawda",
+        "createdAt": "2015-12-24T16:10:16.948Z",
+        "updatedAt": "2015-12-24T16:10:16.948Z",
+        "id": 110
+      },
+      {
+        "text": "adawdq",
+        "createdAt": "2015-12-24T16:11:03.406Z",
+        "updatedAt": "2015-12-24T16:11:03.406Z",
+        "id": 111
+      },
+      {
+        "text": "adas",
+        "createdAt": "2015-12-24T16:11:05.445Z",
+        "updatedAt": "2015-12-24T16:11:05.445Z",
+        "id": 112
+      },
+      {
+        "text": "asdas",
+        "createdAt": "2015-12-24T16:11:51.643Z",
+        "updatedAt": "2015-12-24T16:11:51.643Z",
+        "id": 113
+      },
+      {
+        "text": "asdas",
+        "createdAt": "2015-12-24T16:12:07.244Z",
+        "updatedAt": "2015-12-24T16:12:07.244Z",
+        "id": 114
+      },
+      {
+        "text": "asdas",
+        "createdAt": "2015-12-24T16:12:09.526Z",
+        "updatedAt": "2015-12-24T16:12:09.526Z",
+        "id": 115
+      },
+      {
+        "text": "dffffff",
+        "createdAt": "2015-12-24T16:12:12.870Z",
+        "updatedAt": "2015-12-24T16:12:12.870Z",
+        "id": 116
+      },
+      {
+        "text": "dasas",
+        "createdAt": "2015-12-24T16:12:48.913Z",
+        "updatedAt": "2015-12-24T16:12:48.913Z",
+        "id": 117
+      },
+      {
+        "text": "adasa",
+        "createdAt": "2015-12-24T16:15:50.803Z",
+        "updatedAt": "2015-12-24T16:15:50.803Z",
+        "id": 118
+      },
+      {
+        "text": "asdas",
+        "createdAt": "2015-12-24T16:15:53.359Z",
+        "updatedAt": "2015-12-24T16:15:53.359Z",
+        "id": 119
+      },
+      {
+        "text": "qweqw",
+        "createdAt": "2015-12-24T16:16:04.072Z",
+        "updatedAt": "2015-12-24T16:16:04.072Z",
+        "id": 120
+      },
+      {
+        "text": "eqwqeqw",
+        "createdAt": "2015-12-24T16:16:06.630Z",
+        "updatedAt": "2015-12-24T16:16:06.630Z",
+        "id": 121
+      },
+      {
+        "text": "Not working",
+        "createdAt": "2015-12-24T16:18:49.926Z",
+        "updatedAt": "2015-12-24T16:18:49.926Z",
+        "id": 122
+      },
+      {
+        "text": "werwerw",
+        "createdAt": "2015-12-24T16:55:09.606Z",
+        "updatedAt": "2015-12-24T16:55:09.606Z",
+        "id": 138
+      },
+      {
+        "text": "efewwfw",
+        "createdAt": "2015-12-24T16:55:16.598Z",
+        "updatedAt": "2015-12-24T16:55:16.598Z",
+        "id": 139
+      },
+      {
+        "text": "wwwww",
+        "createdAt": "2015-12-24T16:55:29.964Z",
+        "updatedAt": "2015-12-24T16:55:29.964Z",
+        "id": 140
+      },
+      {
+        "text": "The spec isn't clear on this. It just say \"terminate these steps\". I think a 404 is much safer option than 200 without the CORS headers. 400 is not appropriate here as there is nothing wrong with the request.\n\nIs there any other system we can look at to see how they handle this? Also, if the request is missing some of the required request headers we can't even look up if the route exists and a 200 is misleading.",
+        "createdAt": "2015-12-24T17:19:09.360Z",
+        "updatedAt": "2015-12-24T17:19:09.360Z",
+        "id": 145
+      },
+      {
+        "text": "My god its amazing",
+        "createdAt": "2015-12-24T17:19:56.197Z",
+        "updatedAt": "2015-12-24T17:19:56.197Z",
+        "id": 146
+      },
+      {
+        "text": "werwew",
+        "createdAt": "2015-12-24T18:07:26.828Z",
+        "updatedAt": "2015-12-24T18:07:26.828Z",
+        "id": 147
       }
     ]
   },
@@ -257,14 +375,14 @@
   },
   "counters": {
     "topics": {
-      "id": 224
+      "id": 238
     },
     "comments": {
-      "id": 93
+      "id": 151
     },
     "comments_topicsid__topics_commentss": {},
     "comments_topicid__topics_comments": {
-      "id": 93
+      "id": 151
     }
   }
 }

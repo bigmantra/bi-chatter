@@ -1,5 +1,5 @@
 define(["require", "exports"], function (require, exports) {
-    var bmPlatformApp = angular.module('bm.platform', ['ngAnimate', 'ngMaterial', 'ngCookies', 'ui.router', 'ngSanitize', 'bm.platform.chatter']);
+    var bmPlatformApp = angular.module('bm.platform', ['ngMaterial', 'ngCookies', 'ui.router', 'ngSanitize', 'bm.platform.chatter']);
     return bmPlatformApp;
 });
 /*

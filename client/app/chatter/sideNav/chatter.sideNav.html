@@ -12,15 +12,11 @@
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
-  .md-sidenav-push-in.md-sidenav-left-open .md-sidenav-push-in-target {
-    transform: translate(30%);
-  }
-
   .md-sidenav-push-in.md-sidenav-right-open .md-sidenav-push-in-target {
     margin-right: 30%
-
   }
 
+  /*to show main content while sidebar is visible*/
   md-backdrop {
     background-color: transparent !important;
   }
@@ -28,6 +24,12 @@
   md-backdrop.md-sidenav-backdrop {
     display: none;
   }
+
+  /* To Fix defect where the vertical line connecting comments vanished after css transitions*/
+  md-content.md-default-theme, md-content {
+    background-color: transparent;
+  }
+
 
 </style>
 
@@ -45,8 +47,16 @@
 
 <md-sidenav sidenav-push-in class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
 
-  <md-toolbar class="md-theme-light">
-    <h1 class="md-toolbar-tools">BI Chatter Dashboard Feed</h1>
+  <md-toolbar class="md-theme-light" style="background-color:transparent!important;" >
+    <div class="md-toolbar-tools">
+      <md-button ng-click="sideNavCtrl.close()"  class="md-icon-button" aria-label="exit_chatter">
+        <md-icon md-svg-icon="//localhost:3000/assets/fonts/ic_exit_to_app_black_24px.svg"></md-icon>
+      </md-button>
+      <h2>
+        <span>Dashboard Chatter Feed</span>
+      </h2>
+      <span flex></span>
+    </div>
   </md-toolbar>
   <md-content layout-padding="" style="padding:30px;">
     <!--    <form>
@@ -56,9 +66,7 @@
           </md-input-container>
         </form>-->
 
-    <md-button ng-click="sideNavCtrl.close()" class="md-primary">
-      Close Sidenav Right
-    </md-button>
+
     <chatter-feed feed-context="sideNavCtrl.feedContext">
     </chatter-feed>
 
@@ -67,15 +75,3 @@
 
 </md-sidenav>
 
-
-<!--
-  <div layout="column" style="height:500px;">
-  <section layout="row" flex>
-
-
-
-
-
-  </section>
-</div>
--->

@@ -11,7 +11,7 @@ define(["index.module"],function() {
 
 
   /** @ngInject */
-  function config($logProvider, $sceDelegateProvider) {
+  function config($logProvider, $sceDelegateProvider,$mdThemingProvider) {
 
     $sceDelegateProvider.resourceUrlWhitelist([
       // Allow same origin resource loads.
@@ -21,6 +21,8 @@ define(["index.module"],function() {
 
     // Enable log
     $logProvider.debugEnabled(true);
+    $mdThemingProvider.theme('default')
+      .primaryPalette('blue');
 
     // Set options third-party lib
 /*    toastr.options.timeOut = 3000;

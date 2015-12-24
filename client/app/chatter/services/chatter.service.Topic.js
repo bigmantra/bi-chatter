@@ -16,6 +16,10 @@ define(["index.module"], function () {
         } else {
           cache[data.id] = new Topic(data);
         }
+        if(!(cache[data.id].hasOwnProperty('comments'))){
+          cache[data.id].comments=[];
+        }
+
         return cache[data.id];
       };
 
