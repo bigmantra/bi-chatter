@@ -62,6 +62,7 @@ define(["index.module"], function () {
         currentDashPath: saw.session.SessionInfos().portalPath,
         currentUser: saw.session.SessionInfos().user,
         currentStateXML: saw.getXmlIsland("idClientStateXml", null, null, true),
+
         baseURL: saw.getBaseURL(),
 
         //Gets a list of Reports and their catalogPaths and SearchIds. Note that the SearchIds are session tokens and are only valid for a presentation services session.
@@ -73,18 +74,16 @@ define(["index.module"], function () {
 
           //Get Current Page
           var xmlIsland = saw.getXmlIsland("idClientStateXml", null, null, true);
-
-
           var statePath = $(xmlIsland).find('ref[statePath]').attr('statePath');
-
-
           var pageId = (/~p:(.*?)~r:/).exec(statePath)[1];
 
 
           //Extract report references in the current page
           //$.each($(xmlIsland).find(('container[cid$=' + pageId + ']')).find('[folder]'), function (reportIndex, reportItem) {
 
-          $.each($(xmlIsland).find('[folder]'), function (reportIndex, reportItem) {
+
+
+          $.each($(xmlIsland).find("[cid='p:" + pageId + "']").find('[folder]'), function (reportIndex, reportItem) {
 
             reports.push({
               reportId: $(this).attr('cid'),
@@ -284,7 +283,12 @@ define(["index.module"], function () {
           var reports = [];
 
 
-          $.each($(saw.getXmlIsland("idClientStateXml", null, null, true)).find('[folder]'), function (reportIndex, reportItem) {
+          //Get Current Page
+          var xmlIsland = saw.getXmlIsland("idClientStateXml", null, null, true);
+          var statePath = $(xmlIsland).find('ref[statePath]').attr('statePath');
+          var pageId = (/~p:(.*?)~r:/).exec(statePath)[1];
+
+          $.each($(xmlIsland).find("[cid='p:" + pageId + "']").find('[folder]'), function (reportIndex, reportItem) {
 
             reports.push({
               reportId: $(this).attr('cid'),
@@ -384,7 +388,8 @@ define(["index.module"], function () {
                 primarySubjectArea: response.primarySubjectArea,
                 analysisPath: reportDetails.analysisPath,
                 reportId: reportDetails.reportId,
-                searchId: reportDetails.searchId
+                searchId: reportDetails.searchId,
+                currentDashboard:gateInstance.currentDashPath
               }
 
               resolve(reportMetadata);

@@ -3,7 +3,7 @@
 
 
 
-<!--Lightning seems to use the "Use" tag. Pls see https://css-tricks.com/svg-use-external-source/-->
+<!--Lightning seems to use the Use tag and it causes CORS issues from inside OBI. Pls see https://css-tricks.com/svg-use-external-source/-->
 <!--utility sprite-->
 <ng-include
   src="'http://localhost:3000/app/chatter/contextChatterDialog/utility-sprite.html'">
@@ -15,9 +15,10 @@
 </ng-include>
 
 
-<md-dialog aria-label="Chatter" flex="50" flex-sm="80" ng-cloak>
+<md-dialog  aria-label="Chatter" flex="50" flex-sm="80" ng-cloak>
   <form>
-<!--    <md-toolbar>
+<!--
+    <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>BI Chatter</h2>
         <span flex></span>
@@ -25,22 +26,15 @@
           <i class="material-icons">clear</i>
         </md-button>
       </div>
-    </md-toolbar>-->
+    </md-toolbar>
+-->
 
 
-    <md-dialog-content>
+    <md-dialog-content class="chatter-dialog-content">
 
       <div class="md-dialog-content">
-        <chatter-feed resource="/api/feeds/1">
-          <chatter-topics>
-            <chatter-new-topic></chatter-new-topic>
-            <chatter-topic>
-              <chatter-comments>
-                <chatter-comment></chatter-comment>
-              </chatter-comments>
-              <chatter-new-comment></chatter-new-comment>
-            </chatter-topic>
-          </chatter-topics>
+
+        <chatter-feed feed-context="dialogCtrl.feedContext">
         </chatter-feed>
 
       </div>
@@ -52,13 +46,9 @@
         Help: How do I start a Chatter Conversation?
       </md-button>
       <span flex></span>
-<!--      <md-button ng-click="answer('Cancel')">
-        Cancel
-      </md-button>-->
-      <md-button ng-click="answer('Done')" style="margin-right:20px;">
+      <md-button ng-click="dialogCtrl.answer('Done')" style="margin-right:20px;">
         Done
       </md-button>
     </md-dialog-actions>
   </form>
 </md-dialog>
-

@@ -33,7 +33,7 @@ define(["index.module"],function() {
 
   app.directive('obiSideNav', function () {
 
-    var controller = ['$scope', '$timeout', '$mdSidenav', '$log','State', function ($scope, $timeout, $mdSidenav, $log,State) {
+    var controller = ['$scope', '$timeout', '$mdSidenav', '$log','State','BIGate', function ($scope, $timeout, $mdSidenav, $log,State,BIGate) {
 
 
         var vm=this;
@@ -48,6 +48,16 @@ define(["index.module"],function() {
               State.sideNavOpened = false;
             });
         };
+
+
+      vm.feedContext={
+
+        level1Context: BIGate.currentDashPath,
+        level2Context: '',
+        level3Context: '',
+        contextDisplayData: {}
+
+      }
 
 
         $scope.$watch(function () {

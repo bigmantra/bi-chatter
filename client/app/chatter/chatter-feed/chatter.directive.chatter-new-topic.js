@@ -5,7 +5,15 @@ define(["require", "exports", 'index.module'], function (require, exports, bmPla
             var _this = this;
             this.TopicService = TopicService;
             this.createTopic = function (text) {
-                var newTopic = _this.TopicService.create({ "text": text });
+                var newTopic = _this.TopicService.create({
+                    "text": text,
+                    "level1Context": _this.feedContext.level1Context,
+                    "level2Context": _this.feedContext.level2Context,
+                    "level3Context": _this.feedContext.level3Context,
+                    "level1ContextHash": _this.feedContext.level1ContextHash,
+                    "level2ContextHash": _this.feedContext.level2ContextHash,
+                    "level3ContextHash": _this.feedContext.level3ContextHash
+                });
                 _this.topicText = '';
                 _this.isActive = false;
                 _this.hasFocus = false;
@@ -24,6 +32,10 @@ define(["require", "exports", 'index.module'], function (require, exports, bmPla
             this.controller = ChatterNewTopicDirectiveController;
             this.controllerAs = 'chatterNewTopicCtrl';
             this.templateUrl = 'http://localhost:3000/app/chatter/chatter-feed/chatter-new-topic.html';
+            this.scope = {
+                feedContext: '='
+            };
+            this.bindToController = true;
             this.link = function (scope, element, attrs, ctrl) {
                 scope.$watch(function () {
                     return ctrl.topicText;

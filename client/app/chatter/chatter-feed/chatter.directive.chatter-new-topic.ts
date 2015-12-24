@@ -16,6 +16,7 @@ class ChatterNewTopicDirectiveController implements IChatterNewTopicDirectiveCon
   isActive:boolean;
   hasFocus:boolean;
   topicText:string;
+  feedContext:any;
 
   static $inject = ['TopicService'];
 
@@ -29,13 +30,22 @@ class ChatterNewTopicDirectiveController implements IChatterNewTopicDirectiveCon
   }
 
   createTopic = (text:any)=> {
-    var newTopic = this.TopicService.create({"text": text});
-    this.topicText='';
+    var newTopic = this.TopicService.create(
+      {
+        "text": text,
+        "level1Context": this.feedContext.level1Context,
+        "level2Context": this.feedContext.level2Context,
+        "level3Context": this.feedContext.level3Context,
+        "level1ContextHash": this.feedContext.level1ContextHash,
+        "level2ContextHash": this.feedContext.level2ContextHash,
+        "level3ContextHash": this.feedContext.level3ContextHash
+      }
+    );
+    this.topicText = '';
     this.isActive = false;
     this.hasFocus = false;
     return newTopic;
   };
-
 
 }
 
@@ -45,14 +55,19 @@ class ChatterNewTopicDirective implements ng.IDirective {
   controller = ChatterNewTopicDirectiveController;
   controllerAs = 'chatterNewTopicCtrl';
   templateUrl = 'http://localhost:3000/app/chatter/chatter-feed/chatter-new-topic.html';
+  scope = {
+    feedContext: '='
+  };
+  bindToController = true;
 
   link = function (scope:ng.IScope, element:ng.IAugmentedJQuery, attrs:ng.IAttributes, ctrl:IChatterNewTopicDirectiveController) {
 
+
     scope.$watch(()=> {
       return ctrl.topicText
-    }, (oldvalue,newvalue)=> {
+    }, (oldvalue, newvalue)=> {
 
-      if(oldvalue!=newvalue){
+      if (oldvalue != newvalue) {
 
         if (ctrl.topicText) {
           element.find('button[disabled]').eq(0).removeAttr('disabled');
@@ -60,20 +75,13 @@ class ChatterNewTopicDirective implements ng.IDirective {
         else {
           element.find('button.slds-button--brand').attr('disabled', '');
         }
-
-
       }
-
-
-
     });
-
 
   };
 
 
   constructor(private TopicService:any) {
-
     console.log('in ChatterNewTopicDirective ')
 
   }

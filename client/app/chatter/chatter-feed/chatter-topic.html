@@ -10,9 +10,16 @@
   </div>
   <div class="slds-media__body">
     <div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate">
-      <p class="slds-truncate"><a href="javascript:void(0)" title="Design Systems">Design Systems</a>
-        -
-        <a href="javascript:void(0)" title="Jason Rodgers">Jason Rogers</a></p>
+      <p class="slds-truncate"><a href="javascript:void(0)" title="Design Systems">Design Systems</a> -<a href="javascript:void(0)" title="Jason Rodgers">Jason Rogers</a>
+        <span class="slds-text-body--small">16hr Ago</span>
+      </p>
+
+<!--
+      <p class="slds-text-body&#45;&#45;small"><a href="javascript:void(0)"
+                                          title="Click for single-item view of this post">18hr Ago</a>
+      </p>
+
+-->
 
       <!--Added Material Design Menu-->
       <md-menu md-position-mode="target-right target">
@@ -36,9 +43,6 @@
 
 
     </div>
-    <p class="slds-text-body--small"><a href="javascript:void(0)"
-                                        title="Click for single-item view of this post">18hr Ago</a>
-    </p>
 
     <div class="slds-comment__content slds-text-longform">
       <p>{{chatterTopicCtrl.topicData.text}}</p>
@@ -73,4 +77,5 @@
     </ul>
   </div>
 </div>
-<chatter-comments comments="chatterTopicCtrl.topicData.comments"  topic-id="chatterTopicCtrl.topicData.id" ></chatter-comments>
+<chatter-comments comments="chatterTopicCtrl.topicData.comments"
+                  topic-id="chatterTopicCtrl.topicData.id"></chatter-comments>

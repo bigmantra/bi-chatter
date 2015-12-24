@@ -30,7 +30,7 @@ define(["index.module"], function () {
           var contextCollection = tableController.getCellContextCollection();
 
           //Copy viewId over to the cell
-          cellController.viewId=tableController.viewId;
+          cellController.viewId = tableController.viewId;
 
           elm.bind('dblclick', function () {
             exp(scope);
@@ -41,7 +41,7 @@ define(["index.module"], function () {
           });
 
           if (context && context.length > 0) {
-            cellController.setContext(context[0]);
+            cellController.setContext(context[0],tableController.getReportContext());
             cellController.setCellType('Measure');
 
             //Check if Topics exist and place cell Marker;
@@ -67,8 +67,12 @@ define(["index.module"], function () {
     $scope.dialogStatus = '  ';
     $scope.dialogCustomFullscreen = $mdMedia('sm');
 
-    vm.setContext = function (context) {
+    vm.setContext = function (context,reportContext) {
       vm.cellContextInfo = context;
+      vm.context={
+          cell:context,
+          report:reportContext
+      }
     };
 
     vm.setReportContext = function (reportContext) {
@@ -88,16 +92,24 @@ define(["index.module"], function () {
     init();
 
 
-
     vm.showChatterDialog = function (ev) {
+
+      console.log(vm.reportContextInfo);
+
+
       $mdDialog.show({
           controller: 'chatterDialogController',
+          controllerAs: 'dialogCtrl',
+          bindToController: true,
           templateUrl: 'http://localhost:3000/app/chatter/contextChatterDialog/chatter-dialog.html',
           /*parent: angular.element(angular.element(document.getElementById('d:dashboard~p:2i41s4pgps2jop6q~r:gvf5n0lc1ns2vva2~v:compoundView!1ViewContainer'))),*/
           parent: angular.element('#DashboardPageContentDiv'),
           targetEvent: ev,
           clickOutsideToClose: true,
           fullscreen: $mdMedia('sm') && $scope.dialogCustomFullscreen,
+          locals: {
+            context:vm.context,
+          }
         })
         .then(function (answer) {
           $scope.dialogStatus = 'You said the information was "' + answer + '".';
