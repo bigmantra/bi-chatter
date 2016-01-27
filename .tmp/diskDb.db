@@ -47,7 +47,7 @@
         "level2ContextHash": "",
         "level3ContextHash": "",
         "createdAt": "2016-01-14T15:47:52.097Z",
-        "updatedAt": "2016-01-14T16:33:42.463Z",
+        "updatedAt": "2016-01-27T17:01:28.266Z",
         "id": 239
       }
     ],
@@ -66,6 +66,11 @@
         "comments_topicId": 153,
         "topics_comments": 239,
         "id": 153
+      },
+      {
+        "comments_topicId": 154,
+        "topics_comments": 239,
+        "id": 154
       }
     ],
     "comments": [
@@ -286,6 +291,12 @@
         "createdAt": "2016-01-14T16:33:42.440Z",
         "updatedAt": "2016-01-14T16:33:42.440Z",
         "id": 153
+      },
+      {
+        "text": "okay, I'll take a look at this first thing tomorrow",
+        "createdAt": "2016-01-27T17:01:28.228Z",
+        "updatedAt": "2016-01-27T17:01:28.228Z",
+        "id": 154
       }
     ]
   },
@@ -398,14 +409,14 @@
   },
   "counters": {
     "topics": {
-      "id": 241
+      "id": 242
     },
     "comments": {
-      "id": 153
+      "id": 154
     },
     "comments_topicsid__topics_commentss": {},
     "comments_topicid__topics_comments": {
-      "id": 153
+      "id": 154
     }
   }
 }
